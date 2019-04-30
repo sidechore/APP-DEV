@@ -13,28 +13,62 @@ export default class PhoneNumber extends Component {
     constructor(props) {
         super(props);
         console.disableYellowBox = true;
-        this.state = {text: 'Useless Placeholder'};
+        this.state = {text: 'Useless Placeholder',
+            Cross1:false,
+            showIconLeftpass1: false,
+        };
     }
 
-    renderRowInput(item) {
-        return <View style={{
-            flexDirection: 'column', width: "100%",
-
-        }}>
-            <View style={{flexDirection: "column",}}>
+    renderRowInputPhone(item) {
+        return <View style={{flexDirection: 'column', width: "100%"}}>
+            <View style={{flexDirection: "row", marginStart: 20, marginEnd: 20}}>
                 <TextInput
-                    style={{height: 40, marginStart: 20, marginEnd: 20, marginTop: 10}}
-                    onChangeText={(text) => this.setState({text})}
+                    style={{height: 50, width: "100%"}}
+                    onChangeText={(text) => this.checkPhone(text)}
+                    textContentType={"Email"}
                     placeholder={item.hintText}
+                    keyboardType={"email-address"}
                 />
 
-            </View>
-            <View
-                style={{height: 0.5, backgroundColor: "#52525D", marginStart: 25, marginEnd: 25,}}></View>
+                {this.state.showIconLeftpass1 &&
+                <Image resizeMode={"contain"} source={require("../../../assets/images/checked.png")}
+                       style={{
+                           width: 20,
+                           height: 20,
+                           position: "absolute",
+                           right: 10,
+                           top: 15
+                       }}/>}
 
+
+                {this.state.Cross1 &&
+                <Image resizeMode={"contain"} source={require("../../../assets/images/close.png")}
+                       style={{
+                           width: 20,
+                           height: 20,
+                           position: "absolute",
+                           right: 10,
+                           top: 15
+                       }}/>}
+            </View>
+            <View style={{height: 0.5, backgroundColor: "#52525D", marginStart: 25, marginEnd: 25,}}></View>
         </View>;
     }
+    checkPhone(text) {
+        if (text.length >=11 && text.length <= 13) {
+            this.setState({showIconLeftpass1: true});
+            this.setState({Cross1:false})
+        }else if(text.length===0 ||text.length>13){
+            this.setState({showIconLeftpass1: false})
+            this.setState({Cross1:true})
+        }
+        else{
+            this.setState({showIconLeftpass1: false})
+            this.setState({Cross1:true})
 
+
+        }
+    }
     render() {
         return (
             <View style={styles.container}>
@@ -87,7 +121,7 @@ export default class PhoneNumber extends Component {
                         </View>
                     </View>
                     <View style={{width: "100%", height: 250, backgroundColor: "white",}}>
-                        {this.renderRowInput({
+                        {this.renderRowInputPhone({
                             hintText: "Phone Number",
 
                         })}
@@ -103,27 +137,28 @@ export default class PhoneNumber extends Component {
 
 
                         }}>
-                            <View style={{flexDirection:"column" , width:"10%",justifyContent: "center",
+                            <View style={{flexDirection:"column" , width:"15%",justifyContent: "center",
                                 alignItems:"center", }}>
                                 <Switch
                                     onTintColor="#00D200"
                                     thumbTintColor="#fff"
-                                    value={true} style={{
+                                    value={false} style={{
                                     position: 'absolute',
-                                    right:10,
+                                    right:15,
                                     tintColor: 'white',
 
                                 }}/>
                             </View>
-                            <View style={{flexDirection:"column", width:"70%",backgroundColor:"yellow",
-                                alignItems:"center",}}>
+                            <View style={{flexDirection:"column", width:"75%",
+                               }}>
 
-                                <Text   > {"I agree to SideChore's Terms of Use and Privacy Policy"} </Text>
+                                <Text style={{color:"black"}}  > {"I agree to SideChore's Terms of Use "} </Text>
+                                <Text style={{color:"black"}}  > {"and Privacy Policy "} </Text>
                             </View>
 
                         </View>
 
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate("ResetPassword")}
+                            <TouchableOpacity 
                                               style={{justifyContent: "center", alignItems: "center", marginTop: 25}}>
                                 <View style={{
                                     flexDirection: "column",
@@ -136,15 +171,15 @@ export default class PhoneNumber extends Component {
 
 
                                 }}>
-                                    <Text style={{color: "white", fontSize: 18}}>{"Send an email"}</Text>
+                                    <Text style={{color: "white", fontSize: 18}}>{"Submit"}</Text>
 
 
                                 </View>
                             </TouchableOpacity>
                         </View>
+                    <View style={{width:"100%",height:250,backgroundColor:"#F3F3F3" }}  >
+                    </View>
 
-                        <Image source={require("../../../assets/images/halfsplash.png")}
-                               style={{resizeMode: 'cover', width: "100%", height: 350}}/>
 
                 </ScrollView>
 

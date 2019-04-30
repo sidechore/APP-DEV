@@ -13,27 +13,79 @@ export default class ForgotPassword extends Component {
     constructor(props) {
         super(props);
         console.disableYellowBox = true;
-        this.state = {text: 'Useless Placeholder'};
+        this.state = {
+            text: 'Useless Placeholder',
+            showIconLeftEmail: false,
+            Cross1: false
+        };
+
     }
 
-    renderRowInput(item) {
-        return <View style={{
-            flexDirection: 'column', width: "100%",
-
-        }}>
-            <View style={{flexDirection: "column",}}>
+    renderRowInputEmail(item) {
+        return <View style={{flexDirection: 'column', width: "100%"}}>
+            <View style={{flexDirection: "row", marginStart: 20, marginEnd: 20}}>
                 <TextInput
-                    style={{height: 40, marginStart: 20, marginEnd: 20, marginTop: 10}}
-                    onChangeText={(text) => this.setState({text})}
+                    style={{height: 50, width: "100%"}}
+                    onChangeText={(text) => this.checkEmail(text)}
+                    textContentType={"Email"}
                     placeholder={item.hintText}
+                    keyboardType={"email-address"}
                 />
 
-            </View>
-            <View
-                style={{height: 0.5, backgroundColor: "#52525D", marginStart: 25, marginEnd: 25, marginTop: 10}}></View>
+                {this.state.showIconLeftEmail &&
+                <Image resizeMode={"contain"} source={require("../../../assets/images/checked.png")}
+                       style={{
+                           width: 20,
+                           height: 20,
+                           position: "absolute",
+                           right: 10,
+                           top: 15
+                       }}/>}
 
+
+                {this.state.Cross1 &&
+                <Image resizeMode={"contain"} source={require("../../../assets/images/close.png")}
+                       style={{
+                           width: 20,
+                           height: 20,
+                           position: "absolute",
+                           right: 10,
+                           top: 15
+                       }}/>}
+            </View>
+            <View style={{height: 0.5, backgroundColor: "#52525D", marginStart: 25, marginEnd: 25,}}></View>
         </View>;
     }
+
+    validate = (text) => {
+        console.log(text);
+        let reg = /^[\w]{1,}[\w.+-]{0,}@[\w-]{2,}([.][a-zA-Z]{2,}|[.][\w-]{2,}[.][a-zA-Z]{2,})$/;
+        if (reg.test(text) === false) {
+            console.log("Email is Not Correct");
+            this.setState({email: text})
+            return false;
+        } else {
+            this.setState({email: text})
+            console.log("Email is Correct");
+            return true;
+        }
+    };
+
+    checkEmail(email) {
+        if (email.length === 0) {
+            this.setState({showIconLeftEmail: false})
+            this.setState({Cross1: true})
+        }
+        if (this.validate(email)) {
+            this.setState({showIconLeftEmail: true});
+            this.setState({Cross1: false})
+        } else {
+            this.setState({showIconLeftEmail: false});
+            this.setState({Cross1: true})
+        }
+
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -54,13 +106,13 @@ export default class ForgotPassword extends Component {
                         justifyContent: "space-around"
                     }}
                     leftComponent={
-                        <TouchableOpacity  onPress={()=>this.props.navigation.goBack()} >
-                        <Image source={require("../../../assets/images/arrowback.png" )} style={{
-                       marginStart:10, height:14,width:14,resizeMode:"contain"
+                        <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+                            <Image source={require("../../../assets/images/arrowback.png")} style={{
+                                marginStart: 10, height: 14, width: 14, resizeMode: "contain"
 
 
-                        }}  /></TouchableOpacity>
-                            }
+                            }}/></TouchableOpacity>
+                    }
 
 
                 />
@@ -85,33 +137,34 @@ export default class ForgotPassword extends Component {
                             </Text>
                         </View>
                     </View>
-                   <View  style={{width:"100%",height:150,backgroundColor:"white",}}>
-                       {this.renderRowInput({
-                           hintText: "Enter your Email Address",
+                    <View style={{width: "100%", height: 150, backgroundColor: "white",}}>
+                        {this.renderRowInputEmail({
+                            hintText: "Enter your Email Address",
 
-                       })}
+                        })}
 
-                       <TouchableOpacity onPress={()=>this.props.navigation.navigate("ResetPassword")} style={{justifyContent: "center", alignItems: "center", marginTop: 25}}>
-                           <View style={{
-                               flexDirection: "column",
-                               backgroundColor: "#FA2021",
-                               width: "85%",
-                               height: 50,
-                               justifyContent: "center",
-                               alignItems: "center",
-                               borderRadius: 7
-
-
-                           }}>
-                               <Text style={{color: "white",fontSize:18}}>{"Send an email"}</Text>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate("ResetPassword")}
+                                          style={{justifyContent: "center", alignItems: "center", marginTop: 25}}>
+                            <View style={{
+                                flexDirection: "column",
+                                backgroundColor: "#FA2021",
+                                width: "85%",
+                                height: 50,
+                                justifyContent: "center",
+                                alignItems: "center",
+                                borderRadius: 7
 
 
-                           </View>
-                       </TouchableOpacity>
-                   </View>
+                            }}>
+                                <Text style={{color: "white", fontSize: 18}}>{"Send an email"}</Text>
+
+
+                            </View>
+                        </TouchableOpacity>
+                    </View>
 
                     <Image source={require("../../../assets/images/halfsplash.png")}
-                           style={{resizeMode:'cover', width:"100%",height:350}}  />
+                           style={{resizeMode: 'cover', width: "100%", height: 350}}/>
 
                 </ScrollView>
 
@@ -119,8 +172,6 @@ export default class ForgotPassword extends Component {
             </View>
 
         )
-
-
 
 
     }

@@ -7,7 +7,7 @@ import InitialScreen from './AuthScreens/InitialScreen';
 import SignInProvider from './AuthScreens/SignInScreen/SignInServiceProvider';
 import ResetPassword from './AuthScreens/ForgotPassword/ResetPassword';
 import PhoneNumber from './AuthScreens/PhoneNumber';
-import VerifyPhoneNo from './AuthScreens/PhoneNumber/VerifyPhoneNo';
+
 export {
     SelectScreen,
     SignInScreen,
@@ -18,7 +18,7 @@ export {
     ResetPassword,
     SignInProvider,
     PhoneNumber,
-    VerifyPhoneNo
+  
 
 
 };

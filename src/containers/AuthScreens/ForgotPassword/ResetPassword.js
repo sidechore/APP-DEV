@@ -13,27 +13,114 @@ export default class ResetPassword extends Component {
     constructor(props) {
         super(props);
         console.disableYellowBox = true;
-        this.state = {text: 'Useless Placeholder'};
+        this.state = {text: 'Useless Placeholder',
+            showIconLeftpass1: false,
+            showIconLeftpass2: false,
+            Cross1:false,
+            Cross2:false,
+            Password:'',
+            Cpassword:"",
+        };
     }
 
-    renderRowInput(item) {
-        return <View style={{
-            flexDirection: 'column', width: "100%",
-
-        }}>
-            <View style={{flexDirection: "column",}}>
+    renderRowInputPassword(item) {
+        return <View style={{flexDirection: 'column', width: "100%"}}>
+            <View style={{flexDirection: "row", marginStart: 20, marginEnd: 20}}>
                 <TextInput
-                    style={{height: 40, marginStart: 20, marginEnd: 20, marginTop: 10}}
-                    onChangeText={(text) => this.setState({text})}
+                    style={{height: 50, width: "100%"}}
+                    onChangeText={(text) => this.checkPassword(text)}
+                    textContentType={"Email"}
                     placeholder={item.hintText}
+                    keyboardType={"email-address"}
+                    secureTextEntry={true}
                 />
 
-            </View>
-            <View
-                style={{height: 0.5, backgroundColor: "#52525D", marginStart: 25, marginEnd: 25, marginTop: 5}}></View>
+                {this.state.showIconLeftpass1&&
+                <Image resizeMode={"contain"} source={require("../../../assets/images/checked.png")}
+                       style={{
+                           width: 20,
+                           height: 20,
+                           position: "absolute",
+                           right: 10,
+                           top: 15
+                       }}/>}
 
+
+                {this.state.Cross1 &&
+                <Image resizeMode={"contain"} source={require("../../../assets/images/close.png")}
+                       style={{
+                           width: 20,
+                           height: 20,
+                           position: "absolute",
+                           right: 10,
+                           top: 15
+                       }}/>}
+            </View>
+            <View style={{height: 0.5, backgroundColor: "#52525D", marginStart: 25, marginEnd: 25,}}></View>
         </View>;
     }
+    renderRowcnfrPassword(item) {
+        return <View style={{flexDirection: 'column', width: "100%"}}>
+            <View style={{flexDirection: "row", marginStart: 20, marginEnd: 20}}>
+                <TextInput
+                    style={{height: 50, width: "100%"}}
+                    onChangeText={(text) => this.cnfrPassword(text)}
+                    textContentType={"Email"}
+                    placeholder={item.hintText}
+                    secureTextEntry={true}
+                    keyboardType={"email-address"}
+                />
+
+                {this.state.showIconLeftpass2 &&
+                <Image resizeMode={"contain"} source={require("../../../assets/images/checked.png")}
+                       style={{
+                           width: 20,
+                           height: 20,
+                           position: "absolute",
+                           right: 10,
+                           top: 15
+                       }}/>}
+
+
+                {this.state.Cross2 &&
+                <Image resizeMode={"contain"} source={require("../../../assets/images/close.png")}
+                       style={{
+                           width: 20,
+                           height: 20,
+                           position: "absolute",
+                           right: 10,
+                           top: 15
+                       }}/>}
+            </View>
+            <View style={{height: 0.5, backgroundColor: "#52525D", marginStart: 25, marginEnd: 25,}}></View>
+        </View>;
+    }
+
+    checkPassword(text) {
+        this.setState({Password:text});
+        if (text.length >= 8 && text.length <= 12) {
+            this.setState({showIconLeftpass1: true});
+            this.setState({Cross1:false})
+        }else {
+            this.setState({showIconLeftpass1: false})
+            this.setState({Cross1:true})
+        }
+    }
+    cnfrPassword(text) {
+        this.setState({Cpassword:text});
+        if (this.state.Password === text){
+            this.setState({showIconLeftpass2: true});
+            this.setState({Cross2:false})
+        }else if(text.length===0){
+            this.setState({showIconLeftpass2: false})
+            this.setState({Cross2:true})
+        }
+        else{
+            this.setState({showIconLeftpass2: false})
+            this.setState({Cross2:true})
+        }
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -79,11 +166,11 @@ export default class ResetPassword extends Component {
 
                     </View>
                     <View  style={{width:"100%",height:200,backgroundColor:"white",marginBottom:20}}>
-                        {this.renderRowInput({
+                        {this.renderRowInputPassword({
                             hintText: "New Password",
 
                         })}
-                        {this.renderRowInput({
+                        {this.renderRowcnfrPassword({
                             hintText: "Confirm Password",
 
                         })}

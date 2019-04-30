@@ -17,7 +17,10 @@ export default class SignInScreen extends Component {
         this.state = {
             text: 'Useless Placeholder',
             showIconLeftEmail: false,
-            showIconLeftpass: false
+            showIconLeftpass: false,
+            Cross1:false,
+            Cross2:false,
+
         };
     }
 
@@ -35,6 +38,17 @@ export default class SignInScreen extends Component {
 
                 {this.state.showIconLeftEmail &&
                 <Image resizeMode={"contain"} source={require("../../../assets/images/checked.png")}
+                       style={{
+                           width: 20,
+                           height: 20,
+                           position: "absolute",
+                           right: 10,
+                           top: 15
+                       }}/>}
+
+
+                {this.state.Cross1 &&
+                <Image resizeMode={"contain"} source={require("../../../assets/images/close.png")}
                        style={{
                            width: 20,
                            height: 20,
@@ -67,6 +81,16 @@ export default class SignInScreen extends Component {
                            right: 10,
                            top: 15
                        }}/>}
+
+                {this.state.Cross2 &&
+                <Image resizeMode={"contain"} source={require("../../../assets/images/close.png")}
+                       style={{
+                           width: 20,
+                           height: 20,
+                           position: "absolute",
+                           right: 10,
+                           top: 15
+                       }}/>}
             </View>
             <View style={{height: 0.5, backgroundColor: "#52525D", marginStart: 25, marginEnd: 25,}}></View>
         </View>;
@@ -84,21 +108,36 @@ export default class SignInScreen extends Component {
             console.log("Email is Correct");
             return true;
         }
-    }
+    };
 
     checkPassword(text) {
         if (text.length >= 8 && text.length <= 12) {
-            this.setState({showIconLeftpass: true})
-        }else {
+            this.setState({showIconLeftpass: true});
+            this.setState({Cross2:false})
+        }else if(text.length===0){
             this.setState({showIconLeftpass: false})
+            this.setState({Cross2:true})
+        }
+        else{
+            this.setState({showIconLeftpass: false})
+            this.setState({Cross2:true})
+
+
         }
     }
 
     checkEmail(email) {
         if (this.validate(email)) {
-            this.setState({showIconLeftEmail: true})
-        } else {
+            this.setState({showIconLeftEmail: true});
+            this.setState({Cross1:false})
+        }else if(email.length===0){
             this.setState({showIconLeftEmail: false})
+            this.setState({Cross1:true})
+        }
+
+        else {
+            this.setState({showIconLeftEmail: false});
+            this.setState({Cross1:true})
         }
 
     }

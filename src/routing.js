@@ -16,7 +16,7 @@ import {
     SignInProvider,
     ResetPassword,
     PhoneNumber,
-    VerifyPhoneNo
+ 
 
 } from './containers';
 
@@ -37,7 +37,6 @@ const AuthStack = createStackNavigator({
     SignInProvider:SignInProvider,
     ResetPassword:ResetPassword,
     PhoneNumber:PhoneNumber,
-    VerifyPhoneNo:VerifyPhoneNo
 
 
 }, {
