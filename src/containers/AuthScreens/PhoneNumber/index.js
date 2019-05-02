@@ -158,7 +158,7 @@ export default class PhoneNumber extends Component {
 
                         </View>
 
-                            <TouchableOpacity 
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate("VerifyPhoneNo")}
                                               style={{justifyContent: "center", alignItems: "center", marginTop: 25}}>
                                 <View style={{
                                     flexDirection: "column",

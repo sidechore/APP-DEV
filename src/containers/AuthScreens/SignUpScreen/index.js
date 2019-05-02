@@ -181,7 +181,6 @@ export default class SignUpScreen extends Component {
                     onChangeText={(text) => this.checkPassword(text)}
                     textContentType={"Email"}
                     placeholder={item.hintText}
-                    secureTextEntry={true}
                     keyboardType={"email-address"}
                 />
 
@@ -216,7 +215,6 @@ export default class SignUpScreen extends Component {
                     style={{height: 50, width: "100%"}}
                     onChangeText={(text) => this.cnfrPassword(text)}
                     textContentType={"Email"}
-                    secureTextEntry={true}
                     placeholder={item.hintText}
                     keyboardType={"email-address"}
                 />

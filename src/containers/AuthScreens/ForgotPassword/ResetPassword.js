@@ -32,7 +32,6 @@ export default class ResetPassword extends Component {
                     textContentType={"Email"}
                     placeholder={item.hintText}
                     keyboardType={"email-address"}
-                    secureTextEntry={true}
                 />
 
                 {this.state.showIconLeftpass1&&
@@ -67,7 +66,6 @@ export default class ResetPassword extends Component {
                     onChangeText={(text) => this.cnfrPassword(text)}
                     textContentType={"Email"}
                     placeholder={item.hintText}
-                    secureTextEntry={true}
                     keyboardType={"email-address"}
                 />
 

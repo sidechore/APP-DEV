@@ -16,7 +16,9 @@ import {
     SignInProvider,
     ResetPassword,
     PhoneNumber,
- 
+    VerifyPhoneNo,
+    EnableNotfi,
+    SelectLocation
 
 } from './containers';
 
@@ -37,6 +39,9 @@ const AuthStack = createStackNavigator({
     SignInProvider:SignInProvider,
     ResetPassword:ResetPassword,
     PhoneNumber:PhoneNumber,
+    VerifyPhoneNo:VerifyPhoneNo,
+    EnableNotfi:EnableNotfi,
+    SelectLocation:SelectLocation
 
 
 }, {

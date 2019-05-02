@@ -4,10 +4,9 @@ import { Colors, Metric } from '../../../themes';
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
-
     },
     backgroundImg: {
-        resizeMode: 'stretch',
+        resizeMode: 'cover',
         height:520
     },
     mainContainer: {
