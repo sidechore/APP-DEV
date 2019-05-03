@@ -10,6 +10,8 @@ import PhoneNumber from './AuthScreens/PhoneNumber';
 import VerifyPhoneNo from './AuthScreens/PhoneNumber/VerifyPhoneNo';
 import EnableNotfi from './AuthScreens/PhoneNumber/EnableNotfi';
 import SelectLocation from './AuthScreens/SelectLocation';
+import StayUpToDate from './AuthScreens/SelectLocation/StayUpToDate';
+
 export {
     SelectScreen,
     SignInScreen,
@@ -22,7 +24,9 @@ export {
     PhoneNumber,
     VerifyPhoneNo,
     EnableNotfi,
-    SelectLocation
+    SelectLocation,
+    StayUpToDate,
+
 
 
 };

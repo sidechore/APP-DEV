@@ -4,6 +4,7 @@ import {SafeAreaView} from 'react-navigation';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {styles} from './styles';
 import {Header, Image} from "react-native-elements";
+import RBSheet from "react-native-raw-bottom-sheet";
 
 import {checkEmail} from '../../../utils';
 import {Colors} from "../../../themes";
@@ -74,6 +75,15 @@ export default class SelectLocation extends Component {
         </View>;
     }
 
+    renderRowInputSheet(item) {
+        return <View style={{flexDirection: "column", justifyContent: "center", alignItems: "center", width: "100%"}}>
+            <View style={{height: 1.5, width: "100%", backgroundColor: "#DADADA", marginTop: 15}}></View>
+            <TouchableOpacity style={{marginTop: 10,}} onPress={() => this.props.navigation.navigate("StayUpToDate")}>
+                <Text style={{color: "red", fontSize: 15}}>
+                    {item.text}
+                </Text></TouchableOpacity>
+        </View>
+    }
 
     checkLocation(Text) {
         if (Text.length === 0) {
@@ -117,7 +127,8 @@ export default class SelectLocation extends Component {
 
                 />
 
-                <ScrollView style={{backgroundColor:"#F3F3F3"}}>
+                <ScrollView>
+
                     <View style={{
                         flexDirection: "column",
                         width: "100%",
@@ -154,13 +165,54 @@ export default class SelectLocation extends Component {
                                    style={{resizeMode: "contain", width: 19, height: 19}}
 
                             />
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={() => {
+                                this.RBSheet.open();
+                            }}>
                                 <Text style={{
                                     color: "red",
                                     marginStart: 10,
                                     fontSize: 15
                                 }}>{"Use Current Location"}</Text>
                             </TouchableOpacity>
+
+                            <RBSheet
+                                ref={ref => {
+                                    this.RBSheet = ref;
+                                }}
+                                animationType="fade"
+                                duration={500}
+                                height={310}
+                                customStyles={{container: {alignItems: "center"}}}>
+                                <View style={{
+                                    flexDirection: "column", width: "100%", alignItems: "center",
+                                    marginTop: 20,
+                                    marginBottom: 20
+                                }}>
+                                    <Text style={{
+                                        fontSize: 16,
+                                        color: "black"
+                                    }}>{"We do not have any service providers"}</Text>
+                                    <Text style={{
+                                        fontSize: 16,
+                                        color: "black"
+                                    }}>{"availaible in this area. Would you like us to"}</Text>
+                                    <Text style={{
+                                        fontSize: 16,
+                                        color: "black"
+                                    }}>{"notify you when SideChore becomes"}</Text>
+                                    <Text style={{fontSize: 16, color: "black"}}>{"availaible?"}</Text>
+                                    {this.renderRowInputSheet({
+                                        text: "Notify me",
+                                    })}
+                                    {this.renderRowInputSheet({
+                                        text: "Browse the app",
+                                    })}
+                                    {this.renderRowInputSheet({
+                                        text: "Select another location",
+                                    })}
+                                </View>
+                            </RBSheet>
+
 
                         </View>
 
@@ -184,6 +236,7 @@ export default class SelectLocation extends Component {
                             </View>
                         </TouchableOpacity>
                     </View>
+
 
 
                 </ScrollView>
