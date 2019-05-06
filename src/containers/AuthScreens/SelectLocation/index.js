@@ -19,7 +19,6 @@ export default class SelectLocation extends Component {
             showIconLeftEmail: false,
             Cross1: false
         };
-
     }
 
     renderRowInputEmail(item) {
@@ -34,7 +33,6 @@ export default class SelectLocation extends Component {
                     placeholder={item.hintText}
                     keyboardType={"email-address"}
                 />
-
                 {this.state.showIconLeftEmail &&
                 <Image resizeMode={"contain"} source={require("../../../assets/images/checked.png")}
                        style={{
@@ -45,7 +43,6 @@ export default class SelectLocation extends Component {
                            top: 15
                        }}/>}
 
-
                 {this.state.Cross1 &&
                 <Image resizeMode={"contain"} source={require("../../../assets/images/close.png")}
                        style={{
@@ -55,30 +52,27 @@ export default class SelectLocation extends Component {
                            right: 10,
                            top: 15
                        }}/>}
-
                 <TouchableOpacity style={{
                     flexDirection: "row", justifyContent: "center",
                     alignItems: "center",
                     marginTop: 30,
                     width: "30%"
                 }}>
-
                     <Text style={{color: "red", fontSize: 15}}>Cancel</Text>
-
                 </TouchableOpacity>
-
             </View>
             <View
                 style={{height: 0.5, width: "60%", backgroundColor: "#52525D", marginStart: 25, marginEnd: 25,}}></View>
-
-
         </View>;
     }
 
     renderRowInputSheet(item) {
         return <View style={{flexDirection: "column", justifyContent: "center", alignItems: "center", width: "100%"}}>
             <View style={{height: 1.5, width: "100%", backgroundColor: "#DADADA", marginTop: 15}}></View>
-            <TouchableOpacity style={{marginTop: 10,}} onPress={() => this.props.navigation.navigate("StayUpToDate")}>
+            <TouchableOpacity style={{marginTop: 10,}} onPress={() => {
+                this.RBSheet.close();
+                this.props.navigation.navigate("StayUpToDate")
+            }}>
                 <Text style={{color: "red", fontSize: 15}}>
                     {item.text}
                 </Text></TouchableOpacity>
@@ -93,20 +87,16 @@ export default class SelectLocation extends Component {
             this.setState({showIconLeftEmail: true});
             this.setState({Cross1: false})
         }
-
     }
 
     render() {
         return (
             <View style={styles.container}>
-
-
                 <Header
                     statusBarProps={{barStyle: "light-content"}}
                     barStyle="light-content" // or directly
                     style={{backgroundColor: "white"}}
                     outerContainerStyles={{backgroundColor: "white"}}
-
                     centerComponent={{
                         text: "Select a Location",
                         style: {fontWeight: "bold", color: "black", fontSize: 18}
@@ -119,16 +109,10 @@ export default class SelectLocation extends Component {
                         <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
                             <Image source={require("../../../assets/images/arrowback.png")} style={{
                                 marginStart: 10, height: 14, width: 14, resizeMode: "contain"
-
-
                             }}/></TouchableOpacity>
                     }
-
-
                 />
-
                 <ScrollView>
-
                     <View style={{
                         flexDirection: "column",
                         width: "100%",
@@ -154,16 +138,13 @@ export default class SelectLocation extends Component {
                     <View style={{width: "100%", height: 250, backgroundColor: "white",}}>
                         {this.renderRowInputEmail({
                             hintText: "Enter a Location",
-
                         })}
-
                         <View style={{
                             flexDirection: "row", width: "100%",
                             marginStart: 30, marginTop: 40
                         }}>
                             <Image source={require("../../../assets/images/pin.png")}
                                    style={{resizeMode: "contain", width: 19, height: 19}}
-
                             />
                             <TouchableOpacity onPress={() => {
                                 this.RBSheet.open();
@@ -174,7 +155,6 @@ export default class SelectLocation extends Component {
                                     fontSize: 15
                                 }}>{"Use Current Location"}</Text>
                             </TouchableOpacity>
-
                             <RBSheet
                                 ref={ref => {
                                     this.RBSheet = ref;
@@ -212,11 +192,7 @@ export default class SelectLocation extends Component {
                                     })}
                                 </View>
                             </RBSheet>
-
-
                         </View>
-
-
                         <TouchableOpacity onPress={() => this.props.navigation.navigate("ResetPassword")}
                                           style={{justifyContent: "center", alignItems: "center", marginTop: 35}}>
                             <View style={{
@@ -227,23 +203,13 @@ export default class SelectLocation extends Component {
                                 justifyContent: "center",
                                 alignItems: "center",
                                 borderRadius: 7
-
-
                             }}>
                                 <Text style={{color: "white", fontSize: 18}}>{"Select"}</Text>
-
-
                             </View>
                         </TouchableOpacity>
                     </View>
-
-
-
                 </ScrollView>
-
-
             </View>
-
         )
 
 

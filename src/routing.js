@@ -1,5 +1,5 @@
 import React from "react";
-import {StyleSheet, Image} from "react-native";
+import {StyleSheet, Image,} from "react-native";
 import colors from "./themes/colors";
 import {
     createAppContainer,
@@ -25,6 +25,7 @@ import {
 
 } from './containers';
 import JobSearch from './containers/Customer/Home';
+import AdditionalJobDetails from './containers/Customer/Home/AdditionalJobDetails';
 
 const TabNavigator = createBottomTabNavigator(
     {
@@ -106,7 +107,8 @@ const AuthStack = createStackNavigator({
     SelectLocation:SelectLocation,
     StayUpToDate:StayUpToDate,
     JobSearch:JobSearch,
-    TabNavigator:TabNavigator
+    TabNavigator:TabNavigator,
+    AdditionalJobDetails:AdditionalJobDetails,
 
 
 }, {

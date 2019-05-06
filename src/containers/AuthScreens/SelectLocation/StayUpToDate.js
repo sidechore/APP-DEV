@@ -21,12 +21,12 @@ export default class StayUpToDate extends Component {
             showIconLeftpass2: false,
             showIconLeftpass3: false,
             showIconLeftpass4: false,
-            Cross1:false,
-            Cross2:false,
-            Cross3:false,
-            Cross4:false,
-            Password:'',
-            Cpassword:"",
+            Cross1: false,
+            Cross2: false,
+            Cross3: false,
+            Cross4: false,
+            Password: '',
+            Cpassword: "",
 
         };
     }
@@ -34,15 +34,13 @@ export default class StayUpToDate extends Component {
     checkEmail(email) {
         if (this.validate(email)) {
             this.setState({showIconLeftpass1: true});
-            this.setState({Cross1:false})
-        }else if(email.length===0){
+            this.setState({Cross1: false})
+        } else if (email.length === 0) {
             this.setState({showIconLeftpass1: false})
-            this.setState({Cross1:true})
-        }
-
-        else {
+            this.setState({Cross1: true})
+        } else {
             this.setState({showIconLeftEmail1: false});
-            this.setState({Cross1:true})
+            this.setState({Cross1: true})
         }
 
     }
@@ -50,14 +48,13 @@ export default class StayUpToDate extends Component {
     checklengthCity(text) {
         if (text.length >= 3) {
             this.setState({showIconLeftpass2: true});
-            this.setState({Cross2:false})
-        }else if(text.length===0){
+            this.setState({Cross2: false})
+        } else if (text.length === 0) {
             this.setState({showIconLeftpass2: false})
-            this.setState({Cross2:true})
-        }
-        else{
+            this.setState({Cross2: true})
+        } else {
             this.setState({showIconLeftpass2: false})
-            this.setState({Cross2:true})
+            this.setState({Cross2: true})
 
 
         }
@@ -66,29 +63,28 @@ export default class StayUpToDate extends Component {
     checklengthState(text) {
         if (text.length >= 3) {
             this.setState({showIconLeftpass3: true});
-            this.setState({Cross3:false})
-        }else if(text.length===0){
+            this.setState({Cross3: false})
+        } else if (text.length === 0) {
             this.setState({showIconLeftpass3: false})
-            this.setState({Cross3:true})
-        }
-        else{
+            this.setState({Cross3: true})
+        } else {
             this.setState({showIconLeftpass3: false})
-            this.setState({Cross3:true})
+            this.setState({Cross3: true})
 
 
         }
     }
+
     Zip(text) {
         if (text.length >= 5 && text.length <= 6) {
             this.setState({showIconLeftpass4: true});
-            this.setState({Cross4:false})
-        }else if(text.length===0){
+            this.setState({Cross4: false})
+        } else if (text.length === 0) {
             this.setState({showIconLeftpass4: false})
-            this.setState({Cross4:true})
-        }
-        else{
+            this.setState({Cross4: true})
+        } else {
             this.setState({showIconLeftpass4: false})
-            this.setState({Cross4:true})
+            this.setState({Cross4: true})
         }
     }
 
@@ -106,12 +102,13 @@ export default class StayUpToDate extends Component {
             return true;
         }
     };
+
     renderRowInputEmail(item) {
-        return <View style={{flexDirection: 'column', width: "100%",justifyContent:'center',alignItems:'center'}}>
-            <View style={{flexDirection: "row",marginTop: 10,}}>
+        return <View style={{flexDirection: 'column', width: "100%", justifyContent: 'center', alignItems: 'center'}}>
+            <View style={{flexDirection: "row", marginTop: 10,}}>
 
                 <TextInput
-                    style={{height: 50, width: "100%",textAlign: "center"}}
+                    style={{height: 50, width: "100%", textAlign: "center"}}
                     onChangeText={(text) => this.checkEmail(text)}
                     textContentType={"Email"}
                     placeholder={item.hintText}
@@ -140,26 +137,31 @@ export default class StayUpToDate extends Component {
                        }}/>}
 
 
-
             </View>
             <View
-                style={{height: 0.5, width: "100%", backgroundColor: "#52525D", marginStart: 25, marginEnd: 25,}}></View>
+                style={{
+                    height: 0.5,
+                    width: "90%",
+                    backgroundColor: "#52525D",
+                    marginStart: 25,
+                    marginEnd: 25,
+                }}></View>
 
 
         </View>;
     }
+
     renderRowInputCity(item) {
-        return <View style={{flexDirection: 'column', width: "100%",justifyContent:'center',alignItems:'center'}}>
-            <View style={{flexDirection: "row",marginTop: 10,}}>
+        return <View style={{flexDirection: 'column', width: "100%", justifyContent: 'center', alignItems: 'center'}}>
+            <View style={{flexDirection: "row", marginTop: 10,}}>
 
                 <TextInput
-                    style={{height: 50, width: "100%",textAlign: "center"}}
+                    style={{height: 50, width: "100%", textAlign: "center"}}
                     onChangeText={(text) => this.checklengthCity(text)}
                     textContentType={"Email"}
                     placeholder={item.hintText}
                     keyboardType={"email-address"}
                 />
-
                 {this.state.showIconLeftpass2 &&
                 <Image resizeMode={"contain"} source={require("../../../assets/images/checked.png")}
                        style={{
@@ -169,8 +171,6 @@ export default class StayUpToDate extends Component {
                            right: 10,
                            top: 15
                        }}/>}
-
-
                 {this.state.Cross2 &&
                 <Image resizeMode={"contain"} source={require("../../../assets/images/close.png")}
                        style={{
@@ -180,28 +180,29 @@ export default class StayUpToDate extends Component {
                            right: 10,
                            top: 15
                        }}/>}
-
-
-
             </View>
             <View
-                style={{height: 0.5, width: "100%", backgroundColor: "#52525D", marginStart: 25, marginEnd: 25,}}></View>
-
-
+                style={{
+                    height: 0.5,
+                    width: "90%",
+                    backgroundColor: "#52525D",
+                    marginStart: 25,
+                    marginEnd: 25,
+                }}></View>
         </View>;
     }
+
     renderRowInputState(item) {
-        return <View style={{flexDirection: 'column', width: "100%",justifyContent:'center',alignItems:'center'}}>
-            <View style={{flexDirection: "row",marginTop: 10,}}>
+        return <View style={{flexDirection: 'column', width: "100%", justifyContent: 'center', alignItems: 'center'}}>
+            <View style={{flexDirection: "row", marginTop: 10,}}>
 
                 <TextInput
-                    style={{height: 50, width: "100%",textAlign: "center"}}
+                    style={{height: 50, width: "100%", textAlign: "center"}}
                     onChangeText={(text) => this.checklengthState(text)}
                     textContentType={"Email"}
                     placeholder={item.hintText}
                     keyboardType={"email-address"}
                 />
-
                 {this.state.showIconLeftpass3 &&
                 <Image resizeMode={"contain"} source={require("../../../assets/images/checked.png")}
                        style={{
@@ -211,8 +212,6 @@ export default class StayUpToDate extends Component {
                            right: 10,
                            top: 15
                        }}/>}
-
-
                 {this.state.Cross3 &&
                 <Image resizeMode={"contain"} source={require("../../../assets/images/close.png")}
                        style={{
@@ -222,28 +221,29 @@ export default class StayUpToDate extends Component {
                            right: 10,
                            top: 15
                        }}/>}
-
-
-
             </View>
             <View
-                style={{height: 0.5, width: "100%", backgroundColor: "#52525D", marginStart: 25, marginEnd: 25,}}></View>
-
-
+                style={{
+                    height: 0.5,
+                    width: "90%",
+                    backgroundColor: "#52525D",
+                    marginStart: 25,
+                    marginEnd: 25,
+                }}></View>
         </View>;
     }
+
     renderRowInputZip(item) {
-        return <View style={{flexDirection: 'column', width: "100%",justifyContent:'center',alignItems:'center'}}>
-            <View style={{flexDirection: "row",marginTop: 10,}}>
+        return <View style={{flexDirection: 'column', width: "100%", justifyContent: 'center', alignItems: 'center'}}>
+            <View style={{flexDirection: "row", marginTop: 10,}}>
 
                 <TextInput
-                    style={{height: 50, width: "100%",textAlign: "center"}}
+                    style={{height: 50, width: "100%", textAlign: "center"}}
                     onChangeText={(text) => this.Zip(text)}
                     textContentType={"Email"}
                     placeholder={item.hintText}
                     keyboardType={"email-address"}
                 />
-
                 {this.state.showIconLeftpass4 &&
                 <Image resizeMode={"contain"} source={require("../../../assets/images/checked.png")}
                        style={{
@@ -253,8 +253,6 @@ export default class StayUpToDate extends Component {
                            right: 10,
                            top: 15
                        }}/>}
-
-
                 {this.state.Cross4 &&
                 <Image resizeMode={"contain"} source={require("../../../assets/images/close.png")}
                        style={{
@@ -264,28 +262,26 @@ export default class StayUpToDate extends Component {
                            right: 10,
                            top: 15
                        }}/>}
-
-
-
             </View>
             <View
-                style={{height: 0.5, width: "100%", backgroundColor: "#52525D", marginStart: 25, marginEnd: 25,}}></View>
-
-
+                style={{
+                    height: 0.5,
+                    width: "90%",
+                    backgroundColor: "#52525D",
+                    marginStart: 25,
+                    marginEnd: 25,
+                }}></View>
         </View>;
     }
 
     render() {
         return (
             <View style={styles.container}>
-
-
                 <Header
                     statusBarProps={{barStyle: "light-content"}}
                     barStyle="light-content" // or directly
                     style={{backgroundColor: "white"}}
                     outerContainerStyles={{backgroundColor: "white"}}
-
                     centerComponent={{
                         text: "Stay up to date",
                         style: {fontWeight: "bold", color: "black", fontSize: 18}
@@ -302,12 +298,9 @@ export default class StayUpToDate extends Component {
 
                             }}/></TouchableOpacity>
                     }
-
-
                 />
 
                 <ScrollView>
-
                     <View style={{
                         flexDirection: "column",
                         width: "100%",
@@ -315,49 +308,55 @@ export default class StayUpToDate extends Component {
                         justifyContent: "center",
                         alignItems: "center"
                     }}>
-
                         <View style={{
                             flexDirection: "column", justifyContent: "center",
                             alignItems: "center", color: "black",
                         }}>
                             <Text style={{color: "black"}}>{"Enter your contact information below to "}</Text>
                             <Text style={{color: "black"}}>{"receive news on when SideChore becomes"}</Text>
-                                <Text style={{color: "black"}}>{"available in you area."}
+                            <Text style={{color: "black"}}>{"available in you area."}
                             </Text>
                         </View>
                     </View>
-   <View style={{backgroundColor:"white",width:"100%",justifyContent:"center",alignItems:"center"}}   >
-       {this.renderRowInputEmail({
-           hintText: "Email",
-       })}
-       {this.renderRowInputCity({
-           hintText: "City",
-       })}
-       {this.renderRowInputState({
-           hintText: "State",
-       })}
-       {this.renderRowInputZip({
-           hintText: "Zip",
-       })}
-       <TouchableOpacity onPress={() => this.props.navigation.navigate("TabNavigator")}
-                         style={{justifyContent: "center", alignItems: "center", marginTop: 35,   width: "85%", backgroundColor: "#FA2021",
-                             height: 50,  borderRadius: 7,marginBottom:20}}>
-           <View style={{
-               flexDirection: "column",
-               justifyContent: "center",
-               alignItems: "center",}}>
-               <Text style={{color: "white", fontSize: 18}}>{"Opt In"}</Text>
-           </View>
-       </TouchableOpacity>
-    </View></ScrollView>
-
-
+                    <View style={{
+                        backgroundColor: "white",
+                        width: "100%",
+                        justifyContent: "center",
+                        alignItems: "center"
+                    }}>
+                        {this.renderRowInputEmail({
+                            hintText: "Email",
+                        })}
+                        {this.renderRowInputCity({
+                            hintText: "City",
+                        })}
+                        {this.renderRowInputState({
+                            hintText: "State",
+                        })}
+                        {this.renderRowInputZip({
+                            hintText: "Zip",
+                        })}
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate("TabNavigator")}
+                                          style={{
+                                              justifyContent: "center",
+                                              alignItems: "center",
+                                              marginTop: 35,
+                                              width: "85%",
+                                              backgroundColor: "#FA2021",
+                                              height: 50,
+                                              borderRadius: 7,
+                                              marginBottom: 20
+                                          }}>
+                            <View style={{
+                                flexDirection: "column",
+                                justifyContent: "center",
+                                alignItems: "center",
+                            }}>
+                                <Text style={{color: "white", fontSize: 18}}>{"Opt In"}</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View></ScrollView>
             </View>
-
         )
-
-
     }
-
-
 }

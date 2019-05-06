@@ -7,15 +7,12 @@ import {styles} from './styles';
 
 export default class InitialScreen extends Component {
 
-
-
     render() {
-
         return (
             <View style={{width:"100%",height:"100%",backgroundColor:"#E9E9E9"}}>
                 <ScrollView>
                     <View style={[styles.container,{flexDirection:"column"}]}>
-                        <View style={{width: "100%",backgroundColor:"yellow"}}>
+                        <View style={{width: "100%",marginBottom:200}}>
                             <ImageBackground
                                 source={require('../../../assets/images/opening.png')}
                                 style={styles.backgroundImg}
@@ -80,8 +77,6 @@ export default class InitialScreen extends Component {
                                             <Text style={{color: "white", fontWeight: "bold"}}>{"Sign Up"}</Text>
                                         </View>
                                     </TouchableOpacity>
-
-
                                 </View>
                             </ImageBackground>
                         </View>
@@ -136,12 +131,6 @@ export default class InitialScreen extends Component {
                     </View>
                 </View>
             </View>
-
-
-
         )
-
-
     }
-
 }

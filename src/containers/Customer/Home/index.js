@@ -25,7 +25,6 @@ export default class JobSearch extends Component {
                     heading: "Moving",
                     Text1: "Furniture | Boxes",
                     Text2: "Bedframe"
-
                 },
                 {
                     id: 2,
@@ -33,16 +32,13 @@ export default class JobSearch extends Component {
                     heading: "Furniture Assembly",
                     Text1: "Bed | Dresser | Table",
                     Text2: "Grill | Bookcase | Desk"
-
                 },
-
                 {
                     id: 3,
                     imgpath: require("../../../assets/images/listimg3.png"),
                     heading: "Mounting",
                     Text1: "Tv Mount | Mirror",
                     Text2: "Curtain Rods | Signs"
-
                 },
                 {
                     id: 4,
@@ -50,7 +46,6 @@ export default class JobSearch extends Component {
                     heading: "Home Repair",
                     Text1: "Doors | Flooring",
                     Text2: "Light Fixtures"
-
                 },
                 {
                     id: 5,
@@ -58,7 +53,6 @@ export default class JobSearch extends Component {
                     heading: "Cleaning",
                     Text1: "Basic or Deep Cleaning",
                     Text2: "Entire House"
-
                 },
                 {
                     id: 6,
@@ -66,31 +60,22 @@ export default class JobSearch extends Component {
                     heading: "Junk Removal",
                     Text1: "Haul off boxes",
                     Text2: "Standard pickup load"
-
                 },
-
-
             ]
         };
-
     }
 
     checkLocation(Text) {
         if (Text.length === 0) {
-            this.setState({showIconLeftEmail: false})
-            this.setState({Cross1: true})
+            this.setState({showIconLeftEmail: false, Cross1: true})
         } else {
-            this.setState({showIconLeftEmail: true});
-            this.setState({Cross1: false})
+            this.setState({showIconLeftEmail: true, Cross1: false});
         }
-
     }
-
 
     renderRowInputEmail(item) {
         return <View style={{flexDirection: 'column', width: "100%"}}>
             <View style={{flexDirection: "row", marginEnd: 10,}}>
-
                 <TextInput
                     style={{height: 50, width: "100%", marginStart: 10}}
                     onChangeText={(text) => this.checkLocation(text)}
@@ -98,7 +83,6 @@ export default class JobSearch extends Component {
                     placeholder={item.hintText}
                     keyboardType={"email-address"}
                 />
-
                 {this.state.showIconLeftEmail &&
                 <Image resizeMode={"contain"} source={require("../../../assets/images/checked.png")}
                        style={{
@@ -108,8 +92,6 @@ export default class JobSearch extends Component {
                            right: 10,
                            top: 15
                        }}/>}
-
-
                 {this.state.Cross1 &&
                 <Image resizeMode={"contain"} source={require("../../../assets/images/close.png")}
                        style={{
@@ -119,20 +101,20 @@ export default class JobSearch extends Component {
                            right: 10,
                            top: 15
                        }}/>}
-
-
             </View>
-
-
         </View>;
     }
 
-
     render() {
         return (<View style={styles.container}>
-
-                <View style={{flexDirection: "row", width: "100%", backgroundColor: "white",}}>
-                    <View style={{flexDirection: "row", width: "70%", color: "yellow", alignItems: "center"}}>
+                <View style={{flexDirection: "row", width: "100%", backgroundColor: "white"}}>
+                    <View style={{
+                        flexDirection: "row",
+                        width: "70%",
+                        color: "yellow",
+                        alignItems: "center",
+                        marginTop: 20
+                    }}>
                         <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
                             <Image source={require("../../../assets/images/pin.png")} style={{
                                 marginTop: 20,
@@ -141,16 +123,18 @@ export default class JobSearch extends Component {
                                 height: 20,
                                 width: 20,
                                 resizeMode: "contain"
-
-
                             }}/></TouchableOpacity>
                         {this.renderRowInputEmail({
                             hintText: "Raleigh/Durham",
-
                         })}
-
                     </View>
-                    <View style={{flexDirection: "row", width: "30%", color: "red", justifyContent: "center"}}>
+                    <View style={{
+                        flexDirection: "row",
+                        width: "30%",
+                        color: "red",
+                        justifyContent: "center",
+                        marginTop: 20
+                    }}>
                         <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
                             <Image source={require("../../../assets/images/search.png")} style={{
                                 marginTop: 20,
@@ -159,22 +143,23 @@ export default class JobSearch extends Component {
                                 height: 20,
                                 width: 20,
                                 resizeMode: "contain"
-
-
                             }}/></TouchableOpacity>
                     </View>
-
                 </View>
                 <View style={{
                     flexDirection: "column", marginTop: 20
                 }}>
-                    <Text style={{color: "black", fontSize: 20, marginStart: 20, marginEnd: 20,}}>What do you need
-                        done?</Text>
+                    <Text style={{
+                        color: "black",
+                        fontSize: 20,
+                        marginStart: 20,
+                        marginEnd: 20,
+                    }}>{"What do you need done?"}</Text>
                     <FlatList
-                        style={{width: "100%", marginBottom: 100}}
+                        style={{width: "100%", marginBottom: 100, marginTop: 10}}
                         data={this.state.ListData}
                         keyExtractor={item => item.id}
-                        showsVerticalScrollIndicator={true}
+                        showsVerticalScrollIndicator={false}
                         numColumns={2}
                         removeClippedSubviews={false}
                         renderItem={({item}) =>
@@ -187,29 +172,27 @@ export default class JobSearch extends Component {
                                     marginTop: 10,
                                     justifyContent: "center"
                                 }}>
-                                <View style={{
-                                    backgroundColor: "white",
-                                    borderRadius: 10,
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    width: "100%"
-                                }}>
-                                    <Image source={item.imgpath} style={{
-                                        resizeMode: "contain", width: 100, height: 100, margin: 10,
-                                    }}/>
-                                </View>
+                                <TouchableOpacity
+                                    onPress={() => this.props.navigation.navigate("AdditionalJobDetails")}>
+                                    <View style={{
+                                        backgroundColor: "white",
+                                        borderRadius: 10,
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        width: "100%"
+                                    }}>
+                                        <Image source={item.imgpath} style={{
+                                            resizeMode: "contain", width: 100, height: 100, margin: 10,
+                                        }}/>
+                                    </View>
+                                </TouchableOpacity>
                                 <Text style={{color: "black", marginTop: 7}}>{item.heading}</Text>
                                 <Text style={{marginTop: 5}}>{item.Text1}</Text>
                                 <Text style={{marginTop: 0}}>{item.Text2}</Text>
                             </View>
                         }
-
                     />
-
-
                 </View>
-
-
             </View>
 
 
