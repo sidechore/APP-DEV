@@ -31,7 +31,7 @@ export default class InitialScreen extends Component {
                                 </View>
                                 <View style={{
                                     flexDirection: "column",
-                                    marginStart: 30, marginBottom: 20
+                                    marginStart: 20,marginEnd:20, marginBottom: 20
 
                                 }}>
                                     <View style={{flexDirection: 'row', width: "50%"}}>
@@ -40,8 +40,7 @@ export default class InitialScreen extends Component {
                                     <View style={{flexDirection: "row", width: "100%", marginTop: 40}}>
 
                                         <Text style={{color: "black"}}>
-                                            {"Triangle Assembly is a Lifestyle app designed for mobile users serves as Handyman and Home services platform."
-                                            }
+                                            {"SideChore is an on-demand platform that increases your productivity by taking on your odd jobs and home service needs."}
                                         </Text>
                                     </View>
                                     <TouchableOpacity

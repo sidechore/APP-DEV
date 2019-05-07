@@ -7,6 +7,9 @@ import * as Progress from 'react-native-progress';
 import SearchBar from "../../../components/JobDetails/SearchBar/index.js"
 import EndingAddress from "../../../components/JobDetails/EndingAddress/index.js"
 import JobDate from "../../../components/JobDetails/JobDate/index.js"
+import Vehicle from "../../../components/JobDetails/Vehicle/index.js"
+import JobSize from "../../../components/JobDetails/JobSize/index.js"
+import AddJob from "../../../components/JobDetails/AddJobDetails/index.js"
 
 let width = Math.round(Dimensions.get('window').width);
 console.log("ProgressWidth:-->" + width);
@@ -17,33 +20,85 @@ export default class AdditionalJobDetails extends Component {
         console.disableYellowBox = true;
         this.state = {
             HeaderText: "Starting Address",
-            ProgressStatus: 0.15,
+            ProgressStatus:0.15,
             StartingAddress: true,
             EndingAddress: false,
             JobDate: false,
+            Vehicle: false,
+            JobSize:false,
+            AddJob:false,
         }
     }
 
+
     NextStep1 = () => {
+
         if (this.state.ProgressStatus === 0.15) {
             this.setState(prevState => ({
                 ProgressStatus: prevState.ProgressStatus + 0.15,
                 StartingAddress: false,
                 EndingAddress: true,
                 JobDate: false,
-                HeaderText: "Ending Address"
+                HeaderText: "Ending Address",
+                Vehicle: false,
+                JobSize:false,
             }));
         }
-        if (this.state.ProgressStatus === 0.3) {
+      else  if (this.state.ProgressStatus === 0.3) {
             this.setState(prevState => ({
-                ProgressStatus: prevState.ProgressStatus + 0.15,
+                ProgressStatus: prevState.ProgressStatus + 0.1,
                 StartingAddress: false,
                 EndingAddress: false,
                 JobDate: true,
-                HeaderText: "Job Date"
+                HeaderText: "Job Date",
+                Vehicle: false,
+                JobSize:false,
             }));
         }
-    };
+
+      else if(this.state.ProgressStatus === 0.4){
+            this.setState(prevState => ({
+                ProgressStatus: prevState.ProgressStatus + 0.1,
+                StartingAddress: false,
+                EndingAddress: false,
+                JobDate: false,
+                HeaderText: "Job Size",
+                Vehicle:false,
+                JobSize:true,
+            }));
+
+
+        }
+
+      else  if (this.state.ProgressStatus === 0.5) {
+            this.setState(prevState => ({
+                ProgressStatus: prevState.ProgressStatus + 0.2,
+                StartingAddress: false,
+                EndingAddress: false,
+                JobDate: false,
+                Vehicle: true,
+                HeaderText: "Vehicle",
+                JobSize:false
+
+
+            }));
+        }
+        else  if (this.state.ProgressStatus === 0.7) {
+            this.setState(prevState => ({
+                ProgressStatus: prevState.ProgressStatus + 0.2,
+                StartingAddress: false,
+                EndingAddress: false,
+                JobDate: false,
+                Vehicle: false,
+                HeaderText: "Additional Job Details",
+                JobSize:false,
+                AddJob:true}));
+        }
+        else{
+
+            this.props.navigation.navigate("Tasker");
+        }};
+
 
     render() {
         return (
@@ -86,6 +141,10 @@ export default class AdditionalJobDetails extends Component {
                 {this.state.StartingAddress && <SearchBar/>}
                 {this.state.EndingAddress && <EndingAddress/>}
                 {this.state.JobDate && <JobDate/>}
+                {this.state.Vehicle && <Vehicle/>}
+                {this.state.JobSize && <JobSize/>}
+                {this.state.AddJob && <AddJob/>}
+
                 <TouchableOpacity style={{
                     backgroundColor: "red",
                     height: 50,

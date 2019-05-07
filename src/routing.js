@@ -26,6 +26,7 @@ import {
 } from './containers';
 import JobSearch from './containers/Customer/Home';
 import AdditionalJobDetails from './containers/Customer/Home/AdditionalJobDetails';
+import Tasker from  "./containers/Customer/Tasker";
 
 const TabNavigator = createBottomTabNavigator(
     {
@@ -109,6 +110,7 @@ const AuthStack = createStackNavigator({
     JobSearch:JobSearch,
     TabNavigator:TabNavigator,
     AdditionalJobDetails:AdditionalJobDetails,
+    Tasker:Tasker,
 
 
 }, {

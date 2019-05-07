@@ -18,6 +18,7 @@ export default class JobSearch extends Component {
             text: 'Useless Placeholder',
             showIconLeftEmail: false,
             Cross1: false,
+
             ListData: [
                 {
                     id: 1,
