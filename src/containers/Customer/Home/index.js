@@ -174,7 +174,12 @@ export default class JobSearch extends Component {
                                     justifyContent: "center"
                                 }}>
                                 <TouchableOpacity
-                                    onPress={() => this.props.navigation.navigate("AdditionalJobDetails")}>
+                                    onPress={() => {
+                                        if (item.heading === "Moving")
+                                            this.props.navigation.navigate("AdditionalJobDetails", {item: "Moving"});
+                                        else
+                                            this.props.navigation.navigate("AdditionalJobDetails", {item: "NotMoving"});
+                                    }}>
                                     <View style={{
                                         backgroundColor: "white",
                                         borderRadius: 10,

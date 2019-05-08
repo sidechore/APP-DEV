@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Text, View, TextInput} from 'react-native';
+import {Text, View, TextInput, FlatList} from 'react-native';
 import {Image} from "react-native-elements";
 
 export default class SearchBar extends Component {
@@ -8,10 +8,13 @@ export default class SearchBar extends Component {
         super(props);
         console.disableYellowBox = true;
         this.state = {
+            places: [],
             text: 'Useless Placeholder',
             showIconLeftEmail: false,
             Cross1: false
         };
+        this.state.places = [];
+        this.getPlaces = this.getPlaces.bind(this);
     }
 
     checkLocation(Text) {
@@ -22,6 +25,17 @@ export default class SearchBar extends Component {
             this.setState({showIconLeftEmail: true});
             this.setState({Cross1: false})
         }
+    }
+
+    getPlaces(txt) {
+        fetch('https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=' + txt + '&inputtype=textquery&fields=formatted_address,name,geometry&key=AIzaSyD5YuagFFL0m0IcjCIvbThN25l0m2jMm2w')
+            .then(response => response.json())
+            .then(response => {
+                console.log("Placess----> " + JSON.stringify(response));
+                let result = response.candidates;
+                this.setState({places: result});
+            })
+
     }
 
     renderRowInputEmail(item) {
@@ -36,29 +50,11 @@ export default class SearchBar extends Component {
                 }}/>
                 <TextInput
                     style={{height: 50, width: "100%", marginStart: 15}}
-                    onChangeText={(text) => this.checkLocation(text)}
+                    onChangeText={(text) => this.getPlaces(text)}
                     textContentType={"Email"}
                     placeholder={item.hintText}
                     keyboardType={"email-address"}
                 />
-                {this.state.showIconLeftEmail &&
-                <Image resizeMode={"contain"} source={require("../../../assets/images/checked.png")}
-                       style={{
-                           width: 20,
-                           height: 20,
-                           position: "absolute",
-                           right: 10,
-                           top: 15
-                       }}/>}
-                {this.state.Cross1 &&
-                <Image resizeMode={"contain"} source={require("../../../assets/images/close.png")}
-                       style={{
-                           width: 20,
-                           height: 20,
-                           position: "absolute",
-                           right: 10,
-                           top: 15
-                       }}/>}
             </View>
             <View style={{
                 height: 1,
@@ -81,21 +77,46 @@ export default class SearchBar extends Component {
                         })}
                     </View>
                 </View>
-                <View style={{
-                    flexDirection: "row", width: "85%", marginTop: 40,
-                    backgroundColor: "white",
-                    marginStart: 30,
-                    height: 70,
-                    borderRadius: 5,
-                }}>
-                    <View style={{width: "15%", alignItems: "center", justifyContent: "center", height: "100%"}}>
-                        <Image style={{flexDirection: "column", resizeMode: "contain", width: 25, height: 25}}
-                               source={require("../../../assets/images/pin.png")}/>
-                    </View>
-                    <View style={{flexDirection: "column", width: "80%", justifyContent: "center"}}>
-                        <Text style={{marginStart: 5, fontSize: 15, color: "black"}}>{"Atlanta, GA, USA"}</Text>
-                        <Text style={{marginStart: 5, fontSize: 13}}>{"Atlanta, GA, USA"}</Text>
-                    </View></View>
+
+                <FlatList style={{width: "100%",}}
+                          data={this.state.places}
+                          showsVerticalScrollIndicator={false}
+
+                          extraData={this.state.places}
+                          renderItem={({item}) =>
+                              <View style={{alignItems: "center", width: "100%"}}>
+
+                                  <View style={{
+                                      flexDirection: "row", width: "85%", marginTop: 20,
+                                      backgroundColor: "white",
+
+                                      height: 70,
+                                      borderRadius: 5,
+                                  }}>
+                                      <View style={{
+                                          width: "15%",
+                                          alignItems: "center",
+                                          justifyContent: "center",
+                                          height: "100%"
+                                      }}>
+                                          <Image style={{
+                                              flexDirection: "column",
+                                              resizeMode: "contain",
+                                              width: 25,
+                                              height: 25
+                                          }}
+                                                 source={require("../../../assets/images/pin.png")}/>
+                                      </View>
+                                      <View style={{flexDirection: "column", width: "80%", justifyContent: "center"}}>
+                                          <Text
+                                              style={{marginStart: 5, fontSize: 15, color: "black"}}>{item.name}</Text>
+                                          <Text style={{marginStart: 5, fontSize: 13}}>{item.formatted_address}</Text>
+                                      </View>
+                                  </View>
+                              </View>
+
+                          }/>
+
             </View>
 
         )

@@ -18,34 +18,30 @@ export default class Tasker extends Component {
             ListData: [
                 {
                     id: 1,
-                    imgpath: require("../../../assets/images/ppp.png"),
+                    imgpath: require("../../../assets/images/pimg1.png"),
                     heading: "Frances Z.",
                     Text1: "93% positive reviews",
                     Text2: "133 Tasks Completed ",
-                    para: "working as maintainanc Technicion for several year" +
-                        " i have assissted clients in residential properties" +
-                        "with putting together furniture shelving units " +
-                        " and appliances "
+                    Crown:false,
+                    para: "Working as maintainanc Technician for several year I have assissted clients in residential properties with putting together furniture shelving units and appliances ",
                 },
                 {
                     id: 2,
-                    imgpath: require("../../../assets/images/ppp.png"),
+                    imgpath: require("../../../assets/images/pimp2.png"),
                     heading: "Morgan G",
                     Text1: "93% positive reviews",
                     Text2: "133 Tasks Completed",
-                    para: "working as maintainanc Technicion for several year" +
-                        " i have assissted clients in residential properties" +
-                        "with putting together furniture shelving units " +
-                        " and appliances "
-
+                    Crown:true,
+                    para: "Working as maintainanc Technician for several year I have assissted clients in residential properties with putting together furniture shelving units and appliances ",
                 },
                 {
                     id: 3,
-                    imgpath: require("../../../assets/images/ppp.png"),
+                    imgpath: require("../../../assets/images/pimp3.png"),
                     heading: "Terrance B.",
                     Text1: "93% positive reviews",
                     Text2: "133 Tasks Completed",
-                },
+                    Crown:false,
+                    para: "Working as maintainanc Technician for several year I have assissted clients in residential properties with putting together furniture shelving units and appliances ",                },
 
             ]
         }
@@ -89,27 +85,23 @@ export default class Tasker extends Component {
                                       justifyContent: "center",
                                       alignItems: "center",
                                       marginTop: 25,
-                                      marginBottom: 25
+                                      marginBottom: 10
                                   }}>
                     <View style={{
                         backgroundColor: "black",
                         height: 50,
-                        width: 300,
+                        width: 350,
                         justifyContent: "center",
                         alignItems: "center",
                         borderRadius: 7
-
-
                     }}>
                         <Text style={{color: "white", fontSize: 15}}>{"Sort by: Number of Reviews"}</Text>
-
-
                     </View>
                 </TouchableOpacity>
 
 
             </View>
-            <FlatList style={{width: "100%",marginTop: 10,backgroundColor:"white"}}
+            <FlatList style={{width: "100%",}}
                       data={this.state.ListData}
                       keyExtractor={item => item.id}
                       showsVerticalScrollIndicator={false}
@@ -121,23 +113,65 @@ export default class Tasker extends Component {
                                   flexDirection: "column",
                                   width: "100%",
                                   marginBottom: 10,
-                                  marginStart: 20,
-                                  marginTop: 10,
-                                  justifyContent: "center",
+
+                                  marginTop: 5,
+
                                   backgroundColor: "white",
                               }}>
-                              <Image source={item.imgpath} style={{width:100,height:100,resizeMode:"contain"}}  />
-                              <View style={{flexDirection:"row"}}>
+                              <View style={{marginStart:30,flexDirection:"row",marginTop:20}}  >
+                              <Image source={item.imgpath} style={{width:70,height:70,resizeMode:"contain"}}  />
+                              <View style={{flexDirection:"column",marginStart:7}}>
 
-                                  <Text>{item.heading}</Text>
+                                  <Text style={{color:"black",fontWeight:"bold",fontSize:15}}  >{item.heading}</Text>
+                                  <View style={{flexDirection:"column",}} >
+                                      {item.Crown &&
+                                      <View style={{flexDirection: "row", alignItems: "center"}}>
+                                          <Image source={require("../../../assets/images/crown.png")}
+                                                 style={{resizeMode: "contain", height: 14, width: 14, marginEnd: 5}}/>
+                                          <Text style={{color: "red"}}>{"Elite Tasker"} </Text>
+
+                                      </View>
+                                      }
+                                      <Text style={{color:"#646464",size:8}}>{item.Text1}</Text>
+
+                                      <Text style={{color:"#646464",size:8}} >{item.Text2}</Text>
+                                  </View>
+
 
                               </View>
-                              <View style={{flexDirection:"column"}} >
-                                  <Text>{item.Text1}</Text>
-                                  <Text>{item.Text2}</Text>
+
+
+                              </View>
+                              <View stye={{flexDirection:"column",}} >
+                                  <Text style={{marginStart:35,marginEnd:20,marginTop:15,marginBottom:15,color:"black"}}   >{item.para}</Text>
+
+                                  <TouchableOpacity onPress={() => this.props.navigation.navigate("SelectLocation")}
+                                                    style={{
+                                                        justifyContent: "center",
+                                                        alignItems: "center",
+
+                                                        marginBottom: 25
+                                                    }}>
+                                      <View style={{
+                                          backgroundColor: "red",
+                                          height: 50,
+                                          width: 350,
+                                          justifyContent: "center",
+                                          alignItems: "center",
+                                          borderRadius: 7
+
+
+                                      }}>
+                                          <Text style={{color: "white", fontSize: 15}}>{"Select for 24$ / hr"}</Text>
+
+
+                                      </View>
+                                  </TouchableOpacity>
+
                               </View>
 
                           </View>
+
                       }/>
 
 

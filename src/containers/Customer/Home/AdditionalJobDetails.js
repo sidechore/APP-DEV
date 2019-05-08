@@ -17,87 +17,142 @@ console.log("ProgressWidth:-->" + width);
 export default class AdditionalJobDetails extends Component {
     constructor(props) {
         super(props);
+        const {navigation} = this.props;
+        const item = navigation.getParam('item');
+        console.log("itempassed--" + item);
         console.disableYellowBox = true;
         this.state = {
             HeaderText: "Starting Address",
-            ProgressStatus:0.15,
+            ProgressStatus: 0.15,
             StartingAddress: true,
             EndingAddress: false,
             JobDate: false,
             Vehicle: false,
-            JobSize:false,
-            AddJob:false,
+            JobSize: false,
+            AddJob: false,
+            JobItem: item,
+        }
+        if (this.state.JobItem === "Moving") {
+            console.log("itempassed--" + item);
+            this.setState({ProgresStatus: 0.15})
+        } else {
+            console.log("itempassed--" + item);
+            this.setState({ProgresStatus: 0.16})
         }
     }
 
 
     NextStep1 = () => {
+        if (this.state.JobItem === "Moving") {
+            if (this.state.StartingAddress ===true) {
+                this.setState(prevState => ({
+                    ProgressStatus: prevState.ProgressStatus + 0.14,
+                    StartingAddress: false,
+                    EndingAddress: true,
+                    JobDate: false,
+                    HeaderText: "Ending Address",
+                    Vehicle: false,
+                    JobSize: false,
+                }));
+            } else if (this.state.EndingAddress === true) {
+                this.setState(prevState => ({
+                    ProgressStatus: prevState.ProgressStatus + 0.14,
+                    StartingAddress: false,
+                    EndingAddress: false,
+                    JobDate: true,
+                    HeaderText: "Job Date",
+                    Vehicle: false,
+                    JobSize: false,
+                }));
+            } else if (this.state.JobDate === true) {
+                this.setState(prevState => ({
+                    ProgressStatus: prevState.ProgressStatus + 0.14,
+                    StartingAddress: false,
+                    EndingAddress: false,
+                    JobDate: false,
+                    HeaderText: "Job Size",
+                    Vehicle: false,
+                    JobSize: true,
+                }));
+            } else if (this.state.JobSize === true) {
+                this.setState(prevState => ({
+                    ProgressStatus: prevState.ProgressStatus + 0.14,
+                    StartingAddress: false,
+                    EndingAddress: false,
+                    JobDate: false,
+                    Vehicle: true,
+                    HeaderText: "Vehicle",
+                    JobSize: false
+                }));
+            } else if (this.state.Vehicle === true) {
+                this.setState(prevState => ({
+                    ProgressStatus: prevState.ProgressStatus + 0.14,
+                    StartingAddress: false,
+                    EndingAddress: false,
+                    JobDate: false,
+                    Vehicle: false,
+                    HeaderText: "Additional Job Details",
+                    JobSize: false,
+                    AddJob: true
+                }));
+            } else {
 
-        if (this.state.ProgressStatus === 0.15) {
-            this.setState(prevState => ({
-                ProgressStatus: prevState.ProgressStatus + 0.15,
-                StartingAddress: false,
-                EndingAddress: true,
-                JobDate: false,
-                HeaderText: "Ending Address",
-                Vehicle: false,
-                JobSize:false,
-            }));
+                this.props.navigation.navigate("Tasker");
+            }
+        } else {
+            if (this.state.StartingAddress === true) {
+                //console.log("itempassed--notmoving" + item);
+                this.setState(prevState => ({
+                    ProgressStatus: prevState.ProgressStatus + 0.16,
+                    StartingAddress: false,
+                    EndingAddress: false,
+                    JobDate: true,
+                    HeaderText: "Job Date",
+                    Vehicle: false,
+                    JobSize: false,
+                }));
+            } else if (this.state.JobDate === true) {
+                this.setState(prevState => ({
+                    ProgressStatus: prevState.ProgressStatus + 0.16,
+                    StartingAddress: false,
+                    EndingAddress: false,
+                    JobDate: false,
+                    HeaderText: "Job Size",
+                    Vehicle: false,
+                    JobSize: true,
+                }));
+
+
+            } else if (this.state.JobSize === true) {
+                this.setState(prevState => ({
+                    ProgressStatus: prevState.ProgressStatus + 0.16,
+                    StartingAddress: false,
+                    EndingAddress: false,
+                    JobDate: false,
+                    Vehicle: true,
+                    HeaderText: "Vehicle",
+                    JobSize: false
+
+
+                }));
+            } else if (this.state.Vehicle === true) {
+                this.setState(prevState => ({
+                    ProgressStatus: prevState.ProgressStatus + 0.16,
+                    StartingAddress: false,
+                    EndingAddress: false,
+                    JobDate: false,
+                    Vehicle: false,
+                    HeaderText: "Additional Job Details",
+                    JobSize: false,
+                    AddJob: true
+                }));
+            } else {
+
+                this.props.navigation.navigate("Tasker");
+            }
         }
-      else  if (this.state.ProgressStatus === 0.3) {
-            this.setState(prevState => ({
-                ProgressStatus: prevState.ProgressStatus + 0.1,
-                StartingAddress: false,
-                EndingAddress: false,
-                JobDate: true,
-                HeaderText: "Job Date",
-                Vehicle: false,
-                JobSize:false,
-            }));
-        }
 
-      else if(this.state.ProgressStatus === 0.4){
-            this.setState(prevState => ({
-                ProgressStatus: prevState.ProgressStatus + 0.1,
-                StartingAddress: false,
-                EndingAddress: false,
-                JobDate: false,
-                HeaderText: "Job Size",
-                Vehicle:false,
-                JobSize:true,
-            }));
-
-
-        }
-
-      else  if (this.state.ProgressStatus === 0.5) {
-            this.setState(prevState => ({
-                ProgressStatus: prevState.ProgressStatus + 0.2,
-                StartingAddress: false,
-                EndingAddress: false,
-                JobDate: false,
-                Vehicle: true,
-                HeaderText: "Vehicle",
-                JobSize:false
-
-
-            }));
-        }
-        else  if (this.state.ProgressStatus === 0.7) {
-            this.setState(prevState => ({
-                ProgressStatus: prevState.ProgressStatus + 0.2,
-                StartingAddress: false,
-                EndingAddress: false,
-                JobDate: false,
-                Vehicle: false,
-                HeaderText: "Additional Job Details",
-                JobSize:false,
-                AddJob:true}));
-        }
-        else{
-
-            this.props.navigation.navigate("Tasker");
-        }};
+    };
 
 
     render() {

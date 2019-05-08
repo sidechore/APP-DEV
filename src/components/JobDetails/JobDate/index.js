@@ -35,6 +35,7 @@ export default class JobDate extends Component {
                         date={this.state.date}
                         onDateChange={date => this.setState({date})}
                         mode={"datetime"}
+
                     />
                 </View>
             </View>

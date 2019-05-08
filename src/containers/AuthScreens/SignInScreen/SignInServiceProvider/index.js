@@ -214,7 +214,7 @@ export default class SignInProvider extends Component {
                     }}>
                         <View style={{flexDirection: 'row'}}>
                             <Text style={{color: "black", fontSize: 15}}>{"Don't have an account?"}</Text>
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate("SignUpScreen")}>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate("ServiceProviderSignUp")}>
                                 <Text style={{color: "red", fontSize: 15, fontWeight: "bold"}}>{"Sign Up"}</Text>
                             </TouchableOpacity>
 

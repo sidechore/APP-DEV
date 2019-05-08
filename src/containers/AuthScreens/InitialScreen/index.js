@@ -51,7 +51,7 @@ export default class InitialScreen extends Component {
                                             flexDirection: "column",
                                             backgroundColor: "#FA2021",
                                             width: "95%",
-                                            marginEnd: 20,
+
                                             height: 50,
                                             justifyContent: "center",
                                             alignItems: "center",
@@ -71,7 +71,7 @@ export default class InitialScreen extends Component {
                                             justifyContent: "center",
                                             alignItems: "center",
                                             borderRadius: 7,
-                                            marginEnd: 20,
+
                                         }}>
                                             <Text style={{color: "white", fontWeight: "bold"}}>{"Sign Up"}</Text>
                                         </View>

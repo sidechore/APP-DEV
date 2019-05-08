@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Text, View, TextInput, ScrollView,} from 'react-native';
+import {Text, View, TextInput, ScrollView, FlatList,} from 'react-native';
 import {Header, Image} from "react-native-elements";
 
 export default class EndingAddress extends Component {
@@ -8,38 +8,27 @@ export default class EndingAddress extends Component {
         super(props);
         console.disableYellowBox = true;
         this.state = {
+            places: [],
             text: 'Useless Placeholder',
             showIconLeftEmail: false,
             Cross1: false
         };
+        this.state.places = [];
+        this.getPlaces = this.getPlaces.bind(this);
     }
 
-    checkLocation(Text) {
-        if (Text.length === 0) {
-            this.setState({showIconLeftEmail: false,Cross1: true});
-        } else {
-            this.setState({showIconLeftEmail: true,Cross1: false});
-        }
+    getPlaces(txt) {
+        fetch('https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=' + txt + '&inputtype=textquery&fields=formatted_address,name,geometry&key=AIzaSyD5YuagFFL0m0IcjCIvbThN25l0m2jMm2w')
+            .then(response => response.json())
+            .then(response => {
+                console.log("Placess----> " + JSON.stringify(response));
+                let result = response.candidates;
+                this.setState({places: result});
+            })
+
     }
 
-    renderRowLocation(item) {
-        return <View style={{
-            flexDirection: "row", width: "85%", marginTop: 20,
-            backgroundColor: "white",
-            marginStart: 30,
-            height: 70,
-            borderRadius: 5,
-        }}>
-            <View style={{width: "15%", alignItems: "center", justifyContent: "center", height: "100%"}}>
-                <Image style={{flexDirection: "column", resizeMode: "contain", width: 25, height: 25}}
-                       source={require("../../../assets/images/pin.png")}/>
-            </View>
-            <View style={{flexDirection: "column", width: "80%", justifyContent: "center"}}>
-                <Text style={{marginStart: 5, fontSize: 15, color: "black"}}>{item.hintText}</Text>
-                <Text style={{marginStart: 5, fontSize: 13}}>{item.text2}</Text>
-            </View>
-        </View>
-    }
+
 
     renderRowInputEmail(item) {
         return <View style={{flexDirection: 'column', width: "100%",}}>
@@ -53,30 +42,12 @@ export default class EndingAddress extends Component {
                 }}/>
                 <TextInput
                     style={{height: 50, width: "100%", marginStart: 15}}
-                    onChangeText={(text) => this.checkLocation(text)}
+                    onChangeText={(text) => this.getPlaces(text)}
                     textContentType={"Email"}
                     placeholder={item.hintText}
-                    keyboardType={"email-address"}/>
-                {this.state.showIconLeftEmail &&
-                <Image resizeMode={"contain"} source={require("../../../assets/images/checked.png")}
-                       style={{
-                           width: 20,
-                           height: 20,
-                           position: "absolute",
-                           right: 10,
-                           top: 15
-                       }}/>}
-                {this.state.Cross1 &&
-                <Image resizeMode={"contain"} source={require("../../../assets/images/close.png")}
-                       style={{
-                           width: 20,
-                           height: 20,
-                           position: "absolute",
-                           right: 10,
-                           top: 15
-                       }}/>}
+                    keyboardType={"email-address"}
+                />
             </View>
-
             <View style={{
                 height: 1,
                 width: "85%",
@@ -91,39 +62,54 @@ export default class EndingAddress extends Component {
     render() {
         return (
             <View style={{flexDirection: "column", width: "100%"}}>
-                <ScrollView>
+
                     <View style={{flexDirection: "row", width: "100%", backgroundColor: "white",}}>
-                        <View style={{flexDirection: "row", width: "100%", color: "yellow", alignItems: "center",}}>
+                        <View style={{flexDirection: "row", width: "100%", alignItems: "center",}}>
                             {this.renderRowInputEmail({
                                 hintText: "Job Location",
                             })}
                         </View>
                     </View>
-                    {this.renderRowLocation({
-                        hintText: "Atlanta, GA, USA",
-                        text2: "Atlanta, GA, USA"
-                    })}
-                    {this.renderRowLocation({
-                        hintText: "Atlanta, GA, USA",
-                        text2: "Atlanta, GA, USA"
-                    })}
-                    {this.renderRowLocation({
-                        hintText: "Atlanta, GA, USA",
-                        text2: "Atlanta, GA, USA"
-                    })}
-                    {this.renderRowLocation({
-                        hintText: "Atlanta, GA, USA",
-                        text2: "Atlanta, GA, USA"
-                    })}
-                    {this.renderRowLocation({
-                        hintText: "Atlanta, GA, USA",
-                        text2: "Atlanta, GA, USA"
-                    })}
-                    {this.renderRowLocation({
-                        hintText: "Atlanta, GA, USA",
-                        text2: "Atlanta, GA, USA"
-                    })}
-                </ScrollView>
+                <FlatList style={{width: "100%",}}
+                          data={this.state.places}
+                          showsVerticalScrollIndicator={false}
+
+                          extraData={this.state.places}
+                          renderItem={({item}) =>
+                              <View style={{alignItems: "center", width: "100%"}}>
+
+                                  <View style={{
+                                      flexDirection: "row", width: "85%", marginTop: 20,
+                                      backgroundColor: "white",
+
+                                      height: 70,
+                                      borderRadius: 5,
+                                  }}>
+                                      <View style={{
+                                          width: "15%",
+                                          alignItems: "center",
+                                          justifyContent: "center",
+                                          height: "100%"
+                                      }}>
+                                          <Image style={{
+                                              flexDirection: "column",
+                                              resizeMode: "contain",
+                                              width: 25,
+                                              height: 25
+                                          }}
+                                                 source={require("../../../assets/images/pin.png")}/>
+                                      </View>
+                                      <View style={{flexDirection: "column", width: "80%", justifyContent: "center"}}>
+                                          <Text
+                                              style={{marginStart: 5, fontSize: 15, color: "black"}}>{item.name}</Text>
+                                          <Text style={{marginStart: 5, fontSize: 13}}>{item.formatted_address}</Text>
+                                      </View>
+                                  </View>
+                              </View>
+
+                          }/>
+
+
             </View>
         )
     }
