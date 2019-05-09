@@ -31,7 +31,7 @@ export default class AdditionalJobDetails extends Component {
             JobSize: false,
             AddJob: false,
             JobItem: item,
-        }
+        };
         if (this.state.JobItem === "Moving") {
             console.log("itempassed--" + item);
             this.setState({ProgresStatus: 0.15})

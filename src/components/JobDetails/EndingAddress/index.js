@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Text, View, TextInput, ScrollView, FlatList,} from 'react-native';
 import {Header, Image} from "react-native-elements";
+import {GooglePlacesAutocomplete} from "react-native-google-places-autocomplete";
 
 export default class EndingAddress extends Component {
 
@@ -13,51 +14,102 @@ export default class EndingAddress extends Component {
             showIconLeftEmail: false,
             Cross1: false
         };
-        this.state.places = [];
-        this.getPlaces = this.getPlaces.bind(this);
-    }
 
-    getPlaces(txt) {
-        fetch('https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=' + txt + '&inputtype=textquery&fields=formatted_address,name,geometry&key=AIzaSyD5YuagFFL0m0IcjCIvbThN25l0m2jMm2w')
-            .then(response => response.json())
-            .then(response => {
-                console.log("Placess----> " + JSON.stringify(response));
-                let result = response.candidates;
-                this.setState({places: result});
-            })
 
     }
 
 
 
-    renderRowInputEmail(item) {
-        return <View style={{flexDirection: 'column', width: "100%",}}>
-            <View style={{flexDirection: "row", width: "80%", marginTop: 5}}>
-                <Image source={require("../../../assets/images/searchleft.png")} style={{
-                    marginTop: 15,
-                    marginStart: 25,
-                    height: 20,
-                    width: 20,
-                    resizeMode: "contain"
-                }}/>
-                <TextInput
-                    style={{height: 50, width: "100%", marginStart: 15}}
-                    onChangeText={(text) => this.getPlaces(text)}
-                    textContentType={"Email"}
-                    placeholder={item.hintText}
-                    keyboardType={"email-address"}
-                />
-            </View>
-            <View style={{
-                height: 1,
-                width: "85%",
-                backgroundColor: "#DADADA",
-                marginStart: 25,
-                marginEnd: 20,
-                marginBottom: 10
-            }}></View>
-        </View>;
-    }
+
+    renderGooglePlacesInput = () => {
+        return (
+            <GooglePlacesAutocomplete
+                placeholder='Job Location'
+                minLength={2} // minimum length of text to search
+                autoFocus={false}
+                returnKeyType={'search'} // Can be left out for default return key https://facebook.github.io/react-native/docs/textinput.html#returnkeytype
+                listViewDisplayed='false'    // true/false/undefined
+                fetchDetails={true}
+                renderDescription={row => row.description} // custom description render
+                onPress={(data, details = null,) => { // 'details' is provided when fetchDetails = true
+                    console.log("hello"+data, details);
+
+                    this.setState({places:[]});
+
+                    this.state.places.push(details);
+                    this.setState({places:this.state.places});
+                    console.log("hello2"+JSON.stringify(this.state.places));
+                }}
+
+
+                getDefaultValue={() => ''}
+
+
+                query={{
+                    // available options: https://developers.google.com/places/web-service/autocomplete
+                    key: 'AIzaSyD5YuagFFL0m0IcjCIvbThN25l0m2jMm2w',
+                    language: 'en', // language of the results
+                    types: '(cities)' // default: 'geocode'
+                }}
+
+                styles={{
+
+                    textInputContainer: {
+                        width: '90%',
+                        backgroundColor:"#ffffff",
+                        borderTopWidth: 0,
+                        margin:15
+
+
+                    },
+                    description: {
+
+                        color:"red"
+                    },
+                    predefinedPlacesDescription: {
+                        color: 'red'
+                    },
+                    poweredContainer:{color:"red"},
+                    powered:{
+
+
+
+                    }
+
+                }}
+
+
+                currentLocation={true} // Will add a 'Current location' button at the top of the predefined places list
+                currentLocationLabel="Current location"
+                nearbyPlacesAPI='GooglePlacesSearch' // Which API to use: GoogleReverseGeocoding or GooglePlacesSearch
+                GoogleReverseGeocodingQuery={{
+                    // available options for GoogleReverseGeocoding API : https://developers.google.com/maps/documentation/geocoding/intro
+                }}
+                GooglePlacesSearchQuery={{
+                    // available options for GooglePlacesSearch API : https://developers.google.com/places/web-service/search
+                    rankby: 'distance',
+                    types: 'food'
+                }}
+                GooglePlacesDetailsQuery={{
+                    // available options for GooglePlacesDetails API : https://developers.google.com/places/web-service/details
+                    fields: ["name",'formatted_address']
+                }}
+
+
+                filterReverseGeocodingByTypes={['locality', 'administrative_area_level_3']} // filter the reverse geocoding results by types - ['locality', 'administrative_area_level_3'] if you want to display only cities
+
+
+                debounce={200} // debounce the requests in ms. Set to 0 to remove debounce. By default 0ms.
+                renderLeftButton={()  => <Image source={require('../../../assets/images/searchleft.png')}
+                                                style={{resizeMode:"contain",width:20,height:20,marginTop:12,marginStart:5}}
+
+
+                />}
+
+
+            />
+        );
+    };
 
     render() {
         return (
@@ -65,7 +117,7 @@ export default class EndingAddress extends Component {
 
                     <View style={{flexDirection: "row", width: "100%", backgroundColor: "white",}}>
                         <View style={{flexDirection: "row", width: "100%", alignItems: "center",}}>
-                            {this.renderRowInputEmail({
+                            {this.renderGooglePlacesInput({
                                 hintText: "Job Location",
                             })}
                         </View>

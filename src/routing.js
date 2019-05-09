@@ -27,6 +27,7 @@ import {
 import JobSearch from './containers/Customer/Home';
 import AdditionalJobDetails from './containers/Customer/Home/AdditionalJobDetails';
 import Tasker from  "./containers/Customer/Tasker";
+import Profile from "./containers/Customer/Profile"
 
 const TabNavigator = createBottomTabNavigator(
     {
@@ -49,7 +50,7 @@ const TabNavigator = createBottomTabNavigator(
             headerTintColor: "#fff"
         },
         Profile: {
-            screen: SelectLocation,
+            screen:Profile,
             navigationOptions: {
                 tabBarLabel: "Profile"
             },
@@ -111,6 +112,7 @@ const AuthStack = createStackNavigator({
     TabNavigator:TabNavigator,
     AdditionalJobDetails:AdditionalJobDetails,
     Tasker:Tasker,
+    Profile:Profile
 
 
 }, {
