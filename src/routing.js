@@ -27,7 +27,9 @@ import {
 import JobSearch from './containers/Customer/Home';
 import AdditionalJobDetails from './containers/Customer/Home/AdditionalJobDetails';
 import Tasker from  "./containers/Customer/Tasker";
-import Profile from "./containers/Customer/Profile"
+import Account from "./containers/Customer/Profile/Account"
+import Profile from "./containers/Customer/Profile/index.js"
+import ChangePassword from "./containers/Customer/Profile/ChangePassword/index.js"
 
 const TabNavigator = createBottomTabNavigator(
     {
@@ -112,7 +114,9 @@ const AuthStack = createStackNavigator({
     TabNavigator:TabNavigator,
     AdditionalJobDetails:AdditionalJobDetails,
     Tasker:Tasker,
-    Profile:Profile
+    Account:Account,
+    Profile:Profile,
+    ChangePassword:ChangePassword,
 
 
 }, {

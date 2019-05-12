@@ -5,7 +5,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {styles} from './styles';
 import {Header, Image} from "react-native-elements";
 import RBSheet from "react-native-raw-bottom-sheet";
-
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import {checkEmail} from '../../../utils';
 import {Colors} from "../../../themes";
 
@@ -78,6 +78,95 @@ export default class SelectLocation extends Component {
                 </Text></TouchableOpacity>
         </View>
     }
+    renderGooglePlacesInput = () => {
+        return (
+            <GooglePlacesAutocomplete
+                placeholder='Enter a Location'
+                minLength={2} // minimum length of text to search
+                autoFocus={false}
+                returnKeyType={'search'} // Can be left out for default return key https://facebook.github.io/react-native/docs/textinput.html#returnkeytype
+                listViewDisplayed='false'    // true/false/undefined
+                fetchDetails={true}
+                renderDescription={row => row.description} // custom description render
+                onPress={(data, details = null,) => { // 'details' is provided when fetchDetails = true
+                    console.log("hello"+data, details);
+
+                    this.setState({places:[]});
+
+                    this.state.places.push(details);
+                    this.setState({places:this.state.places});
+                    console.log("hello2"+JSON.stringify(this.state.places));
+                }}
+
+
+                getDefaultValue={() => ''}
+
+
+                query={{
+                    // available options: https://developers.google.com/places/web-service/autocomplete
+                    key: 'AIzaSyD5YuagFFL0m0IcjCIvbThN25l0m2jMm2w',
+                    language: 'en', // language of the results
+                    types: '(cities)' // default: 'geocode'
+                }}
+
+                styles={{
+
+                    textInputContainer: {
+                        width: '90%',
+                        backgroundColor:"#ffffff",
+                        borderTopWidth: 0,
+                        margin:15
+
+
+                    },
+                    description: {
+
+                        color:"red"
+                    },
+                    predefinedPlacesDescription: {
+                        color: 'red'
+                    },
+                    poweredContainer:{color:"red"},
+                    powered:{
+
+
+
+                    }
+
+                }}
+
+
+                currentLocation={true} // Will add a 'Current location' button at the top of the predefined places list
+                currentLocationLabel="Current location"
+                nearbyPlacesAPI='GooglePlacesSearch' // Which API to use: GoogleReverseGeocoding or GooglePlacesSearch
+                GoogleReverseGeocodingQuery={{
+                    // available options for GoogleReverseGeocoding API : https://developers.google.com/maps/documentation/geocoding/intro
+                }}
+                GooglePlacesSearchQuery={{
+                    // available options for GooglePlacesSearch API : https://developers.google.com/places/web-service/search
+                    rankby: 'distance',
+                    types: 'food'
+                }}
+                GooglePlacesDetailsQuery={{
+                    // available options for GooglePlacesDetails API : https://developers.google.com/places/web-service/details
+                    fields: ["name",'formatted_address']
+                }}
+
+
+                filterReverseGeocodingByTypes={['locality', 'administrative_area_level_3']} // filter the reverse geocoding results by types - ['locality', 'administrative_area_level_3'] if you want to display only cities
+
+
+                debounce={200} // debounce the requests in ms. Set to 0 to remove debounce. By default 0ms.
+                renderLeftButton={()  => <Image source={require('../../../assets/images/searchleft.png')}
+                                                style={{resizeMode:"contain",width:20,height:20,marginTop:12,marginStart:5}}
+
+
+                />}
+
+
+            />
+        );
+    };
 
     checkLocation(Text) {
         if (Text.length === 0) {
@@ -136,9 +225,7 @@ export default class SelectLocation extends Component {
                         </View>
                     </View>
                     <View style={{width: "100%", height: 250, backgroundColor: "white",}}>
-                        {this.renderRowInputEmail({
-                            hintText: "Enter a Location",
-                        })}
+                        {this.renderGooglePlacesInput()}
                         <View style={{
                             flexDirection: "row", width: "100%",
                             marginStart: 30, marginTop: 40
