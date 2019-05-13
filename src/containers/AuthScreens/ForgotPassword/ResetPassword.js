@@ -185,7 +185,7 @@ export default class ResetPassword extends Component {
 
 
                             }}>
-                                <Text style={{color: "white",fontSize:18}}>{"Send an email"}</Text>
+                                <Text style={{color: "white",fontSize:18}}>{"Reset"}</Text>
 
 
                             </View>

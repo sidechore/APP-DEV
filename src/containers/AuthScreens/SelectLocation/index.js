@@ -21,50 +21,7 @@ export default class SelectLocation extends Component {
         };
     }
 
-    renderRowInputEmail(item) {
-        return <View style={{flexDirection: 'column', width: "100%"}}>
-            <View style={{flexDirection: "row", marginStart: 20, marginEnd: 20, marginTop: 10}}>
-                <Image source={require("../../../assets/images/search.png")}
-                       style={{resizeMode: "contain", width: 15, height: 15, marginTop: 20, marginStart: 10}}/>
-                <TextInput
-                    style={{height: 50, width: "60%", marginStart: 10}}
-                    onChangeText={(text) => this.checkLocation(text)}
-                    textContentType={"Email"}
-                    placeholder={item.hintText}
-                    keyboardType={"email-address"}
-                />
-                {this.state.showIconLeftEmail &&
-                <Image resizeMode={"contain"} source={require("../../../assets/images/checked.png")}
-                       style={{
-                           width: 20,
-                           height: 20,
-                           position: "absolute",
-                           right: 10,
-                           top: 15
-                       }}/>}
 
-                {this.state.Cross1 &&
-                <Image resizeMode={"contain"} source={require("../../../assets/images/close.png")}
-                       style={{
-                           width: 20,
-                           height: 20,
-                           position: "absolute",
-                           right: 10,
-                           top: 15
-                       }}/>}
-                <TouchableOpacity style={{
-                    flexDirection: "row", justifyContent: "center",
-                    alignItems: "center",
-                    marginTop: 30,
-                    width: "30%"
-                }}>
-                    <Text style={{color: "red", fontSize: 15}}>Cancel</Text>
-                </TouchableOpacity>
-            </View>
-            <View
-                style={{height: 0.5, width: "60%", backgroundColor: "#52525D", marginStart: 25, marginEnd: 25,}}></View>
-        </View>;
-    }
 
     renderRowInputSheet(item) {
         return <View style={{flexDirection: "column", justifyContent: "center", alignItems: "center", width: "100%"}}>
@@ -97,28 +54,19 @@ export default class SelectLocation extends Component {
                     this.setState({places:this.state.places});
                     console.log("hello2"+JSON.stringify(this.state.places));
                 }}
-
-
                 getDefaultValue={() => ''}
-
-
                 query={{
                     // available options: https://developers.google.com/places/web-service/autocomplete
                     key: 'AIzaSyD5YuagFFL0m0IcjCIvbThN25l0m2jMm2w',
                     language: 'en', // language of the results
                     types: '(cities)' // default: 'geocode'
                 }}
-
                 styles={{
 
                     textInputContainer: {
-                        width: '90%',
+                        width: '100%',
                         backgroundColor:"#ffffff",
-                        borderTopWidth: 0,
-                        margin:15
-
-
-                    },
+                        borderTopWidth: 0,},
                     description: {
 
                         color:"red"
@@ -128,14 +76,7 @@ export default class SelectLocation extends Component {
                     },
                     poweredContainer:{color:"red"},
                     powered:{
-
-
-
-                    }
-
-                }}
-
-
+                    }}}
                 currentLocation={true} // Will add a 'Current location' button at the top of the predefined places list
                 currentLocationLabel="Current location"
                 nearbyPlacesAPI='GooglePlacesSearch' // Which API to use: GoogleReverseGeocoding or GooglePlacesSearch
@@ -149,34 +90,18 @@ export default class SelectLocation extends Component {
                 }}
                 GooglePlacesDetailsQuery={{
                     // available options for GooglePlacesDetails API : https://developers.google.com/places/web-service/details
-                    fields: ["name",'formatted_address']
-                }}
-
-
+                    fields: ["name",'formatted_address']}}
                 filterReverseGeocodingByTypes={['locality', 'administrative_area_level_3']} // filter the reverse geocoding results by types - ['locality', 'administrative_area_level_3'] if you want to display only cities
-
-
                 debounce={200} // debounce the requests in ms. Set to 0 to remove debounce. By default 0ms.
                 renderLeftButton={()  => <Image source={require('../../../assets/images/searchleft.png')}
-                                                style={{resizeMode:"contain",width:20,height:20,marginTop:12,marginStart:5}}
-
-
-                />}
+                                                style={{resizeMode:"contain",width:20,height:20,marginTop:12,marginStart:5}}/>}
 
 
             />
         );
     };
 
-    checkLocation(Text) {
-        if (Text.length === 0) {
-            this.setState({showIconLeftEmail: false})
-            this.setState({Cross1: true})
-        } else {
-            this.setState({showIconLeftEmail: true});
-            this.setState({Cross1: false})
-        }
-    }
+
 
     render() {
         return (
@@ -213,7 +138,7 @@ export default class SelectLocation extends Component {
                             color: "red",
                             marginBottom: 20,
                             marginTop: 60,
-                            fontSize: 18
+                            fontSize: 20
                         }}>{"Service Location"}</Text>
                         <View style={{
                             flexDirection: "column", marginBottom: 80, justifyContent: "center",
@@ -224,11 +149,27 @@ export default class SelectLocation extends Component {
                             </Text>
                         </View>
                     </View>
-                    <View style={{width: "100%", height: 250, backgroundColor: "white",}}>
-                        {this.renderGooglePlacesInput()}
+
+                    <View style={{width: "100%", backgroundColor: "white",}}>
+                        <View style={{width:"100%",flexDirection:"column"}} >
+                        <View style={{width:"80%", backgroundColor:"white",marginStart:20,
+                            flexDirection:"row",marginEnd:20,
+                        marginTop:20}} >
+                            {this.renderGooglePlacesInput()}
+                        <View style={{width:"20%",marginTop:15,left:25,
+                          flexDirection:"row"}} >
+                                <Text style={{fontSize:16,color:"red",}}  >
+                                    {"Cancel"}
+                                </Text>
+                        </View>
+                        </View>
+
+
+
+                        </View>
                         <View style={{
-                            flexDirection: "row", width: "100%",
-                            marginStart: 30, marginTop: 40
+                            flexDirection: "row", width: "100%",marginStart:25,marginTop:40
+
                         }}>
                             <Image source={require("../../../assets/images/pin.png")}
                                    style={{resizeMode: "contain", width: 19, height: 19}}
@@ -239,7 +180,7 @@ export default class SelectLocation extends Component {
                                 <Text style={{
                                     color: "red",
                                     marginStart: 10,
-                                    fontSize: 15
+                                    fontSize: 18
                                 }}>{"Use Current Location"}</Text>
                             </TouchableOpacity>
                             <RBSheet
@@ -289,7 +230,8 @@ export default class SelectLocation extends Component {
                                 height: 50,
                                 justifyContent: "center",
                                 alignItems: "center",
-                                borderRadius: 7
+                                borderRadius: 7,
+                                marginBottom:20
                             }}>
                                 <Text style={{color: "white", fontSize: 18}}>{"Select"}</Text>
                             </View>

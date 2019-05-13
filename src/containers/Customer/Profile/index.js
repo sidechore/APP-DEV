@@ -13,7 +13,7 @@ export default class Profile extends Component {
         super(props);
         console.disableYellowBox = true;
         this.setState({
-            Forward:true,
+
 
         })
     }
@@ -24,9 +24,7 @@ export default class Profile extends Component {
 
                 <View style={{
                     flexDirection: "row", width: "85%", marginTop: 20,
-                    backgroundColor: "white",
-
-                    height: 50,
+                    backgroundColor: "white", height: 50,
                     borderRadius: 5,
                     alignItems:"center"
 
@@ -37,10 +35,10 @@ export default class Profile extends Component {
                     </View>
                     <View style={{width:"10%"}} >
 
-                        {item.Forward &&
+
                     <Image style={{resizeMode:"contain",
                         height:14,width:14
-                    }}  source={require("../../../assets/images/arrowforward.png")}/>}
+                    }}  source={require("../../../assets/images/arrowforward.png")}/>
                     </View>
 
 
@@ -50,34 +48,24 @@ export default class Profile extends Component {
         )
 
     }
-    renderRowInputSheet(item) {
-        return <View style={{flexDirection: "column", width: "100%"}}>
-            <View style={{height: 1.5, width: "100%", backgroundColor: "#DADADA", marginTop: 15}}></View>
-            <TouchableOpacity style={{marginTop: 10,}} onPress={() => {
-                this.RBSheet.close();
-            }}>
-                <Text style={{color: "black", fontSize: 15, marginStart:30}}>
-                    {item.text}
-                </Text></TouchableOpacity>
-        </View>
-    }
-    render() {
-        return (
-            <View style={styles.container}>
-                <Header
-                    statusBarProps={{barStyle: "light-content"}}
-                    barStyle="light-content" // or directly
-                    style={{backgroundColor: "white"}}
-                    outerContainerStyles={{backgroundColor: "white"}}
 
-                    centerComponent={{
-                        text: "Profile",
-                        style: {fontWeight: "bold", color: "black", fontSize: 18}
-                    }}
-                    containerStyle={{
-                        backgroundColor: "white",
-                        justifyContent: "space-around"
-                    }}
+    render() {
+                return (
+                <View style={styles.container}>
+                <Header
+                statusBarProps={{barStyle: "light-content"}}
+                barStyle="light-content" // or directly
+                style={{backgroundColor: "white"}}
+                outerContainerStyles={{backgroundColor: "white"}}
+
+                centerComponent={{
+                    text: "Profile",
+                    style: {fontWeight: "bold", color: "black", fontSize: 18}
+                }}
+                containerStyle={{
+                    backgroundColor: "white",
+                    justifyContent: "space-around"
+                }}
 
                     leftComponent={<TouchableOpacity onPress={() => this.props.navigation.goBack()}>
                         <Image source={require("../../../assets/images/arrowback.png")} style={{
@@ -91,8 +79,8 @@ export default class Profile extends Component {
                 <View style={{width:"100%",marginBottom:20,alignItems:"center"}} >
                     <TouchableOpacity onPress={()=>this.props.navigation.navigate("Account")} >
                     {this.renderRowProfile({
-                        text:"Account Details",
-                        Forward:true
+                        text:"Account",
+
 
 
                     })}
@@ -100,14 +88,14 @@ export default class Profile extends Component {
                     <TouchableOpacity onPress={()=>this.props.navigation.navigate("ChangePassword")}  >
                     {this.renderRowProfile({
                         text:"Change Password",
-                        Forward:true
+
 
                     })}
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity   onPress={()=> this.props.navigation.navigate("UpdatePayment")} >
                     {this.renderRowProfile({
                         text:"Update Payment",
-                        Forward:true
+
 
 
                     })}
@@ -115,7 +103,7 @@ export default class Profile extends Component {
                     <TouchableOpacity onPress={()=>this.RBSheet.open()}  >
                     {this.renderRowProfile({
                         text:"Location",
-                        Forward:false
+
 
 
                     })}
@@ -189,10 +177,10 @@ export default class Profile extends Component {
 
                         </View>
                     </RBSheet>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={()=>this.props.navigation.navigate("Promotions") } >
                     {this.renderRowProfile({
-                        text:"Promos",
-                        Forward:true
+                        text:"Promotions",
+
 
 
                     })}
@@ -200,14 +188,14 @@ export default class Profile extends Component {
                     <TouchableOpacity>
                     {this.renderRowProfile({
                         text:"Notification",
-                        Forward:true
+
 
 
                     })}</TouchableOpacity>
                         <TouchableOpacity>
                     {this.renderRowProfile({
                         text:"Help",
-                        Forward:true
+
 
 
                     })}

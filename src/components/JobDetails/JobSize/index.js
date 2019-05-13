@@ -74,7 +74,7 @@ export default class JobSize extends Component {
                             />
                             <View style={{flexDirection:"column"}} >
                                 <Text  style={{marginStart:10,color:"black",fontSize:16}} >{"Medium"}</Text>
-                                <Text  style={{marginStart:10,color:"#B9B9B9"}} >{"Estimate 2 to 3 hours"}</Text>
+                                <Text  style={{marginStart:10,color:"#B9B9B9"}} >{"Estimate 2 to 4 hours"}</Text>
                             </View>
                         </View>
                         <View style={{flexDirection:"row",margin:10}}>

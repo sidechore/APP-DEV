@@ -70,7 +70,18 @@ export default class Account extends Component {
 
 
                         }}/></TouchableOpacity>}
+                rightComponent={
+
+                    <TouchableOpacity style={{marginEnd:20}} >
+
+                        <Text style={{color:"black",fontWeight:"bold"}} >{"Edit"}</Text>
+
+                    </TouchableOpacity>
+
+                }
+
                 />
+
 
                 <ScrollView>
                     <View style={{width:"100%",justifyContent:"center",alignItems:"center",
@@ -133,6 +144,10 @@ export default class Account extends Component {
                                style={{resizeMode:"contain",height:39,width:39,position:"absolute",bottom:45,left:30}}
 
                         />
+                        <Text style={{color:"black",fontSize:20,marginTop:20}}  >
+                            {"John Doe"}
+
+                        </Text>
 
                     </View>
                     <View style={{marginBottom:40  }}  >

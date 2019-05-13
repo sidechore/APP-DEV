@@ -12,7 +12,9 @@ export default class EnableNotfi extends Component {
     }
 
     renderRow(item) {
-        return <View style={{marginTop: 15, flexDirection: 'row', width: "100%", alignItems: "center"}}>
+        return <View style={{marginTop: 15, flexDirection: 'row', width: "50%", alignItems: "center"
+
+        }}>
             <Image style={{width: 6, height: 6, resizeMode: "contain"}}
                    source={require("../../../assets/images/square_bulets.png")}/>
             <Text style={{marginStart: 15, color: "black", fontsize: 15}}>{item.hintText}</Text>
@@ -64,7 +66,9 @@ export default class EnableNotfi extends Component {
 
                     </View>
                     <View
-                        style={{width: "100%", height: 280, marginStart: 20, marginEnd: 20, backgroundColor: "white",}}>
+                        style={{width: "100%", height: 280, marginStart: 35, marginEnd: 20, backgroundColor: "white",
+                        justifyContent:"center"
+                        }}>
                         <Text style={{
                             marginTop: 20,
                             color: "black",

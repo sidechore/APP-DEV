@@ -22,45 +22,49 @@ export default class JobSearch extends Component {
             ListData: [
                 {
                     id: 1,
-                    imgpath: require("../../../assets/images/listimg1.png"),
-                    heading: "Moving",
-                    Text1: "Furniture | Boxes",
-                    Text2: "Bedframe"
-                },
-                {
-                    id: 2,
+
                     imgpath: require("../../../assets/images/listimg2.png"),
                     heading: "Furniture Assembly",
                     Text1: "Bed | Dresser | Table",
                     Text2: "Grill | Bookcase | Desk"
                 },
                 {
-                    id: 3,
+                    id: 2,
+
                     imgpath: require("../../../assets/images/listimg3.png"),
                     heading: "Mounting",
                     Text1: "Tv Mount | Mirror",
                     Text2: "Curtain Rods | Signs"
                 },
                 {
-                    id: 4,
+                    id: 3,
+
                     imgpath: require("../../../assets/images/listimg4.png"),
                     heading: "Home Repair",
                     Text1: "Doors | Flooring",
                     Text2: "Light Fixtures"
                 },
                 {
-                    id: 5,
-                    imgpath: require("../../../assets/images/listimg5.png"),
-                    heading: "Cleaning",
-                    Text1: "Basic or Deep Cleaning",
-                    Text2: "Entire House"
+                    id: 4,
+                    imgpath: require("../../../assets/images/listimg1.png"),
+                    heading: "Moving",
+                    Text1: "Furniture | Boxes",
+                    Text2: "Bedframe"
                 },
                 {
-                    id: 6,
+                    id: 5,
+
                     imgpath: require("../../../assets/images/listimg6.png"),
                     heading: "Junk Removal",
                     Text1: "Haul off boxes",
                     Text2: "Standard pickup load"
+                },
+                {
+                    id: 6,
+                    imgpath: require("../../../assets/images/listimg5.png"),
+                    heading: "Cleaning",
+                    Text1: "Basic or Deep Cleaning",
+                    Text2: "Entire House"
                 },
             ]
         };
@@ -148,7 +152,7 @@ export default class JobSearch extends Component {
                     </View>
                 </View>
                 <View style={{
-                    flexDirection: "column", marginTop: 20
+                    flexDirection: "column", marginTop: 20,marginBottom:10
                 }}>
                     <Text style={{
                         color: "black",
@@ -192,9 +196,10 @@ export default class JobSearch extends Component {
                                         }}/>
                                     </View>
                                 </TouchableOpacity>
-                                <Text style={{color: "black", marginTop: 7}}>{item.heading}</Text>
-                                <Text style={{marginTop: 5}}>{item.Text1}</Text>
-                                <Text style={{marginTop: 0}}>{item.Text2}</Text>
+                                <Text style={{color: "black", marginTop: 7,fontWeight:"bold",
+                                fontSize:15,marginStart:10}}>{item.heading}</Text>
+                                <Text style={{marginTop: 5,marginStart:10,fontSize:13}}>{item.Text1}</Text>
+                                <Text style={{marginTop: 0,marginStart:10,fontSize:13}}>{item.Text2}</Text>
                             </View>
                         }
                     />

@@ -431,6 +431,7 @@ export default class SignUpScreen extends Component {
                         </View>
 
                     </View>
+
                     {this. renderRowInputText({
                         hintText: "First Name",
 
@@ -459,7 +460,7 @@ export default class SignUpScreen extends Component {
                         hintText: "Postal Code",
 
                     })}
-                    <View style={{flexDirection:"column",width:"100%",height:130,backgroundColor:"#F3F3F3",marginTop:10}} >
+                    <View style={{flexDirection:"column",width:"100%",backgroundColor:"white",marginTop:10}} >
                     <TouchableOpacity onPress={()=>this.props.navigation.navigate("PhoneNumber")}  style={{justifyContent: "center", alignItems: "center", marginTop: 25}}>
                         <View style={{
                             flexDirection: "column",
@@ -477,7 +478,47 @@ export default class SignUpScreen extends Component {
 
                         </View>
                     </TouchableOpacity   >
-                        <View style={{flexDirection:"row",justifyContent:"center",alignItems:"center",marginTop:20  }} >
+                        <View style={{marginTop: 30, width: "100%", flexDirection: "row", alignItems: "center"}}>
+                            <View style={{width: "40%", height: 0.5, backgroundColor: Colors.lightGrey}}></View>
+
+                            <View style={{
+                                backgroundColor: "white",
+                                justifyContent: "center",
+                                alignItems: 'center',
+                                borderRadius: 20,
+                                width: 40,
+                                height: 40,
+                                marginStart: 10,
+                                marginEnd: 10,
+                                shadowColor: '#000',
+                                shadowOffset: {width: 2, height: 2},
+                                shadowOpacity: 1,
+                                shadowRadius: 10,
+                                elevation: 10
+                            }}><Text style={{color: "black"}}>{"OR"}</Text>
+                            </View>
+                            <View
+                                style={{width: "100%", height: 0.5, backgroundColor: Colors.lightGrey}}></View>
+                        </View>
+                        <TouchableOpacity
+                            style={{justifyContent: "center", alignItems: "center", marginTop: 30, marginBottom: 10}}>
+                            <View style={{
+                                flexDirection: "row",
+                                backgroundColor: "#4E598F",
+                                width: "85%",
+                                height: 50,
+                                justifyContent: "center",
+                                alignItems: "center",
+                                borderRadius: 7
+                            }}>
+                                <Image source={require("../../../assets/images/facebook.png")}
+                                       style={{resizeMode: "contain", width: 25, height: 25, marginEnd: 5}}/>
+                                <Text style={{color: "white", fontWeight: "bold"}}>{"Sign Up with Facebook"}</Text>
+                            </View>
+                        </TouchableOpacity>
+
+
+                        <View style={{flexDirection:"row",justifyContent:"center",alignItems:"center",marginTop:20,backgroundColor:"#F3F3F3",height:70  }} >
                             <Text style={{color:'black'}} >{"Already have an account?"}</Text>
                             <Text style={{color:"red", fontWeight:"bold" }}>{" Sign In"}</Text>
                         </View>

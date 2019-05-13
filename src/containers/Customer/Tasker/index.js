@@ -90,7 +90,7 @@ export default class Tasker extends Component {
                     <View style={{
                         backgroundColor: "black",
                         height: 50,
-                        width: 350,
+                        width: 320,
                         justifyContent: "center",
                         alignItems: "center",
                         borderRadius: 7
@@ -155,7 +155,7 @@ export default class Tasker extends Component {
                                       <View style={{
                                           backgroundColor: "red",
                                           height: 50,
-                                          width: 350,
+                                          width: 320,
                                           justifyContent: "center",
                                           alignItems: "center",
                                           borderRadius: 7
