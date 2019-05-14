@@ -140,12 +140,12 @@ export default class PhoneNumber extends Component {
                             <View style={{flexDirection:"column" , width:"15%",justifyContent: "center",
                                 alignItems:"center", }}>
                                 <Switch
-                                    onTintColor="#00D200"
-                                    thumbTintColor="#fff"
+                                    onTintColor="red"
+                                    thumbTintColor="white"
                                     value={false} style={{
                                     position: 'absolute',
                                     right:15,
-                                    tintColor: 'white',
+                                    tintColor: 'red',
 
                                 }}/>
                             </View>

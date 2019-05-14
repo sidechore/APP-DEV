@@ -33,7 +33,7 @@ export default class JobSearch extends Component {
 
                     imgpath: require("../../../assets/images/listimg3.png"),
                     heading: "Mounting",
-                    Text1: "Tv Mount | Mirror",
+                    Text1: "TV Mount | Mirror",
                     Text2: "Curtain Rods | Signs"
                 },
                 {
@@ -192,7 +192,7 @@ export default class JobSearch extends Component {
                                         width: "100%"
                                     }}>
                                         <Image source={item.imgpath} style={{
-                                            resizeMode: "contain", width: 100, height: 100, margin: 10,
+                                            resizeMode: "contain", width: 90, height: 90, margin: 10,
                                         }}/>
                                     </View>
                                 </TouchableOpacity>

@@ -101,8 +101,7 @@ export default class Tasker extends Component {
 
 
             </View>
-            <FlatList style={{width: "100%",}}
-                      data={this.state.ListData}
+            <FlatList   data={this.state.ListData}
                       keyExtractor={item => item.id}
                       showsVerticalScrollIndicator={false}
                       numColumns={1}
@@ -121,9 +120,10 @@ export default class Tasker extends Component {
                               <View style={{marginStart:30,flexDirection:"row",marginTop:20}}  >
                               <Image source={item.imgpath} style={{width:70,height:70,resizeMode:"contain"}}  />
                               <View style={{flexDirection:"column",marginStart:7}}>
-
-                                  <Text style={{color:"black",fontWeight:"bold",fontSize:15}}  >{item.heading}</Text>
-                                  <View style={{flexDirection:"column",}} >
+                                <TouchableOpacity onPress={()=>this.props.navigation.navigate("TaskerProfile")} >
+                                    <Text style={{color:"black",fontWeight:"bold",fontSize:15}}  >{item.heading}</Text>
+                                </TouchableOpacity>
+                                    <View style={{flexDirection:"column",}} >
                                       {item.Crown &&
                                       <View style={{flexDirection: "row", alignItems: "center"}}>
                                           <Image source={require("../../../assets/images/crown.png")}

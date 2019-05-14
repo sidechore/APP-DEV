@@ -185,14 +185,14 @@ export default class Profile extends Component {
 
                     })}
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity  onPress={()=>this.props.navigation.navigate("Notifications")}>
                     {this.renderRowProfile({
                         text:"Notification",
 
 
 
-                    })}</TouchableOpacity>
-                        <TouchableOpacity>
+                    })}</TouchableOpacity   >
+                        <TouchableOpacity onPress={()=>this.props.navigation.navigate("Help")}>
                     {this.renderRowProfile({
                         text:"Help",
 

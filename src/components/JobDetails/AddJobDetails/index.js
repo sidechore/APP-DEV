@@ -36,7 +36,7 @@ export default class AddJobDetails extends Component {
                                multiline={true}
                                numberOfLines={2}
                                onChangeText={(text) => this.setState({text})}
-                               placeholder={"Describe what you need done.Include the quantity of items and the model/brand name.... "}
+                               placeholder={"Describe what you need done. Include the quantity of items and the model/brand name.... "}
 
                     />
 

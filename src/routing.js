@@ -34,6 +34,9 @@ import UpdatePayment from "./containers/Customer/Profile/UpdatePayment/index.js"
 import Rewards from "./containers/Customer/Profile/UpdatePayment/Rewards.js"
 import Payment from "./containers/Customer/Profile/UpdatePayment/Payment.js"
 import Promotions from "./containers/Customer/Profile/Promotions/index.js"
+import Notifications from "./containers/Customer/Profile/Notifications/index.js"
+import Help from "./containers/Customer/Profile/Help/index.js"
+import TaskerProfile from"./containers/Customer/Tasker/TaskerProfile/index.js"
 
 const TabNavigator = createBottomTabNavigator(
     {
@@ -124,7 +127,10 @@ const AuthStack = createStackNavigator({
     UpdatePayment:UpdatePayment,
     Rewards:Rewards,
     Payment:Payment,
-    Promotions:Promotions
+    Promotions:Promotions,
+    Notifications:Notifications,
+    Help:Help,
+    TaskerProfile:TaskerProfile
 
 
 
