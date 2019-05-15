@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
-import {ImageBackground, Text, View, TouchableOpacity, TextInput, ScrollView} from 'react-native';
+import {ImageBackground, Text, View, TouchableOpacity, TextInput, ScrollView,} from 'react-native';
 import {SafeAreaView} from 'react-navigation';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {styles} from './styles';
-import {Header, Image,Rating, AirbnbRating} from "react-native-elements";
+import {Header, Image } from "react-native-elements";
 import RBSheet from "react-native-raw-bottom-sheet";
+import { Rating, AirbnbRating } from 'react-native-ratings';
 
 
 
@@ -35,14 +36,11 @@ export default class TaskerProfile extends Component {
             <View style={{flexDirection:"row",width:"30%"}}>
                 <Rating
                     type='custom'
-
-
                     onFinishRating={this.ratingCompleted}
                     style={{ paddingVertical: 10, }}
                     imageSize={15}
-                    ratingBackgroundColor="transparent"
                     ratingColor={"red"}
-
+                    ratingBackgroundColor={"#646464"}
                 />
             </View>
             </View>
@@ -65,7 +63,7 @@ export default class TaskerProfile extends Component {
                     outerContainerStyles={{backgroundColor: "white"}}
 
                     centerComponent={{
-                        text: "Tasker Profile",
+                        text: "Service Pro Profile",
                         style: {fontWeight: "bold", color: "black", fontSize: 18}
                     }}
                     containerStyle={{
