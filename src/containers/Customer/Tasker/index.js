@@ -15,6 +15,7 @@ import {styles} from './styles';
 import {Header, Image} from "react-native-elements";
 import Modal from "react-native-modal";
 import RBSheet from "react-native-raw-bottom-sheet";
+import SwipeUpDown from 'react-native-swipe-up-down';
 
 
 import {checkEmail} from '../../../utils';
@@ -34,7 +35,7 @@ export default class Tasker extends Component {
                     imgpath: require("../../../assets/images/pimg1.png"),
                     heading: "Frances Z.",
                     Text1: "93% positive reviews",
-                    Text2: "133 Tasks Completed ",
+                    Text2: "133 jobs Completed ",
                     Crown: false,
                     para: "Working as maintainanc Technician for several year I have assissted clients in residential properties with putting together furniture shelving units and appliances ",
                 },
@@ -43,7 +44,7 @@ export default class Tasker extends Component {
                     imgpath: require("../../../assets/images/pimp2.png"),
                     heading: "Morgan G",
                     Text1: "93% positive reviews",
-                    Text2: "133 Tasks Completed",
+                    Text2: "133 jobs Completed",
                     Crown: true,
                     para: "Working as maintainanc Technician for several year I have assissted clients in residential properties with putting together furniture shelving units and appliances ",
                 },
@@ -52,7 +53,7 @@ export default class Tasker extends Component {
                     imgpath: require("../../../assets/images/pimp3.png"),
                     heading: "Terrance B.",
                     Text1: "93% positive reviews",
-                    Text2: "133 Tasks Completed",
+                    Text2: "133 jobs Completed",
                     Crown: false,
                     para: "Working as maintainanc Technician for several year I have assissted clients in residential properties with putting together furniture shelving units and appliances ",
                 },
@@ -73,7 +74,34 @@ export default class Tasker extends Component {
 
 
     };
+       renderRowSort(item){
+           return <View style={{width:"100%",}}>
+               <View style={{height: 1, backgroundColor: "#DADADA",width:"100%"}}></View>
+               <View style={{flexDirection:"row",marginStart:20,marginEnd:20,
+                   marginTop:20,
+                   marginBottom:20,
+               }}  >
+                   <View style={{width:"80%",}}>
+                   <Text  style={{fontSize:15,color:"black"}} >{item.txt}</Text>
+                   </View>
 
+                   <View style={{width:"20%",justifyContent:"center",alignItems:"center"}} >
+                       <Image source={item.img}
+                              style={{resizeMode:"contain",
+                                  height:20,
+                                  width:20
+                              }}
+                       />
+
+                   </View>
+               </View>
+               </View>
+
+
+
+
+
+       }
 
     render() {
         return (<View style={styles.container}>
@@ -352,6 +380,88 @@ export default class Tasker extends Component {
                 </Modal>
 
 
+            <SwipeUpDown
+                itemMini={<View></View>}
+                itemFull={<View  style={{
+                justifyContent:"center",
+                    alignItems:"center",
+                    position:"absolute",
+                    bottom:80,
+                    flexDirection:"row",
+                    width:"100%"
+                }}>
+                    <TouchableOpacity onPress={() => {
+                        this.RBSheet2.open();
+
+                    }}
+                                      style={{
+                                          backgroundColor:"white",
+                                          width:125,
+                                          height:50,
+                                          justifyContent:"center",
+                                          alignItems:"center",
+                                          borderRadius:27,
+                                          borderWidth:3,
+                                          borderColor:"red",
+                                          marginStart:10}}>
+
+                        <Text style={{color:"red",
+                            fontSize:18,
+                            fontWeight:"bold"
+                        }}>{"Sort By"}</Text></TouchableOpacity></View>} // Pass props component when show full
+                onShowMini={() => console.log('mini')}
+                onShowFull={() => console.log('full')}
+                onMoveDown={() => console.log('down')}
+                onMoveUp={() => console.log('up')}
+                disablePressToShow={false} // Press item mini to show full
+                style={{ backgroundColor: 'transparent' }} // style for swipe
+            />
+
+            <RBSheet
+                ref={ref => {
+                    this.RBSheet2 = ref;
+                }}
+                animationType="fade"
+                duration={250}
+                height={380}
+                customStyles={{container: {alignItems: "center"}}}>
+                <View style={{flexDirection:"column",width:"100%",marginStart:20,marginTop:20}}
+                >
+                    <View  style={{justifyContent:"center",alignItems:"center",marginBottom:25}}>
+                        <Text style={{fontSize:20,color:"black",fontWeight:"bold"}}  >{"Sort By:"}</Text>
+
+                    </View>
+                    {this.renderRowSort({
+                    txt:"Price",
+                        img:require("../../../assets/images/radioCH.png")
+                    })
+                    }
+                    {this.renderRowSort({
+                        txt:"% of Postive Reviews",
+                        img:require("../../../assets/images/radioUN.png")
+                    })
+                    }
+                    {this.renderRowSort({
+                        txt:"# of Reviews",
+                        img:require("../../../assets/images/radioUN.png")
+                    })
+                    }
+                    {this.renderRowSort({
+                        txt:"# of Completed Tasks",
+                        img:require("../../../assets/images/radioUN.png")
+                    })
+                    }
+                    {this.renderRowSort({
+                        txt:"Recommended",
+                        img:require("../../../assets/images/radioUN.png")
+                    })
+                    }
+                </View>
+
+
+
+
+            </RBSheet>
 
 
 

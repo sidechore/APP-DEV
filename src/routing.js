@@ -38,6 +38,9 @@ import Notifications from "./containers/Customer/Profile/Notifications/index.js"
 import Help from "./containers/Customer/Profile/Help/index.js"
 import TaskerProfile from"./containers/Customer/Tasker/TaskerProfile/index.js"
 import PaymentUpdate from "./containers/Customer/Tasker/PaymentUpdate/index.js"
+import Jobs from "./containers/Customer/Jobs/index.js"
+import Current from "./containers/Customer/Jobs/Current/index.js"
+import JobDetails from "./containers/Customer/Jobs/JobDetails/index.js"
 
 const TabNavigator = createBottomTabNavigator(
     {
@@ -49,7 +52,7 @@ const TabNavigator = createBottomTabNavigator(
         },
 
         Jobs: {
-            screen: SignInScreen,
+            screen:Jobs,
             navigationOptions: {
                 tabBarLabel: "Jobs"
             },
@@ -132,7 +135,10 @@ const AuthStack = createStackNavigator({
     Notifications:Notifications,
     Help:Help,
     TaskerProfile:TaskerProfile,
-    PaymentUpdate:PaymentUpdate
+    PaymentUpdate:PaymentUpdate,
+    Jobs:Jobs,
+    Current:Current,
+    JobDetails:JobDetails
 
 
 

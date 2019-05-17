@@ -158,7 +158,7 @@ export default class PaymentUpdate extends Component {
                             </TouchableOpacity>
                             <View style={{height: 1, backgroundColor: "#DADADA", marginStart: 25, marginEnd: 25,}}></View>
                             <View style={{justifyContent:"center",alignItems:"center",width:"100%",marginTop:10}}  >
-                                <Text style={{color:"#646464"}} >{"Final ammount will be charged once your Job"} </Text>
+                                <Text style={{color:"#646464"}} >{"Final amount will be charged once your Job"} </Text>
                                 <Text  style={{color:"#646464"}}  >{"is completed."}</Text>
                             </View>
 
