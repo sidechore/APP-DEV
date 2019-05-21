@@ -336,7 +336,7 @@ export default class StayUpToDate extends Component {
                         {this.renderRowInputZip({
                             hintText: "Zip",
                         })}
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate("TabNavigator")}
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate("ProviderTab")}
                                           style={{
                                               justifyContent: "center",
                                               alignItems: "center",

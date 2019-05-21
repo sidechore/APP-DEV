@@ -42,10 +42,9 @@ import Jobs from "./containers/Customer/Jobs/index.js"
 import Current from "./containers/Customer/Jobs/Current/index.js"
 import JobDetails from "./containers/Customer/Jobs/JobDetails/index.js"
 import Review from "./containers/Customer/Jobs/Reviews.js"
-<<<<<<< HEAD
 import Contact from "./containers/Customer/Jobs/Contact.js"
-=======
->>>>>>> origin/master
+import ProviderHome from "./containers/Provider/Home/index.js"
+
 
 const TabNavigator = createBottomTabNavigator(
     {
@@ -107,7 +106,93 @@ const TabNavigator = createBottomTabNavigator(
     }
 );
 
+const ProviderTab= createBottomTabNavigator(
+    {
+        Home: {
+            screen:ProviderHome,
+            navigationOptions: {
+                tabBarLabel: "Home"
+            }
+        },
+        Jobs: {
+            screen:Jobs,
+            navigationOptions: {
+                tabBarLabel: "My Jobs"
+            },
+            headerTitleStyle: {
+                fontWeight: "bold",
+                color: "#fff",
+            },
+            headerTintColor: "#fff"
+        },
+        Availability: {
+            screen:Profile,
+            navigationOptions: {
+                tabBarLabel: "Availability"
+            }
+        },
+        Performance: {
+            screen:Profile,
+            navigationOptions: {
+                tabBarLabel: "Performance"
+            },
+        },
+        Profile: {
+            screen:Profile,
+            navigationOptions: {
+                tabBarLabel: "Profile"
+            },
+        }
+    },
 
+    {
+        initialRouteName: "Home",
+        defaultNavigationOptions: ({navigation}) => ({
+            tabBarIcon: ({focused, horizontal, tintColor}) => {
+                const {routeName} = navigation.state;
+
+                if (routeName === "Home") {
+                    if (focused) {
+                        return <Image source={require('./assets/images/prhome.png')} style={styles.icon}/>
+                    } else {
+                        return <Image source={require('./assets/images/pghome.png')} style={styles.icon}/>
+                    }
+                } else if (routeName === "Jobs") {
+                    if (focused) {
+                        return <Image source={require('./assets/images/prmyjobs.png')} style={styles.icon}/>
+                    } else {
+                        return <Image source={require('./assets/images/pgmyjobs.png')} style={styles.icon}/>
+                    }
+                } else if (routeName === "Availability") {
+                    if (focused) {
+                        return <Image source={require('./assets/images/pravailability.png')} style={styles.icon}/>
+                    } else {
+                        return <Image source={require('./assets/images/pgavailability.png')} style={styles.icon}/>
+                    }
+                }
+                else if (routeName === "Performance") {
+                    if (focused) {
+                        return <Image source={require('./assets/images/performance.png')} style={styles.icon}/>
+                    } else {
+                        return <Image source={require('./assets/images/pgperformance.png')} style={styles.icon}/>
+                    }
+                }
+                else if (routeName === "Profile") {
+                    if (focused) {
+                        return <Image source={require('./assets/images/prprofile.png')} style={styles.icon}/>
+                    } else {
+                        return <Image source={require('./assets/images/pgprofile.png')} style={styles.icon}/>
+                    }
+                }
+            },
+        }),
+        tabBarOptions: {
+            activeTintColor: colors.bottomTabTintColor
+        }
+    }
+
+
+);
 
 
 
@@ -144,23 +229,21 @@ const AuthStack = createStackNavigator({
     Jobs:Jobs,
     Current:Current,
     JobDetails:JobDetails,
-<<<<<<< HEAD
+    Contact:Contact,
     Review:Review,
-    Contact:Contact
-=======
-    Review:Review
->>>>>>> origin/master
+    ProviderTab:ProviderTab,
+    ProviderHome:ProviderHome,
+
 
 
 
 
 
 }, {
-<<<<<<< HEAD
-    initialRouteName: 'JobDetails',
-=======
-    initialRouteName: 'PaymentUpdate',
->>>>>>> origin/master
+
+    initialRouteName: 'SelectScreen',
+
+
     headerMode: 'none'
 });
 

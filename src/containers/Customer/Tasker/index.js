@@ -60,48 +60,50 @@ export default class Tasker extends Component {
 
             ]
         }
-        this.toggleModal2=this.toggleModal2.bind(this);
+        this.toggleModal2 = this.toggleModal2.bind(this);
     }
 
     toggleModal = () => {
+        this.RBSheet.close();
         this.setState({isModalVisible: !this.state.isModalVisible});
 
     };
-    toggleModal2  () {
+
+    toggleModal2() {
         this.props.navigation.navigate("PaymentUpdate")
-      this.setState({isModalVisible:false});
-      this.RBSheet.close();
+        this.setState({isModalVisible: false});
+        this.RBSheet.close();
 
 
     };
-       renderRowSort(item){
-           return <View style={{width:"100%",}}>
-               <View style={{height: 1, backgroundColor: "#DADADA",width:"100%"}}></View>
-               <View style={{flexDirection:"row",marginStart:20,marginEnd:20,
-                   marginTop:20,
-                   marginBottom:20,
-               }}  >
-                   <View style={{width:"80%",}}>
-                   <Text  style={{fontSize:15,color:"black"}} >{item.txt}</Text>
-                   </View>
 
-                   <View style={{width:"20%",justifyContent:"center",alignItems:"center"}} >
-                       <Image source={item.img}
-                              style={{resizeMode:"contain",
-                                  height:20,
-                                  width:20
-                              }}
-                       />
+    renderRowSort(item) {
+        return <View style={{width: "100%",}}>
+            <View style={{height: 1, backgroundColor: "#DADADA", width: "100%"}}></View>
+            <View style={{
+                flexDirection: "row", marginStart: 20, marginEnd: 20,
+                marginTop: 20,
+                marginBottom: 20,
+            }}>
+                <View style={{width: "80%",}}>
+                    <Text style={{fontSize: 15, color: "black"}}>{item.txt}</Text>
+                </View>
 
-                   </View>
-               </View>
-               </View>
+                <View style={{width: "20%", justifyContent: "center", alignItems: "center"}}>
+                    <Image source={item.img}
+                           style={{
+                               resizeMode: "contain",
+                               height: 20,
+                               width: 20
+                           }}
+                    />
+
+                </View>
+            </View>
+        </View>
 
 
-
-
-
-       }
+    }
 
     render() {
         return (<View style={styles.container}>
@@ -264,68 +266,85 @@ export default class Tasker extends Component {
                 <View style={{
                     flexDirection: "column",
                     backgroundColor: "white",
-                    bottom:0,
+                    bottom: 0,
 
-                    width:"100%",
+                    width: "100%",
 
 
                 }}>
-                    <View style={{ flexDirection:"row",width:"100%" ,marginTop:20,marginBottom:20,}}>
-                        <View style={{width:"30%",justifyContent:"center",
-                            alignItems:"center"}}>
+                    <View style={{flexDirection: "row", width: "100%", marginTop: 20, marginBottom: 20,}}>
+                        <View style={{
+                            width: "30%", justifyContent: "center",
+                            alignItems: "center"
+                        }}>
                             <Image source={require("../../../assets/images/pimp2.png")}
                                    style={{width: 60, height: 60, resizeMode: "contain"}}
                             />
                         </View>
-                        <View style={{width:"70%",justifyContent:"center",flexDirection:"column"}}>
+                        <View style={{width: "70%", justifyContent: "center", flexDirection: "column"}}>
                             <Text style={{
                                 color: "black",
                                 fontWeight: "bold",
                                 fontSize: 15
                             }}>{"Furniture Assembly"}</Text>
-                            <Text style={{color:"#646464"}} >{"Morgan G"}</Text>
+                            <Text style={{color: "#646464"}}>{"Morgan G"}</Text>
 
                         </View>
 
 
                     </View>
-                    <View style={{height: 1, backgroundColor: "#DADADA",width:"100%"}}></View>
-                    <View style={{flexDirection:"row",width:"100%", alignItems:"center",marginTop:20,marginBottom:20,marginStart:20,marginEnd:20,}}>
-                        <View style={{width:"30%",}} >
+                    <View style={{height: 1, backgroundColor: "#DADADA", width: "100%"}}></View>
+                    <View style={{
+                        flexDirection: "row",
+                        width: "100%",
+                        alignItems: "center",
+                        marginTop: 20,
+                        marginBottom: 20,
+                        marginStart: 20,
+                        marginEnd: 20,
+                    }}>
+                        <View style={{width: "30%",}}>
                             <Text style={{
                                 color: "black",
                                 fontWeight: "bold",
                                 fontSize: 15
                             }}>{"Date & Time"}</Text>
                         </View>
-                        <View style={{width:"70%",alignItems:"center"}} >
-                            <Text style={{color:"black"}}>{"Fri, Feb 22, 2019 at 3:30 PM"}</Text>
+                        <View style={{width: "70%", alignItems: "center"}}>
+                            <Text style={{color: "black"}}>{"Fri, Feb 22, 2019 at 3:30 PM"}</Text>
                         </View>
                     </View>
-                    <View style={{height: 1, backgroundColor: "#DADADA",width:"100%"}}></View>
-                    <View style={{flexDirection:"row",width:"100%",
-                        alignItems:"center",marginTop:20,marginBottom:20,marginStart:20,marginEnd:20}}>
-                        <View style={{width:"75%",}} >
+                    <View style={{height: 1, backgroundColor: "#DADADA", width: "100%"}}></View>
+                    <View style={{
+                        flexDirection: "row", width: "100%",
+                        alignItems: "center", marginTop: 20, marginBottom: 20, marginStart: 20, marginEnd: 20
+                    }}>
+                        <View style={{width: "75%",}}>
                             <Text style={{
                                 color: "black",
                                 fontWeight: "bold",
                                 fontSize: 15
                             }}>{"Rate"}</Text>
                         </View>
-                        <View style={{width:"20%",}} >
-                            <Text style={{color:"black"}} >{"$24 / hr"}</Text>
+                        <View style={{width: "20%",}}>
+                            <Text style={{color: "black"}}>{"$24 / hr"}</Text>
                         </View>
                     </View>
-                    <View style={{height: 1, backgroundColor: "#DADADA",width:"100%"}}></View>
+                    <View style={{height: 1, backgroundColor: "#DADADA", width: "100%"}}></View>
 
-                    <View style={{width:"100%",justifyContent:"center",alignItems:"center",backgroundColor:"#EAEAEA"}}>
-                        <Text style={{color:"black",fontSize:18,margin:15}} >{"Add Promo Code"}</Text>
+                    <View style={{
+                        width: "100%",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        backgroundColor: "#EAEAEA"
+                    }}>
+                        <Text style={{color: "black", fontSize: 18, margin: 15}}>{"Add Promo Code"}</Text>
                     </View>
-                    <TouchableOpacity onPress={()=>this.toggleModal()}
+                    <TouchableOpacity onPress={() => this.toggleModal()}
                                       style={{
                                           justifyContent: "center",
                                           alignItems: "center",
-                                          marginTop:20,
+                                          marginTop: 20,
 
                                           marginBottom: 20
                                       }}>
@@ -348,25 +367,26 @@ export default class Tasker extends Component {
 
                 </View>
             </RBSheet>
-                <Modal isVisible={this.state.isModalVisible}
-                       onBackdropPress={() => this.setState({ isModalVisible: false })}
-
-                >
-                    <View style={{justifyContent:"center",alignItems:"center",}} >
-                    <View style={{flexDirection:"column",backgroundColor:"white",height:180,borderRadius:5
-                        ,width:300,justifyContent:"center",alignItems:"center",
-                    }}  >
-                        <Text style={{color:"black"}}  >{"There was a problem with you credit card"}</Text>
-                        <Text style={{color:"black"}} >{"If this continues, please try setting up a"}</Text>
-                        <Text style={{color:"black", marginBottom:50}} >{"new one for your account"}</Text>
+            <Modal isVisible={this.state.isModalVisible}
+                   onBackdropPress={() => this.setState({isModalVisible: false})} style={{zIndex:9999}}>
+                <View style={{justifyContent: "center", alignItems: "center",}}>
+                    <View style={{
+                        flexDirection: "column", backgroundColor: "white", height: 180, borderRadius: 5
+                        , width: 300, justifyContent: "center", alignItems: "center",
+                    }}>
+                        <Text style={{color: "black"}}>{"There was a problem with you credit card"}</Text>
+                        <Text style={{color: "black"}}>{"If this continues, please try setting up a"}</Text>
+                        <Text style={{color: "black", marginBottom: 50}}>{"new one for your account"}</Text>
                         <TouchableOpacity style={{
                             backgroundColor: "red",
                             height: 50,
                             width: "100%",
                             alignItems: "center",
                             position: "absolute",
+                            borderBottomLeftRadius:5,
+                            borderBottomRightRadius:5,
                             bottom: 0
-                        }} onPress={()=>this.toggleModal2()}>
+                        }} onPress={() => this.toggleModal2()}>
                             <View style={{}}>
                                 <Text style={{color: "white", fontSize: 15, marginTop: 15}}>Update Payment Method</Text>
                             </View>
@@ -375,46 +395,48 @@ export default class Tasker extends Component {
 
                     </View>
 
-                    </View>
+                </View>
 
-                </Modal>
+            </Modal>
 
 
             <SwipeUpDown
                 itemMini={<View></View>}
-                itemFull={<View  style={{
-                justifyContent:"center",
-                    alignItems:"center",
-                    position:"absolute",
-                    bottom:80,
-                    flexDirection:"row",
-                    width:"100%"
+                itemFull={<View style={{
+                    justifyContent: "center",
+                    alignItems: "center",
+                    position: "absolute",
+                    bottom: 80,
+                    flexDirection: "row",
+                    width: "100%"
                 }}>
                     <TouchableOpacity onPress={() => {
                         this.RBSheet2.open();
 
                     }}
                                       style={{
-                                          backgroundColor:"white",
-                                          width:125,
-                                          height:50,
-                                          justifyContent:"center",
-                                          alignItems:"center",
-                                          borderRadius:27,
-                                          borderWidth:3,
-                                          borderColor:"red",
-                                          marginStart:10}}>
+                                          backgroundColor: "white",
+                                          width: 125,
+                                          height: 50,
+                                          justifyContent: "center",
+                                          alignItems: "center",
+                                          borderRadius: 27,
+                                          borderWidth: 3,
+                                          borderColor: "red",
+                                          marginStart: 10
+                                      }}>
 
-                        <Text style={{color:"red",
-                            fontSize:18,
-                            fontWeight:"bold"
+                        <Text style={{
+                            color: "red",
+                            fontSize: 18,
+                            fontWeight: "bold"
                         }}>{"Sort By"}</Text></TouchableOpacity></View>} // Pass props component when show full
                 onShowMini={() => console.log('mini')}
                 onShowFull={() => console.log('full')}
                 onMoveDown={() => console.log('down')}
                 onMoveUp={() => console.log('up')}
                 disablePressToShow={false} // Press item mini to show full
-                style={{ backgroundColor: 'transparent' }} // style for swipe
+                style={{backgroundColor: 'transparent'}} // style for swipe
             />
 
             <RBSheet
@@ -425,44 +447,41 @@ export default class Tasker extends Component {
                 duration={250}
                 height={380}
                 customStyles={{container: {alignItems: "center"}}}>
-                <View style={{flexDirection:"column",width:"100%",marginStart:20,marginTop:20}}
+                <View style={{flexDirection: "column", width: "100%", marginStart: 20, marginTop: 20}}
                 >
-                    <View  style={{justifyContent:"center",alignItems:"center",marginBottom:25}}>
-                        <Text style={{fontSize:20,color:"black",fontWeight:"bold"}}  >{"Sort By:"}</Text>
+                    <View style={{justifyContent: "center", alignItems: "center", marginBottom: 25}}>
+                        <Text style={{fontSize: 20, color: "black", fontWeight: "bold"}}>{"Sort By:"}</Text>
 
                     </View>
                     {this.renderRowSort({
-                    txt:"Price",
-                        img:require("../../../assets/images/radioCH.png")
+                        txt: "Price",
+                        img: require("../../../assets/images/radioCH.png")
                     })
                     }
                     {this.renderRowSort({
-                        txt:"% of Postive Reviews",
-                        img:require("../../../assets/images/radioUN.png")
+                        txt: "% of Postive Reviews",
+                        img: require("../../../assets/images/radioUN.png")
                     })
                     }
                     {this.renderRowSort({
-                        txt:"# of Reviews",
-                        img:require("../../../assets/images/radioUN.png")
+                        txt: "# of Reviews",
+                        img: require("../../../assets/images/radioUN.png")
                     })
                     }
                     {this.renderRowSort({
-                        txt:"# of Completed Tasks",
-                        img:require("../../../assets/images/radioUN.png")
+                        txt: "# of Completed Tasks",
+                        img: require("../../../assets/images/radioUN.png")
                     })
                     }
                     {this.renderRowSort({
-                        txt:"Recommended",
-                        img:require("../../../assets/images/radioUN.png")
+                        txt: "Recommended",
+                        img: require("../../../assets/images/radioUN.png")
                     })
                     }
                 </View>
 
 
-
-
             </RBSheet>
-
 
 
         </View>)

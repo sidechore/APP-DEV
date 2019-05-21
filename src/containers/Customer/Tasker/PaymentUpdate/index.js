@@ -67,13 +67,15 @@ export default class PaymentUpdate extends Component {
         }
     }
     toggleModal2  () {
+        this.RBSheet.close();
         this.props.navigation.navigate("JobDetails",{Screen:"payside"})
         this.setState({isModalVisible:false});
-        this.RBSheet.close();
+
 
 
     };
     toggleModal = () => {
+        this.RBSheet.close();
         this.setState({isModalVisible: !this.state.isModalVisible});
 
     };
@@ -306,8 +308,7 @@ export default class PaymentUpdate extends Component {
 
                 <Modal isVisible={this.state.isModalVisible}
                        onBackdropPress={() => this.setState({ isModalVisible: false })}
-
-                >
+                       style={{zIndex:9999}}>
                     <View style={{justifyContent:"center",alignItems:"center",}} >
                         <View style={{flexDirection:"column",backgroundColor:"white",height:220,borderRadius:5
                             ,width:250,justifyContent:"center",alignItems:"center",
@@ -324,9 +325,9 @@ export default class PaymentUpdate extends Component {
                                 width: "100%",
                                 alignItems: "center",
                                 position: "absolute",
+                                borderBottomLeftRadius:5,
+                                borderBottomRightRadius:5,
                                 bottom: 0,
-                                borderBottomLeftRadiusRadius:5,
-                                borderBottomRightRadius:5
                             }} onPress={()=>this.toggleModal2()}>
                                 <View style={{}}>
                                     <Text style={{color: "white", fontSize: 15, marginTop: 15}}>{"Great!"}</Text>

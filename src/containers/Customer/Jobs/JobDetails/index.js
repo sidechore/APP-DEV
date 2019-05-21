@@ -22,6 +22,12 @@ componentDidMount() {
        this.RBSheet5.open();
     }
 }
+    togglereview(){
+        this.RBSheet5.close();
+        this.props.navigation.navigate("Review")
+
+
+    }
 
 
 
@@ -399,7 +405,7 @@ componentDidMount() {
                         <Text style={{color:"black",fontSize:20}} >{"How would you rate our app?"}</Text>
 
                         <TouchableOpacity
-                            onPress={()=>this.props.navigation.navigate("Review")}
+                            onPress={()=>this.togglereview()}
                             style={{
                                 justifyContent: "center",
                                 alignItems: "center",
