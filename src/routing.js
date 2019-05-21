@@ -41,6 +41,11 @@ import PaymentUpdate from "./containers/Customer/Tasker/PaymentUpdate/index.js"
 import Jobs from "./containers/Customer/Jobs/index.js"
 import Current from "./containers/Customer/Jobs/Current/index.js"
 import JobDetails from "./containers/Customer/Jobs/JobDetails/index.js"
+import Review from "./containers/Customer/Jobs/Reviews.js"
+<<<<<<< HEAD
+import Contact from "./containers/Customer/Jobs/Contact.js"
+=======
+>>>>>>> origin/master
 
 const TabNavigator = createBottomTabNavigator(
     {
@@ -138,14 +143,24 @@ const AuthStack = createStackNavigator({
     PaymentUpdate:PaymentUpdate,
     Jobs:Jobs,
     Current:Current,
-    JobDetails:JobDetails
+    JobDetails:JobDetails,
+<<<<<<< HEAD
+    Review:Review,
+    Contact:Contact
+=======
+    Review:Review
+>>>>>>> origin/master
 
 
 
 
 
 }, {
-    initialRouteName: 'SelectScreen',
+<<<<<<< HEAD
+    initialRouteName: 'JobDetails',
+=======
+    initialRouteName: 'PaymentUpdate',
+>>>>>>> origin/master
     headerMode: 'none'
 });
 

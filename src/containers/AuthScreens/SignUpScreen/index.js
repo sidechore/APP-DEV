@@ -406,7 +406,7 @@ export default class SignUpScreen extends Component {
                     outerContainerStyles={{backgroundColor: "white"}}
 
                     centerComponent={{
-                        text: "Sign Up",
+                        text: "sethi",
                         style: {fontWeight: "bold", color: "black", fontSize: 18}
                     }}
                     containerStyle={{

@@ -14,6 +14,17 @@ export default class JobDetails extends Component {
             text: 'Useless Placeholder',
         }
     }
+componentDidMount() {
+
+    const {navigation} = this.props;
+    const Screen = navigation.getParam('Screen', 'NO-ID');
+    if (Screen === "payside") {
+       this.RBSheet5.open();
+    }
+}
+
+
+
 
     render() {
         return (
@@ -277,6 +288,7 @@ export default class JobDetails extends Component {
                         >{"Contact Service Pro "}</Text>
 
                         <TouchableOpacity
+                            onPress={()=>this.props.navigation.navigate("Contact")}
                             style={{
                                 justifyContent: "center",
                                 alignItems: "center",
@@ -325,23 +337,69 @@ export default class JobDetails extends Component {
                     </View>
                 </RBSheet>
                 <RBSheet
+                ref={ref => {
+                    this.RBSheet4 = ref;
+                }}
+                animationType="fade"
+                duration={500}
+                height={200}
+                customStyles={{container: {alignItems: "center"}}}>
+                <View style={{flexDirection:"column",width:"100%",justifyContent:"center",alignItems:"center",
+                    backgroundColor:"White",height:200
+
+                }}>
+                    <Text
+                        style={{color:"black",fontSize:20,marginBottom:15}}
+                    >{"Cancel Job"}</Text>
+                    <Text style={{color:"#646464"}} >{"Are you sure you would like to cancel?"}</Text>
+
+                    <TouchableOpacity
+                        onPress={()=>this.props.navigation.navigate("Review")}
+                        style={{
+                            justifyContent: "center",
+                            alignItems: "center",
+                            marginTop: 10,
+                            marginBottom:10,
+                            width: "85%",
+                            backgroundColor: "red",
+                            height: 50,
+                            borderRadius: 7,
+                            borderWidth:1,
+                            borderColor:"white"
+
+                        }}>
+                        <View style={{
+                            flexDirection: "column",
+                            justifyContent: "center",
+                            alignItems: "center",
+                        }}>
+                            <Text style={{color: "white", fontSize: 18}}>{"Cancel Job"}</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <Text style={{color:"#646464"}} >{"Do not cancel"}</Text>
+
+                </View>
+            </RBSheet>
+                <RBSheet
                     ref={ref => {
-                        this.RBSheet4 = ref;
+                        this.RBSheet5 = ref;
                     }}
                     animationType="fade"
                     duration={500}
-                    height={200}
+                    height={250}
                     customStyles={{container: {alignItems: "center"}}}>
                     <View style={{flexDirection:"column",width:"100%",justifyContent:"center",alignItems:"center",
-                        backgroundColor:"White",height:200
+                        backgroundColor:"White",height:200,marginTop:20
 
                     }}>
-                        <Text
-                        style={{color:"black",fontSize:20,marginBottom:15}}
-                        >{"Cancel Job"}</Text>
-                        <Text style={{color:"#646464"}} >{"Are you sure you would like to cancel?"}</Text>
+                        <Image source={require("../../../../assets/images/StarCircled.png")}
+                               style={{resizeMode:"contain",height:70,width:70,marginBottom:20}}
+                        />
+
+                        <Text style={{color:"black",fontSize:20}} >{"How would you rate our app?"}</Text>
 
                         <TouchableOpacity
+                            onPress={()=>this.props.navigation.navigate("Review")}
                             style={{
                                 justifyContent: "center",
                                 alignItems: "center",
@@ -360,10 +418,10 @@ export default class JobDetails extends Component {
                                 justifyContent: "center",
                                 alignItems: "center",
                             }}>
-                                <Text style={{color: "white", fontSize: 18}}>{"Cancel Job"}</Text>
+                                <Text style={{color: "white", fontSize: 18}}>{"Like It!"}</Text>
                             </View>
                         </TouchableOpacity>
-                        <Text style={{color:"#646464"}} >{"Do not cancel"}</Text>
+                        <Text style={{color:"#646464",fontSize:15}} >{"Improvement is needed"}</Text>
 
                     </View>
                 </RBSheet>

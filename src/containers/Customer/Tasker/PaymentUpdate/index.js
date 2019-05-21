@@ -67,7 +67,7 @@ export default class PaymentUpdate extends Component {
         }
     }
     toggleModal2  () {
-        this.props.navigation.navigate("Tasker")
+        this.props.navigation.navigate("JobDetails",{Screen:"payside"})
         this.setState({isModalVisible:false});
         this.RBSheet.close();
 
