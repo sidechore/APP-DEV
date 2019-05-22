@@ -44,6 +44,14 @@ import JobDetails from "./containers/Customer/Jobs/JobDetails/index.js"
 import Review from "./containers/Customer/Jobs/Reviews.js"
 import Contact from "./containers/Customer/Jobs/Contact.js"
 import ProviderHome from "./containers/Provider/Home/index.js"
+import ProProfile from "./containers/Provider/Profile/index.js"
+import ProAbout from "./containers/Provider/Profile/AboutMe/index.js"
+import ServiceArea from "./containers/Provider/Profile/ServiceArea/index.js"
+import DirectDeposit from "./containers/Provider/Profile/DirectDeposit/index.js"
+import Vehicles from "./containers/Provider/Profile/Vehicles/index.js"
+import Promote from "./containers/Provider/Profile/Promote/index.js"
+import Support from "./containers/Provider/Profile/Support/index.js"
+
 
 
 const TabNavigator = createBottomTabNavigator(
@@ -138,7 +146,7 @@ const ProviderTab= createBottomTabNavigator(
             },
         },
         Profile: {
-            screen:Profile,
+            screen:ProProfile,
             navigationOptions: {
                 tabBarLabel: "Profile"
             },
@@ -233,6 +241,13 @@ const AuthStack = createStackNavigator({
     Review:Review,
     ProviderTab:ProviderTab,
     ProviderHome:ProviderHome,
+    ProProfile:ProProfile,
+    ProAbout:ProAbout,
+    ServiceArea:ServiceArea,
+    DirectDeposit:DirectDeposit,
+    Vehicles:Vehicles,
+    Promote:Promote,
+    Support:Support
 
 
 
@@ -241,7 +256,7 @@ const AuthStack = createStackNavigator({
 
 }, {
 
-    initialRouteName: 'SelectScreen',
+    initialRouteName: 'ProviderTab',
 
 
     headerMode: 'none'
