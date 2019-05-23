@@ -51,6 +51,10 @@ import DirectDeposit from "./containers/Provider/Profile/DirectDeposit/index.js"
 import Vehicles from "./containers/Provider/Profile/Vehicles/index.js"
 import Promote from "./containers/Provider/Profile/Promote/index.js"
 import Support from "./containers/Provider/Profile/Support/index.js"
+import ProJobs from "./containers/Provider/MyJobs/index.js"
+import ProJobsDetails from "./containers/Provider/MyJobs/ProJobDetails"
+import ProJobsDetailsInvoice from "./containers/Provider/MyJobs/ProJobsDetailsInvoice"
+import ProContact from "./containers/Provider/MyJobs/ProContact";
 
 
 
@@ -123,7 +127,7 @@ const ProviderTab= createBottomTabNavigator(
             }
         },
         Jobs: {
-            screen:Jobs,
+            screen:ProJobs,
             navigationOptions: {
                 tabBarLabel: "My Jobs"
             },
@@ -247,7 +251,11 @@ const AuthStack = createStackNavigator({
     DirectDeposit:DirectDeposit,
     Vehicles:Vehicles,
     Promote:Promote,
-    Support:Support
+    Support:Support,
+    ProJobs:ProJobs,
+    ProJobsDetails:ProJobsDetails,
+    ProJobsDetailsInvoice:ProJobsDetailsInvoice,
+    ProContact:ProContact
 
 
 
