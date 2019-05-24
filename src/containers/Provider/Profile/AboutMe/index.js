@@ -45,13 +45,13 @@ export default class ProAbout extends Component {
                 />
                 <View style={{flexDirection:"column",width:"100%",marginStart:20,marginTop:30}}>
                 <Text style={{color:"black"}} >
-                    {"Official start date: 2017"}
+                    {"I've been a tasker since 2017."}
                 </Text>
                     <Text style={{color:"black"}} >
-                        {"Total amount of jobs completed: 108"}
+                        {"I've completed 108 tasks."}
                     </Text>
                     <Text style={{color:"black"}} >
-                        {"Average response time: Fast"}
+                        {"I respond quickly."}
                     </Text>
 
 

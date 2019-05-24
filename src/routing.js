@@ -55,7 +55,8 @@ import ProJobs from "./containers/Provider/MyJobs/index.js"
 import ProJobsDetails from "./containers/Provider/MyJobs/ProJobDetails"
 import ProJobsDetailsInvoice from "./containers/Provider/MyJobs/ProJobsDetailsInvoice"
 import ProContact from "./containers/Provider/MyJobs/ProContact";
-
+import TimeSlot from "./containers/TimeSlot"
+import ScheduledJobDetails from "./containers/Provider/Availability/ScheduledJobDetails"
 
 
 const TabNavigator = createBottomTabNavigator(
@@ -255,8 +256,9 @@ const AuthStack = createStackNavigator({
     ProJobs:ProJobs,
     ProJobsDetails:ProJobsDetails,
     ProJobsDetailsInvoice:ProJobsDetailsInvoice,
-    ProContact:ProContact
-
+    ProContact:ProContact,
+    TimeSlot:TimeSlot,
+    ScheduledJobDetails:ScheduledJobDetails
 
 
 
@@ -264,7 +266,7 @@ const AuthStack = createStackNavigator({
 
 }, {
 
-    initialRouteName: 'ProviderTab',
+    initialRouteName: 'ScheduledJobDetails',
 
 
     headerMode: 'none'
