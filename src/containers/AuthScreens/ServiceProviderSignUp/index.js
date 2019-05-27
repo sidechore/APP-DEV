@@ -9,15 +9,26 @@ import {Header, Image,CheckBox } from "react-native-elements";
 
 
 
+
+
 export default class ServiceProviderSignUp extends Component {
 
 
     constructor(props) {
         super(props);
         console.disableYellowBox = true;
-        this.state = {text: 'Useless Placeholder',};
+        this.state = {text: 'Useless Placeholder',
+            };
+        const {navigation} = this.props;
+        const itemId = navigation.getParam('User', 'NO-ID');
+        console.log("gettingUSer--->" + itemId);
+        this.state.userName=itemId;
 
     }
+
+    onSignUp = () => {
+        this.props.navigation.navigate('PhoneNumber', {User:this.state.userName});
+    };
     renderRowInput(item) {
         return <View style={{
             flexDirection: 'column', width: "100%",
@@ -272,20 +283,25 @@ export default class ServiceProviderSignUp extends Component {
                         })}
 
                     </View>
-                    {/*<View style={{flexDirection:"row",width:"100%",height:30,marginTop:20,marginStart:25}} >
-                        <Image source={require("../../../assets/images/arrowupred.png")} style={{resizeMode:"contain",
+                    < View style={{flexDirection:"row",width:"90%",height:30,marginTop:20,marginStart:25}} >
+                        <TouchableOpacity onPress={()=>this.Picker()}>
+                        <Image   source={require("../../../assets/images/arrowupred.png")} style={{resizeMode:"contain",
                         height:15,width:15
                         }}  />
-                        <Image source={require("../../../assets/images/arrowdownred.png")} style={{resizeMode:"contain",
+                        </TouchableOpacity>
+
+                        <Image  source={require("../../../assets/images/arrowdownred.png")} style={{resizeMode:"contain",
                             height:15,width:15,marginStart:20
                         }}  />
-
+                        <TouchableOpacity   style={{justifyContent:"center",alignItems:"flex-end",width:"80%"}} >
+                        <Text  style={{color:"red",fontSize:17,}} >{"Done"}</Text>
+                        </TouchableOpacity>
                     </View>
-*/}
+
 
                     <View style={{flexDirection:"column",width:"100%",height:100,backgroundColor:"#F3F3F3",marginTop:10}} >
                         <TouchableOpacity
-                            onPress={()=>this.props.navigation.navigate("PhoneNumber")}
+                            onPress={this.onSignUp}
 
                             style={{justifyContent: "center", alignItems: "center", marginTop: 25}}>
                             <View style={{
@@ -310,6 +326,7 @@ export default class ServiceProviderSignUp extends Component {
 
 
                 </ScrollView>
+
 
             </View>
 

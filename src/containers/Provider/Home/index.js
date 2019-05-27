@@ -83,7 +83,7 @@ export default class ProviderHome extends Component {
                             fontSize: 17
 
                         }}
-                    >{"Today's Scheduled Tasks"}</Text>
+                    >{"Today's Scheduled Jobs"}</Text>
                     </TouchableOpacity>
 
                 </View>
@@ -100,9 +100,9 @@ export default class ProviderHome extends Component {
                         marginTop:10,
                         marginBottom:10
                     }}>
-                        <Text style={{color:"black"}} >{"No tasks scheduled today."}</Text>
+                        <Text style={{color:"black"}} >{"No jobs scheduled today."}</Text>
                         <Text style={{marginTop:10,color:"#B8B8B8"}}>{"Make sure that your availability is set up date so"}</Text>
-                        <Text style={{color:"#B8B8B8"}}>{"that you can receive new tasks."}</Text>
+                        <Text style={{color:"#B8B8B8"}}>{"that you can receive new jobs."}</Text>
 
                     </View>
                     <TouchableOpacity style={{width:"100%",backgroundColor:"red",justifyContent:"center"

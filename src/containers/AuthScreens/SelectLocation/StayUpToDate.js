@@ -29,7 +29,20 @@ export default class StayUpToDate extends Component {
             Cpassword: "",
 
         };
+
+    const {navigation} = this.props;
+const itemId = navigation.getParam('User', 'NO-ID');
+console.log("gettingUSer--->" + itemId);
+this.state.userName=itemId;
+}
+onVerify = () => {
+    if(this.state.userName==="Client")
+    this.props.navigation.navigate('TabNavigator', {User:this.state.userName});
+    else{
+
+       this.props.navigation.navigate("ProviderTab", {User:this.state.userName})
     }
+};
 
     checkEmail(email) {
         if (this.validate(email)) {
@@ -336,7 +349,7 @@ export default class StayUpToDate extends Component {
                         {this.renderRowInputZip({
                             hintText: "Zip",
                         })}
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate("ProviderTab")}
+                        <TouchableOpacity onPress={this.onVerify}
                                           style={{
                                               justifyContent: "center",
                                               alignItems: "center",

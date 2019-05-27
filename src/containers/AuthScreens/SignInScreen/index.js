@@ -18,11 +18,20 @@ export default class SignInScreen extends Component {
             text: 'Useless Placeholder',
             showIconLeftEmail: false,
             showIconLeftpass: false,
-            Cross1:false,
-            Cross2:false,
-
+            userName: undefined,
         };
+        const {navigation} = this.props;
+        const itemId = navigation.getParam('User', 'NO-ID');
+        console.log("gettingUSer--->" + itemId);
+        this.state.userName=itemId;
     }
+    onSignUp = () => {
+        this.props.navigation.navigate('SignUpScreen', {User:this.state.userName});
+    };
+
+    onSignIn = () => {
+        this.props.navigation.navigate('SignInScreen', {User:this.state.userName});
+    };
 
 
     renderRowInputEmail(item) {
@@ -198,7 +207,7 @@ export default class SignInScreen extends Component {
                             <Text style={{color: "white", fontWeight: "bold"}}>{"Sign In"}</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate("ForgotPassword")}>
+                    <TouchableOpacity onPress={this.onSignUp}>
                         <View style={{
                             flexDirection: "column",
                             justifyContent: "center",
@@ -254,7 +263,7 @@ export default class SignInScreen extends Component {
                     }}>
                         <View style={{flexDirection: 'row'}}>
                             <Text style={{color: "black", fontSize: 15}}>{"Don't have an account?"}</Text>
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate("SignUpScreen")}>
+                            <TouchableOpacity onPress={this.onSignUp}>
                                 <Text style={{color: "red", fontSize: 15, fontWeight: "bold"}}>{"Sign Up"}</Text>
                             </TouchableOpacity>
 

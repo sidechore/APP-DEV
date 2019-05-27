@@ -6,6 +6,20 @@ import {SafeAreaView} from 'react-navigation';
 import {styles} from './styles';
 
 export default class InitialScreen extends Component {
+    onProviderSignin = () => {
+        this.props.navigation.navigate('SignInProvider',{User:"Provider"});
+    };
+
+    onClientSignin = () => {
+        this.props.navigation.navigate('SignInScreen',{User:"Client"});
+    };
+    onProviderSignup = () => {
+        this.props.navigation.navigate('ServiceProviderSignUp',{User:"Provider"});
+    };
+
+    onClientSignup = () => {
+        this.props.navigation.navigate('SignUpScreen',{User:"Client"});
+    };
 
     render() {
         return (
@@ -44,7 +58,7 @@ export default class InitialScreen extends Component {
                                         </Text>
                                     </View>
                                     <TouchableOpacity
-                                        onPress={()=>this.props.navigation.navigate("SignInScreen")}
+                                        onPress={this.onClientSignin}
 
                                         style={{justifyContent: "center", alignItems: "center", marginTop: 40}}>
                                         <View style={{
@@ -61,7 +75,7 @@ export default class InitialScreen extends Component {
                                         </View>
                                     </TouchableOpacity>
 
-                                    <TouchableOpacity  onPress={()=>this.props.navigation.navigate("SignUpScreen")}
+                                    <TouchableOpacity  onPress={this.onClientSignup}
                                                        style={{justifyContent: "center", alignItems: "center", marginTop: 20}}>
                                         <View style={{
                                             flexDirection: "column",
@@ -87,7 +101,7 @@ export default class InitialScreen extends Component {
                     </View>
                     <View style={{flexDirection: "row", width: "100%", marginStart: 40, marginEnd: 40,marginTop:40,marginBottom:60 }}>
 
-                        <TouchableOpacity  onPress={()=>this.props.navigation.navigate("SignInProvider")}
+                        <TouchableOpacity  onPress={this.onProviderSignin}
                                            style={{
                                                width: "40%",
 
@@ -112,7 +126,7 @@ export default class InitialScreen extends Component {
                             </View>
                         </TouchableOpacity>
 
-                        <TouchableOpacity onPress={()=>this.props.navigation.navigate("ServiceProviderSignUp")}
+                        <TouchableOpacity onPress={this.onProviderSignup}
                                           style={{width: "40%"}}>
                             <View style={{
                                 flexDirection: "row",

@@ -17,9 +17,23 @@ export default class SignInProvider extends Component {
         this.state = {
             text: 'Useless Placeholder',
             showIconLeftEmail: false,
-            showIconLeftpass: false
+            showIconLeftpass: false,
+            userName: undefined,
         };
+        const {navigation} = this.props;
+        const itemId = navigation.getParam('User', 'NO-ID');
+        console.log("gettingUSer--->" + itemId);
+        this.state.userName=itemId;
     }
+
+    onSignUp = () => {
+        this.props.navigation.navigate('ServiceProviderSignUp', {User:this.state.userName});
+    };
+
+    onSignIn = () => {
+        this.props.navigation.navigate('SignInProvider', {User:this.state.userName});
+    };
+
 
 
     renderRowInputEmail(item) {
@@ -191,6 +205,7 @@ export default class SignInProvider extends Component {
                             style={{width: "100%", height: 0.5, backgroundColor: Colors.lightGrey}}></View>
                     </View>
                     <TouchableOpacity
+                        onPress={this.onSignIn}
                         style={{justifyContent: "center", alignItems: "center", marginTop: 30, marginBottom: 40}}>
                         <View style={{
                             flexDirection: "row",
@@ -214,7 +229,7 @@ export default class SignInProvider extends Component {
                     }}>
                         <View style={{flexDirection: 'row'}}>
                             <Text style={{color: "black", fontSize: 15}}>{"Don't have an account?"}</Text>
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate("ServiceProviderSignUp")}>
+                            <TouchableOpacity onPress={this.onSignUp}>
                                 <Text style={{color: "red", fontSize: 15, fontWeight: "bold"}}>{"Sign Up"}</Text>
                             </TouchableOpacity>
 

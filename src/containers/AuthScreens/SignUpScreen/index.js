@@ -30,10 +30,16 @@ export default class SignUpScreen extends Component {
             Cross6:false,
             Cross7:false,
             Password:'',
-            Cpassword:"",
+            Cpassword:"",}
 
-        };
+            const {navigation} = this.props;
+        const itemId = navigation.getParam('User', 'NO-ID');
+        console.log("gettingUSer--->" + itemId);
+        this.state.userName=itemId;
     }
+        onSignUp = () => {
+            this.props.navigation.navigate('PhoneNumber', {User:this.state.userName});
+        };
 
     renderRowInputText(item) {
         return<View style={{flexDirection: 'column', width: "100%"}}>
@@ -406,7 +412,7 @@ export default class SignUpScreen extends Component {
                     outerContainerStyles={{backgroundColor: "white"}}
 
                     centerComponent={{
-                        text: "sethi",
+                        text: "Sign Up",
                         style: {fontWeight: "bold", color: "black", fontSize: 18}
                     }}
                     containerStyle={{
@@ -461,7 +467,7 @@ export default class SignUpScreen extends Component {
 
                     })}
                     <View style={{flexDirection:"column",width:"100%",backgroundColor:"white",marginTop:10}} >
-                    <TouchableOpacity onPress={()=>this.props.navigation.navigate("PhoneNumber")}  style={{justifyContent: "center", alignItems: "center", marginTop: 25}}>
+                    <TouchableOpacity onPress={this.onSignUp}  style={{justifyContent: "center", alignItems: "center", marginTop: 25}}>
                         <View style={{
                             flexDirection: "column",
                             backgroundColor: "#FA2021",

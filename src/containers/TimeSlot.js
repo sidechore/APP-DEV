@@ -173,8 +173,9 @@ export default class TimeSlot extends Component {
 
                                 justifyContent: 'center',
                                 alignItems: "center"
-                            }}>
+                            }}><TouchableOpacity onPress={()=>this.props.navigation.navigate("ServiceArea")} >
                                 <Text style={{color: "black", fontSize: 17}}>{this.state.monthSet}</Text>
+                            </TouchableOpacity>
                             </View>
                             <View style={{
                                 width: "10%",

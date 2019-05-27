@@ -68,10 +68,10 @@ export default class ProAbout extends Component {
                         {"Enter your bank account information to"}
                     </Text>
                     <Text style={{color:"black",fontSize:15}} >
-                        {"ensure that your tasker earnings are deposited"}
+                        {"ensure that your Service Pro earnings are"}
                     </Text>
                     <Text style={{color:"black",fontSize:15}} >
-                        {"directly into your account."}
+                        {"deposited directly into your account."}
                     </Text>
                 </View>
                 <View style={{flexDirection:"column",backgroundColor:"white"}}>

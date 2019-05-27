@@ -469,7 +469,7 @@ export default class Tasker extends Component {
                     })
                     }
                     {this.renderRowSort({
-                        txt: "# of Completed Tasks",
+                        txt: "# of Completed jobs",
                         img: require("../../../assets/images/radioUN.png")
                     })
                     }

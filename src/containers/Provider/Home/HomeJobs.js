@@ -85,7 +85,7 @@ export default class HomeJobs extends Component {
                                 fontSize: 17
 
                             }}
-                        >{"Today's Scheduled Tasks"}</Text>
+                        >{"Today's Scheduled Jobs"}</Text>
                     </TouchableOpacity>
 
                 </View>

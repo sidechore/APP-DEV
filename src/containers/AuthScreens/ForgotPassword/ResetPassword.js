@@ -21,7 +21,14 @@ export default class ResetPassword extends Component {
             Password:'',
             Cpassword:"",
         };
+        const {navigation} = this.props;
+        const itemId = navigation.getParam('User', 'NO-ID');
+        console.log("gettingUSer--->" + itemId);
+        this.state.userName=itemId;
     }
+    onVerify = () => {
+        this.props.navigation.navigate('ResetPassword', {User:this.state.userName});
+    };
 
     renderRowInputPassword(item) {
         return <View style={{flexDirection: 'column', width: "100%"}}>

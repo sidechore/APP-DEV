@@ -33,7 +33,7 @@ export default class ProProfile extends Component {
                             style={{marginStart: 5, fontSize: 15, color: "black",marginBottom:5}}>{item.text2}</Text>
                         {item.Greytext &&
                             <Text
-                                style={{marginStart: 5, fontSize: 13, textAlignVertical: "center"}}>{item.text1}</Text>
+                                style={{marginStart: 5,color:"#BABABA" ,fontSize: 13, textAlignVertical: "center"}}>{item.text1}</Text>
                         }
                         </View>
                     <View style={{width:"10%"}} >

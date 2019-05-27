@@ -31,7 +31,7 @@ export default class Promote extends Component {
                             style={{marginStart: 5, fontSize: 15, color: "black",marginBottom:5}}>{item.text2}</Text>
 
                         <Text
-                            style={{marginStart: 5, fontSize: 13, textAlignVertical: "center"}}>{item.text1}</Text>
+                            style={{marginStart: 5, fontSize: 13,color:"#BABABA" ,textAlignVertical: "center"}}>{item.text1}</Text>
 
                     </View>
                     <View style={{width:"10%"}} >
@@ -79,7 +79,7 @@ export default class Promote extends Component {
                     {this.renderRowProfile({
 
                         text2:"26SJX3",
-                        text1:"Give clients $10 of their next task",
+                        text1:"Give clients $10 off their next job",
                         Greytext:false
                     })}
                     {this.renderRowProfile({

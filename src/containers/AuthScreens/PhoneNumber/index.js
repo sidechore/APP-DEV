@@ -17,7 +17,14 @@ export default class PhoneNumber extends Component {
             Cross1:false,
             showIconLeftpass1: false,
         };
+        const {navigation} = this.props;
+        const itemId = navigation.getParam('User', 'NO-ID');
+        console.log("gettingUSer--->" + itemId);
+        this.state.userName=itemId;
     }
+    onSUbmit = () => {
+        this.props.navigation.navigate('VerifyPhoneNo', {User:this.state.userName});
+    };
 
     renderRowInputPhone(item) {
         return <View style={{flexDirection: 'column', width: "100%"}}>
@@ -158,7 +165,7 @@ export default class PhoneNumber extends Component {
 
                         </View>
 
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate("VerifyPhoneNo")}
+                            <TouchableOpacity onPress={this.onSUbmit}
                                               style={{justifyContent: "center", alignItems: "center", marginTop: 25}}>
                                 <View style={{
                                     flexDirection: "column",

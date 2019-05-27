@@ -57,6 +57,8 @@ import ProJobsDetailsInvoice from "./containers/Provider/MyJobs/ProJobsDetailsIn
 import ProContact from "./containers/Provider/MyJobs/ProContact";
 import TimeSlot from "./containers/TimeSlot"
 import ScheduledJobDetails from "./containers/Provider/Availability/ScheduledJobDetails"
+import Performance from "./containers/Provider/Performance/index.js"
+import ServicesAndRates from "./containers/Provider/Performance/ServicesAndRates"
 
 
 const TabNavigator = createBottomTabNavigator(
@@ -106,9 +108,9 @@ const TabNavigator = createBottomTabNavigator(
                     }
                 } else if (routeName === "Profile") {
                     if (focused) {
-                        return <Image source={require('./assets/images/Profile.png')} style={styles.icon}/>
+                        return <Image source={require('./assets/images/prProfle.png')} style={styles.icon}/>
                     } else {
-                        return <Image source={require('./assets/images/ProfileG.png')} style={styles.icon}/>
+                        return <Image source={require('./assets/images/pgprofile.png')} style={styles.icon}/>
                     }
                 }
             },
@@ -145,7 +147,7 @@ const ProviderTab= createBottomTabNavigator(
             }
         },
         Performance: {
-            screen:Profile,
+            screen:Performance,
             navigationOptions: {
                 tabBarLabel: "Performance"
             },
@@ -166,15 +168,15 @@ const ProviderTab= createBottomTabNavigator(
 
                 if (routeName === "Home") {
                     if (focused) {
-                        return <Image source={require('./assets/images/prhome.png')} style={styles.icon}/>
+                        return <Image source={require('./assets/images/Home.png')} style={styles.icon}/>
                     } else {
-                        return <Image source={require('./assets/images/pghome.png')} style={styles.icon}/>
+                        return <Image source={require('./assets/images/HomeG.png')} style={styles.icon}/>
                     }
                 } else if (routeName === "Jobs") {
                     if (focused) {
-                        return <Image source={require('./assets/images/prmyjobs.png')} style={styles.icon}/>
+                        return <Image source={require('./assets/images/Job.png')} style={styles.icon}/>
                     } else {
-                        return <Image source={require('./assets/images/pgmyjobs.png')} style={styles.icon}/>
+                        return <Image source={require('./assets/images/JobG.png')} style={styles.icon}/>
                     }
                 } else if (routeName === "Availability") {
                     if (focused) {
@@ -192,7 +194,7 @@ const ProviderTab= createBottomTabNavigator(
                 }
                 else if (routeName === "Profile") {
                     if (focused) {
-                        return <Image source={require('./assets/images/prprofile.png')} style={styles.icon}/>
+                        return <Image source={require('./assets/images/prProfle.png')} style={styles.icon}/>
                     } else {
                         return <Image source={require('./assets/images/pgprofile.png')} style={styles.icon}/>
                     }
@@ -258,7 +260,9 @@ const AuthStack = createStackNavigator({
     ProJobsDetailsInvoice:ProJobsDetailsInvoice,
     ProContact:ProContact,
     TimeSlot:TimeSlot,
-    ScheduledJobDetails:ScheduledJobDetails
+    ScheduledJobDetails:ScheduledJobDetails,
+    Performance:Performance,
+    ServicesAndRates:ServicesAndRates
 
 
 
@@ -266,7 +270,7 @@ const AuthStack = createStackNavigator({
 
 }, {
 
-    initialRouteName: 'ScheduledJobDetails',
+    initialRouteName: 'ProviderTab',
 
 
     headerMode: 'none'

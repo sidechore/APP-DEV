@@ -267,7 +267,7 @@ export default class PaymentUpdate extends Component {
                             <View style={{height: 1, backgroundColor: "#DADADA",width:"100%"}}></View>
                             <View  style={{width:"100%",justifyContent:"center",alignItems:"center",marginTop:20,marginBottom:20}}>
 
-                                <Text style={{color:"black",fontSize:12}} >{"You will not charged until your task is completed."}</Text>
+                                <Text style={{color:"black",fontSize:12}} >{"You will not charged until your job is completed."}</Text>
                                 <Text style={{color:"black",fontSize:12}} >{"A 7.5% Trust & Support fee will be added to your subtotal"}</Text>
 
                             </View>

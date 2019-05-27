@@ -17,8 +17,14 @@ export default class VerifyPhoneNo extends Component {
             Cross1:false,
             showIconLeftpass1: false,
         };
+        const {navigation} = this.props;
+        const itemId = navigation.getParam('User', 'NO-ID');
+        console.log("gettingUSer--->" + itemId);
+        this.state.userName=itemId;
     }
-
+    onVerify = () => {
+        this.props.navigation.navigate('EnableNotfi', {User:this.state.userName});
+    };
 
 
 
@@ -130,7 +136,7 @@ export default class VerifyPhoneNo extends Component {
 
                         })}
 
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate("EnableNotfi")}
+                        <TouchableOpacity onPress={this.onVerify()}
                                           style={{justifyContent: "center", alignItems: "center", marginTop: 25}}>
                             <View style={{
                                 flexDirection: "column",
