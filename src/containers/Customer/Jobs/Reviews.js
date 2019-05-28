@@ -21,6 +21,7 @@ export default class Jobs extends Component {
                     textContentType={"Email"}
                     placeholder={"(Optional)"}
                     keyboardType={"email-address"}
+                    ratingCount={5}
                 />
             </View>
             <View style={{height: 0.5, backgroundColor: "#52525D", marginStart: 25, marginEnd: 25,}}></View>

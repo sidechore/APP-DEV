@@ -59,6 +59,8 @@ import TimeSlot from "./containers/TimeSlot"
 import ScheduledJobDetails from "./containers/Provider/Availability/ScheduledJobDetails"
 import Performance from "./containers/Provider/Performance/index.js"
 import ServicesAndRates from "./containers/Provider/Performance/ServicesAndRates"
+import ServicesAndRate2 from "./containers/Provider/Performance/ServicesAndRate2"
+
 
 
 const TabNavigator = createBottomTabNavigator(
@@ -262,7 +264,9 @@ const AuthStack = createStackNavigator({
     TimeSlot:TimeSlot,
     ScheduledJobDetails:ScheduledJobDetails,
     Performance:Performance,
-    ServicesAndRates:ServicesAndRates
+    ServicesAndRates:ServicesAndRates,
+    ServicesAndRate2:ServicesAndRate2
+
 
 
 
@@ -270,7 +274,7 @@ const AuthStack = createStackNavigator({
 
 }, {
 
-    initialRouteName: 'ProviderTab',
+    initialRouteName: 'TabNavigator',
 
 
     headerMode: 'none'

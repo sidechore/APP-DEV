@@ -74,8 +74,10 @@ export default class ServicesAndRates extends Component {
                     }}>
 
                         <View style={{flexDirection: "column", width: "75%", justifyContent: "center",marginStart:10}}>
+                            <TouchableOpacity onPress={()=>this.props.navigation.navigate("ServicesAndRate2")} >
                             <Text
                                 style={{marginStart: 5, fontSize: 15, color: "black",marginBottom:5}}>{"Furniture Assembly"}</Text>
+                            </TouchableOpacity>
                             <Text
                                 style={{marginStart: 5,color:"#5A5D61" ,fontSize: 13, textAlignVertical: "center"}}>{"Suggested rate $21/hr"}</Text>
                         </View>
