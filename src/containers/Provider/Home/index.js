@@ -10,17 +10,10 @@ export default class ProviderHome extends Component {
         super(props);
         this.state = {
             text: 'Useless Placeholder',
-            JobsOpen: false,
-            JobClose: true,
+
         };
     }
-    Open(){
-        this.setState({JobsOpen:true});
-        this.setState({JobClose:false})
 
-
-
-    }
 
     render() {
         return (
@@ -51,8 +44,7 @@ export default class ProviderHome extends Component {
 
                 />
 
-
-                {this.state.JobClose &&  <View>
+                <View>
                     <View style={{
                 flexDirection: "column", width: "100%", backgroundColor: "white",
                 justifyContent: "center", alignItems: "center"
@@ -75,7 +67,7 @@ export default class ProviderHome extends Component {
                     marginBottom: 20
                 }}>
                     <TouchableOpacity
-                    onPress={()=>this.Open()}
+
                     >
                     <Text
                         style={{
@@ -105,20 +97,20 @@ export default class ProviderHome extends Component {
                         <Text style={{color:"#B8B8B8"}}>{"that you can receive new jobs."}</Text>
 
                     </View>
-                    <TouchableOpacity style={{width:"100%",backgroundColor:"red",justifyContent:"center"
+                    <TouchableOpacity onPress={()=>this.props.navigation.navigate("TimeSlot")}
+                        style={{width:"100%",backgroundColor:"red",justifyContent:"center"
                         ,alignItems:"center",borderBottomRightRadius:5,borderBottomLeftRadius:5,height:50,marginTop:20
                     }} >
-                        <Text style={{color:"white",fontSize:17}} >{"Set my Availability"}</Text>
+                        <Text style={{color:"white",fontSize:17}}  >{"Set my Availability"}</Text>
                     </TouchableOpacity>
 
                 </View>
-</View>}
-
-                {this.state.JobsOpen &&
-                    <HomeJobs/>
+</View>
 
 
-                }
+
+
+
 
             </View>
         )

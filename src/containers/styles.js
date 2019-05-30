@@ -6,11 +6,6 @@ export const styles = StyleSheet.create({
         flex: 1,
         width:"100%",
         backgroundColor:"#F3F3F3"
-
-
-
-
-
     },
     backgroundImg: {
         resizeMode: 'cover'

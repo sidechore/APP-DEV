@@ -54,6 +54,31 @@ export default class HomeJobs extends Component {
     render() {
         return (
             <View style={styles.container}>
+                <Header
+                    statusBarProps={{barStyle: "light-content"}}
+                    barStyle="light-content" // or directly
+                    style={{backgroundColor: "white"}}
+                    outerContainerStyles={{backgroundColor: "white"}}
+
+                    centerComponent={{
+                        text: "Home",
+                        style: {fontWeight: "bold", color: "black", fontSize: 18}
+                    }}
+                    containerStyle={{
+                        backgroundColor: "white",
+                        justifyContent: "space-around"
+                    }}
+                    leftComponent={
+                        <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+                            <Image source={require("../../../assets/images/arrowback.png")} style={{
+                                marginStart: 10, height: 14, width: 14, resizeMode: "contain"
+
+
+                            }}/></TouchableOpacity>
+                    }
+
+
+                />
                 <View style={{
                     flexDirection: "column", width: "100%", backgroundColor: "white",
                     justifyContent: "center", alignItems: "center"
@@ -92,7 +117,9 @@ export default class HomeJobs extends Component {
                 <View style={{width:"90%",
                 flexDirection:"column",marginStart:20
                 }}>
+                    <TouchableOpacity  onPress={()=>this.props.navigation.navigate("ScheduledJobDetails")} >
                     {this.renderrowJobs()}
+                    </TouchableOpacity>
                     {this.renderrowJobs()}
                     {this.renderrowJobs()}
                     {this.renderrowJobs()}
