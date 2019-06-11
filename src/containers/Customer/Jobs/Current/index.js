@@ -13,6 +13,8 @@ export default class Current extends Component {
             text: 'Useless Placeholder',
             JobsOpen: false,
             JobClose: true,
+
+        
         };
     }
     onPrss(){
@@ -23,7 +25,8 @@ export default class Current extends Component {
 
     renderJobsOpen(item) {
 
-        return <View style={{flexDirection: "row", width: "100%", backgroundColor: "white", marginTop: 20}}>
+        return <View style={{flexDirection:"column"}} >
+        <View style={{flexDirection: "row", width: "100%", backgroundColor: "white", marginTop: 20}}>
             <View style={{
                 flexDirection: "column", width: "40%", justifyContent: "center",
                 alignItems: "center", marginTop: 20, marginBottom: 30
@@ -61,7 +64,19 @@ export default class Current extends Component {
                     />
                     <Text style={{color: "#606366"}}>{"Carpenter Village"}</Text>
                 </View>
+                
             </View>
+            
+        </View>
+        {item.Tip &&
+                <TouchableOpacity onPress={()=>this.props.navigation.navigate("Tip")} 
+                style={{flexDirection:"column",width:"100%",justifyContent:"center",
+                alignItems:"center",backgroundColor:"red",height:50,borderBottomEndRadius:5,borderBottomStartRadius:5}}>
+                <Text 
+                style={{color:"white",fontSize:17,fontWeight:"bold"}}
+                 >{"Add a Tip"}</Text>
+                  </TouchableOpacity>
+                }
 
         </View>
 
@@ -106,13 +121,15 @@ export default class Current extends Component {
                     <Text style={{color: "red", fontSize: 15}}>March 2019</Text>
 
 
-                    {this.renderJobsOpen()}
-                    {this.renderJobsOpen()}
+                    {this.renderJobsOpen({
+                     Tip:true
+                    })}
+                    {this.renderJobsOpen({ Tip:false})}
                     <Text style={{color: "red", fontSize: 15, marginTop: 15}}>November 2018</Text>
 
-                    {this.renderJobsOpen()}
-                    {this.renderJobsOpen()}
-                    {this.renderJobsOpen()}
+                    {this.renderJobsOpen({ Tip:false})}
+                    {this.renderJobsOpen({ Tip:false})}
+                    {this.renderJobsOpen({ Tip:false})}
 
                 </View>
                 }

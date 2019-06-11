@@ -313,7 +313,7 @@ componentDidMount() {
                                 justifyContent: "center",
                                 alignItems: "center",
                             }}>
-                                <Text style={{color: "white", fontSize: 18}}>{"Email"}</Text>
+                                <Text style={{color: "white", fontSize: 18}}>{"Message"}</Text>
                             </View>
                         </TouchableOpacity>
 

@@ -19,20 +19,24 @@ export default class SelectLocation extends Component {
             showIconLeftEmail: false,
             Cross1: false
         };
+        const {navigation} = this.props;
+        const itemId = navigation.getParam('User', 'NO-ID');
+        console.log("gettingUSer--->" + itemId);
+        this.state.userName = itemId;
     }
-
+    onVerify = () => {
+        this.RBSheet.close();
+        this.props.navigation.navigate('StayUpToDate', {User: this.state.userName});
+    };
 
 
     renderRowInputSheet(item) {
         return <View style={{flexDirection: "column", justifyContent: "center", alignItems: "center", width: "100%"}}>
             <View style={{height: 1.5, width: "100%", backgroundColor: "#DADADA", marginTop: 15}}></View>
-            <TouchableOpacity style={{marginTop: 10,}} onPress={() => {
-                this.RBSheet.close();
-                this.props.navigation.navigate("StayUpToDate")
-            }}>
+            <View style={{marginTop: 10,}} >
                 <Text style={{color: "red", fontSize: 15}}>
                     {item.text}
-                </Text></TouchableOpacity>
+                </Text></View>
         </View>
     }
     renderGooglePlacesInput = () => {
@@ -209,9 +213,11 @@ export default class SelectLocation extends Component {
                                         color: "black"
                                     }}>{"notify you when SideChore becomes"}</Text>
                                     <Text style={{fontSize: 16, color: "black"}}>{"availaible?"}</Text>
+                                <TouchableOpacity onPress={this.onVerify} >
                                     {this.renderRowInputSheet({
                                         text: "Notify me",
                                     })}
+                                </TouchableOpacity>
                                     {this.renderRowInputSheet({
                                         text: "Browse the app",
                                     })}

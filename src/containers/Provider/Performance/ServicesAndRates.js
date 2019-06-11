@@ -51,7 +51,7 @@ export default class ServicesAndRates extends Component {
 
                         <View style={{justifyContent:"center",alignItems:'center',width:"80%",marginBottom:20}}>
                             <View style={{justifyContent:"center",alignItems:'center'}}>
-                            <Text style={{color:"black",textAlign:"center"}} >{"Uh oh! One or more of your job rates is above or below the rates we recommend for providers in your area with your experience. please update asap to increase the chance that you will get booked for the job."}</Text>
+                            <Text style={{color:"black",textAlign:"center",lineHeight: 20,}} >{"Uh oh! One or more of your job rates is above or below the rates we recommend for providers in your area with your experience. please update asap to increase the chance that you will get booked for the job."}</Text>
                             </View>
                             </View>
 
@@ -62,7 +62,7 @@ export default class ServicesAndRates extends Component {
 <View style={{flexDirection:"column",width:"100%",justifyContent:"center",alignItems:"center"}} >
 
                 <View style={{alignItems: "center", width: "85%",backgroundColor:"white", marginTop: 20, borderRadius: 5,marginBottom:60}}>
-                    <Text style={{color:"red",fontSize:17,marginTop:10,marginBottom:10}} >{"Current Skills"}</Text>
+                    <Text style={{color:"red",fontSize:17,marginTop:10,marginBottom:10}} >{"Current Services"}</Text>
 
                     <View style={{
                         flexDirection: "row",

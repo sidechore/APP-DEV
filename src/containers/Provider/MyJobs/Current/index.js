@@ -4,7 +4,8 @@ import {styles} from './styles';
 import {Header, Image} from "react-native-elements";
 import RBSheet from "react-native-raw-bottom-sheet";
 import Modal from "react-native-modal";
-
+let latCircle = 0;
+let longCircle = 0;
 export default class Current extends Component {
     constructor(props) {
         super(props);
@@ -15,11 +16,16 @@ export default class Current extends Component {
             JobClose: true,
         };
     }
-    onPrss(){
+    async onPrss(){
 
-        this.props.navigation.navigate("TaskerProfile")
 
-    }
+            this.props.navigation.navigate("TaskerProfile")
+
+        }
+
+
+
+
 
     renderJobsOpen(item) {
 

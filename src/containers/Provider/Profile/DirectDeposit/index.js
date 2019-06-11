@@ -93,8 +93,8 @@ export default class ProAbout extends Component {
                         />
                         <View style={{flexDirection:"column",width:"100%"}} >
                         <Text style={{color:"red",fontSize:15,marginStart:20}} >{"Your personal information is confidential"}</Text>
-                        <Text style={{color:"red",fontSize:15,marginStart:20}} >{"and protected in accordance with our pri-"}</Text>
-                            <Text style={{color:"red",fontSize:15,marginStart:20}} >{"vacy policy."}</Text>
+                        <Text style={{color:"red",fontSize:15,marginStart:20}} >{"and protected in accordance with our"}</Text>
+                            <Text style={{color:"red",fontSize:15,marginStart:20}} >{"privacy policy."}</Text>
 
 
 

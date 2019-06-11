@@ -3,11 +3,31 @@ import React, {Component} from 'react';
 import {Text, View, TouchableOpacity, Dimensions,ScrollView} from 'react-native';
 import {styles} from './styles';
 import {isUserWhitespacable} from "@babel/types";
+let latCircle = 0;
+let longCircle = 0;
+let description=0;
 export default class HomeJobs extends Component {
     constructor(props) {
         super(props);
     }
 
+    async onPress(){
+        await fetch("https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyD5YuagFFL0m0IcjCIvbThN25l0m2jMm2w&components=postal_code:27615")
+            .then(function (response) {
+                return response.json();
+            }).then(function (myJson) {
+            console.log("LL" + JSON.stringify(myJson));
+            latCircle = myJson.results[0].geometry.location.lat;
+            longCircle = myJson.results[0].geometry.location.lng;
+            description=myJson.results[0].formatted_address;
+            //    this.props.navigation.navigate("ScheduledJobDetails",{latCircle,longCircle})
+                console.log("longlat" + latCircle);
+                console.log("longlat" + longCircle);
+                console.log("longlat" + description);
+        });
+       this.props.navigation.navigate("ScheduledJobDetails",{latCi:latCircle,longCi:longCircle,descrp:description})
+
+    }
 
     renderrowJobs(item){
 
@@ -117,7 +137,7 @@ export default class HomeJobs extends Component {
                 <View style={{width:"90%",
                 flexDirection:"column",marginStart:20
                 }}>
-                    <TouchableOpacity  onPress={()=>this.props.navigation.navigate("ScheduledJobDetails")} >
+                    <TouchableOpacity  onPress={()=>this.onPress()} >
                     {this.renderrowJobs()}
                     </TouchableOpacity>
                     {this.renderrowJobs()}

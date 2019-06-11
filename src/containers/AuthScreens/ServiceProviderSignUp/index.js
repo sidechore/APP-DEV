@@ -5,6 +5,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {styles} from './styles';
 import {Header, Image, CheckBox} from "react-native-elements";
 import RNPickerSelect from 'react-native-picker-select';
+import Colors from "../../../themes/colors";
 
 
 const BType = [
@@ -27,7 +28,7 @@ export default class ServiceProviderSignUp extends Component {
         super(props);
         console.disableYellowBox = true;
         this.state = {
-            text: 'Useless Placeholder', favSport1: undefined,
+            text: 'Useless Placeholder', favSport1: undefined,freeLancer:true,
         };
         const {navigation} = this.props;
         const itemId = navigation.getParam('User', 'NO-ID');
@@ -96,7 +97,21 @@ export default class ServiceProviderSignUp extends Component {
 
 
     }
+SelectVal(value){
+        this.setState({favSport1:value});
+    if(value==="Freelancer"){
 
+        this.setState({freeLancer:false})
+    }
+    else if(value==="Registered Business"){
+
+        this.setState({freeLancer:true})
+        
+    }
+
+
+
+}
     renderRowSelect(item) {
         return <View style={{
             flexDirection: 'column', width: "100%",
@@ -107,11 +122,9 @@ export default class ServiceProviderSignUp extends Component {
                     <RNPickerSelect
                         placeholder={item.placeholder}
                         items={BType}
-                        onValueChange={(value) => {
-                            this.setState({
-                                favSport1: value,
-                            });
-                        }}
+                        onValueChange={(value) => this.SelectVal(value)
+
+                        }
                         onUpArrow={() => {
                             this.inputRefs.favSport1.focus();
                         }}
@@ -222,6 +235,8 @@ export default class ServiceProviderSignUp extends Component {
                         })}
 
                     </View>
+                    {this.state.freeLancer &&
+                        <View>
                     <View style={{
                         justifyContent: "center",
                         alignItems: "center",
@@ -237,92 +252,94 @@ export default class ServiceProviderSignUp extends Component {
                         }}>{"Company Information"}</Text>
 
                     </View>
-                    <View style={{backgroundColor: "white", width: "100%"}}>
-                        {this.renderRowInput({
-                            hintText: "Company Name",
-                            showIC: false,
-                            showIC2: false,
+                    < View style={{backgroundColor: "white", width: "100%"}}>
+                    {this.renderRowInput({
+                        hintText: "Company Name",
+                        showIC: false,
+                        showIC2: false,
 
 
-                        })}
-                        {this.renderRowInput({
-                            hintText: "Street Address",
-                            showIC: false,
-                            showIC2: false,
+                    })}
+                    {this.renderRowInput({
+                        hintText: "Street Address",
+                        showIC: false,
+                        showIC2: false,
 
 
-                        })}
-                        {this.renderRowInput({
-                            hintText: "City",
-                            showIC: false,
-                            showIC2: false,
+                    })}
+                    {this.renderRowInput({
+                        hintText: "City",
+                        showIC: false,
+                        showIC2: false,
 
 
-                        })}
-                        {this.renderRowInput({
-                            hintText: "State",
-                            showIC: false,
-                            showIC2: false,
+                    })}
+                    {this.renderRowInput({
+                        hintText: "State",
+                        showIC: false,
+                        showIC2: false,
 
 
-                        })}
-                        {this.renderRowInput({
-                            hintText: "Zip Code",
-                            showIC: false,
-                            showIC2: false,
+                    })}
+                    {this.renderRowInput({
+                        hintText: "Zip Code",
+                        showIC: false,
+                        showIC2: false,
 
 
-                        })}
-                        {this.renderRowInput({
-                            hintText: "Online Review Link (yelp, google, facebook, etc)",
-                            showIC: false,
-                            showIC2: false,
+                    })}
+                    {this.renderRowInput({
+                        hintText: "Online Review Link (yelp, google, facebook, etc)",
+                        showIC: false,
+                        showIC2: false,
 
 
-                        })}
-                        {this.renderRowInput({
-                            hintText: "Company Website",
-                            showIC: false,
-                            showIC2: false,
+                    })}
+                    {this.renderRowInput({
+                        hintText: "Company Website",
+                        showIC: false,
+                        showIC2: false,
 
 
-                        })}
-                        {this.renderRowInput({
-                            hintText: "Years in business",
-                            showIC: true,
-                            showIC2: true,
+                    })}
+                    {this.renderRowInput({
+                        hintText: "Years in business",
+                        showIC: true,
+                        showIC2: true,
 
 
-                        })}
-                        {this.renderRowInput({
-                            hintText: "Number of Employees",
+                    })}
+                    {this.renderRowInput({
+                        hintText: "Number of Employees",
 
-                            showIC: false,
-                            showIC2: false,
+                        showIC: false,
+                        showIC2: false,
 
 
-                        })}
+                    })}
 
                         <View style={{
-                            flexDirection: "column",
-                            width: "100%",
-                            marginStart: 25,
-                            marginEnd: 20,
-                            marginTop: 20,
-                            marginBottom: 20
-                        }}>
-                            <Text>{"Do you have General Liability Insurance?"}</Text>
-                            <View style={{flexDirection: "row", width: "100%", right: 15}}>
-                                {this.renderRowWithChecks({title: "Yes", checked: false})}
-                                {this.renderRowWithChecks({title: "No", checked: true})}
+                        flexDirection: "column",
+                        width: "100%",
+                        marginStart: 25,
+                        marginEnd: 20,
+                        marginTop: 20,
+                        marginBottom: 20
+                    }}>
+                        <Text>{"Do you have General Liability Insurance?"}</Text>
+                        <View style={{flexDirection: "row", width: "100%", right: 15}}>
+                        {this.renderRowWithChecks({title: "Yes", checked: false})}
+                        {this.renderRowWithChecks({title: "No", checked: true})}
 
-                            </View>
+                        </View>
 
 
                         </View>
 
 
-                    </View>
+                        </View>
+                        </View>
+                    }
                     <View style={{
                         justifyContent: "center",
                         alignItems: "center",
@@ -386,17 +403,8 @@ export default class ServiceProviderSignUp extends Component {
 
 
 
-                    <View style={{
-                        flexDirection: "column",
-                        width: "100%",
-                        height: 100,
-                        backgroundColor: "#F3F3F3",
-                        marginTop: 10
-                    }}>
-                        <TouchableOpacity
-                            onPress={this.onSignUp}
-
-                            style={{justifyContent: "center", alignItems: "center", marginTop: 25}}>
+                    <View style={{flexDirection:"column",width:"100%",backgroundColor:"white",}} >
+                        <TouchableOpacity onPress={this.onSignUp}  style={{justifyContent: "center", alignItems: "center", marginTop: 25}}>
                             <View style={{
                                 flexDirection: "column",
                                 backgroundColor: "#FA2021",
@@ -412,11 +420,53 @@ export default class ServiceProviderSignUp extends Component {
 
 
                             </View>
+                        </TouchableOpacity   >
+                        <View style={{marginTop: 30, width: "100%", flexDirection: "row", alignItems: "center"}}>
+                            <View style={{width: "40%", height: 0.5, backgroundColor: Colors.lightGrey}}></View>
+
+                            <View style={{
+                                backgroundColor: "white",
+                                justifyContent: "center",
+                                alignItems: 'center',
+                                borderRadius: 20,
+                                width: 40,
+                                height: 40,
+                                marginStart: 10,
+                                marginEnd: 10,
+                                shadowColor: '#000',
+                                shadowOffset: {width: 2, height: 2},
+                                shadowOpacity: 1,
+                                shadowRadius: 10,
+                                elevation: 10
+                            }}><Text style={{color: "black"}}>{"OR"}</Text>
+                            </View>
+                            <View
+                                style={{width: "100%", height: 0.5, backgroundColor: Colors.lightGrey}}></View>
+                        </View>
+                        <TouchableOpacity
+                            style={{justifyContent: "center", alignItems: "center", marginTop: 30, marginBottom: 10}}>
+                            <View style={{
+                                flexDirection: "row",
+                                backgroundColor: "#4E598F",
+                                width: "85%",
+                                height: 50,
+                                justifyContent: "center",
+                                alignItems: "center",
+                                borderRadius: 7
+                            }}>
+                                <Image source={require("../../../assets/images/facebook.png")}
+                                       style={{resizeMode: "contain", width: 25, height: 25, marginEnd: 5}}/>
+                                <Text style={{color: "white", fontWeight: "bold"}}>{"Sign Up with Facebook"}</Text>
+                            </View>
                         </TouchableOpacity>
 
 
-                    </View>
+                        <View style={{flexDirection:"row",justifyContent:"center",alignItems:"center",marginTop:20,backgroundColor:"#F3F3F3",height:70  }} >
+                            <Text style={{color:'black'}} >{"Already have an account?"}</Text>
+                            <Text style={{color:"red", fontWeight:"bold" }}>{" Sign In"}</Text>
+                        </View>
 
+                    </View>
 
                 </ScrollView>
 

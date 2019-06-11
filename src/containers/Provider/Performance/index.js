@@ -44,9 +44,10 @@ export default class Performance extends Component {
                 <View style={{flexDirection:"column",justifyContent:"center",alignItems:"center",width:"100%",marginBottom:40}} >
                     <View  style={{flexDirection:"column",justifyContent:"center",alignItems:"center",width:"85%",
                     backgroundColor:"white",marginTop:20,borderRadius:5}}>
-                        <View style={{justifyContent:"center",alignItems:'center',width:"100%",marginTop:10,marginBottom:10}}>
+                        <TouchableOpacity onPress={()=>this.props.navigation.navigate("Invoice")}
+                         style={{justifyContent:"center",alignItems:'center',width:"100%",marginTop:10,marginBottom:10}}>
                         <Text style={{color:"red",fontSize:17}} >{"April Invoices"}</Text>
-                        </View>
+                        </TouchableOpacity>
                         <View style={{width:"100%",justifyContent:"center",alignItems:"center",flexDirection:"column",}}>
                             <View style={{height: 0.5,width:"100%" ,backgroundColor: "#DADADA",}}></View>
                             <View style={{flexDirection:"row",width:"100%",justifyContent:"center",alignItems:"center"}}>
@@ -73,9 +74,9 @@ export default class Performance extends Component {
                     </View>
                     <View  style={{flexDirection:"column",justifyContent:"center",alignItems:"center",width:"85%",
                         backgroundColor:"white",marginTop:20,borderRadius:5}}>
-                        <View style={{justifyContent:"center",alignItems:'center',width:"100%",marginTop:10,marginBottom:10}}>
+                        <TouchableOpacity onPress={()=>this.props.navigation.navigate("PerformanceSummary")} style={{justifyContent:"center",alignItems:'center',width:"100%",marginTop:10,marginBottom:10}}>
                             <Text style={{color:"red",fontSize:17}} >{"Performance Summary"}</Text>
-                        </View>
+                        </TouchableOpacity>
                         <View style={{width:"100%",justifyContent:"center",alignItems:"center",flexDirection:"column",}}>
                             <View style={{height: 0.5,width:"100%" ,backgroundColor: "#DADADA",}}></View>
                             <View style={{flexDirection:"row",width:"100%",justifyContent:"center",alignItems:"center"}}>
@@ -133,15 +134,15 @@ export default class Performance extends Component {
                     </View>
                     <View  style={{flexDirection:"column",justifyContent:"center",alignItems:"center",width:"85%",
                         backgroundColor:"white",marginTop:20,borderRadius:5}}>
-                        <View style={{justifyContent:"center",alignItems:'center',width:"100%",marginTop:10,marginBottom:10}}>
-                            <Text onPress={()=>this.props.navigation.navigate("ServicesAndRates")} style={{color:"red",fontSize:17}} >{"Services & Rates"}</Text>
-                        </View>
+                        <TouchableOpacity onPress={()=>this.props.navigation.navigate("ServicesAndRates")} style={{justifyContent:"center",alignItems:'center',width:"100%",marginTop:10,marginBottom:10}}>
+                            <Text  style={{color:"red",fontSize:17}} >{"Services & Rates"}</Text>
+                        </TouchableOpacity>
                         <View style={{width:"100%",justifyContent:"center",alignItems:"center",flexDirection:"column",}}>
                             <View style={{height: 0.5,width:"100%" ,backgroundColor: "#DADADA",}}></View>
                             <View style={{flexDirection:"row",width:"100%",justifyContent:"center",alignItems:"center"}}>
                                 <View style={{flexDirection:"column",width:"25%",justifyContent:"center",alignItems:"center",marginTop:10,marginBottom:10}} >
                                     <Text style={{color:"#646464",fontSize:25}}>{"2"}</Text>
-                                    <Text style={{color:"#B8B8B8",fontSize:11,marginTop:5}}  >{"SKILLS"}</Text>
+                                    <Text style={{color:"#B8B8B8",fontSize:11,marginTop:5}}  >{"SERVICES"}</Text>
                                 </View>
                                 <View style={{height:"100%",width:0.5 ,backgroundColor: "#DADADA", }}></View>
                                 <View style={{flexDirection:"column",width:"75%",justifyContent:"center",alignItems:"center",marginTop:10,marginBottom:10}} >

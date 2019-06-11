@@ -17,13 +17,6 @@ export default class SearchBar extends Component {
 
     }
 
-
-
-
-
-
-
-
     renderGooglePlacesInput = () => {
         return (
             <GooglePlacesAutocomplete
@@ -43,8 +36,6 @@ export default class SearchBar extends Component {
                     this.setState({places:this.state.places});
                     console.log("hello2"+JSON.stringify(this.state.places));
                 }}
-
-
                 getDefaultValue={() => ''}
 
 

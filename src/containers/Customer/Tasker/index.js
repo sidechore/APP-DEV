@@ -191,14 +191,14 @@ export default class Tasker extends Component {
                                           <View style={{flexDirection: "column",}}>
                                               {item.Crown &&
                                               <View style={{flexDirection: "row", alignItems: "center"}}>
-                                                  <Image source={require("../../../assets/images/crown.png")}
+                                                  <Image source={require("../../../assets/images/tickred.png")}
                                                          style={{
                                                              resizeMode: "contain",
                                                              height: 14,
                                                              width: 14,
                                                              marginEnd: 5
                                                          }}/>
-                                                  <Text style={{color: "red"}}>{"Elite Service Pro"} </Text>
+                                                  <Text style={{color: "red"}}>{"Best Match"} </Text>
 
                                               </View>
                                               }

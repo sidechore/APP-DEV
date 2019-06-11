@@ -1,48 +1,83 @@
 import React, {Component} from 'react';
-import {ImageBackground, Text, View, TouchableOpacity, TextInput,Dimensions,ScrollView} from 'react-native';
+import {ImageBackground, Text, View, TouchableOpacity, TextInput, Dimensions, ScrollView} from 'react-native';
 import {SafeAreaView} from 'react-navigation';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {styles} from './styles';
 import {Header, Image} from "react-native-elements";
 import RBSheet from "react-native-raw-bottom-sheet";
 import Modal from "react-native-modal";
-import MapView, { Marker, ProviderPropType } from 'react-native-maps';
+import MapView, {Marker, ProviderPropType} from 'react-native-maps';
 import Redmarker from '../../../assets/images/markerred.png';
-const { width, height } = Dimensions.get('window');
+
+const {width, height} = Dimensions.get('window');
+const RADIUS = 2609.34;
 
 const ASPECT_RATIO = width / height;
-const LATITUDE = 37.78825;
-const LONGITUDE = -122.4324;
+const LATITUDE = 35.8861371;
+const LONGITUDE = -78.64554749999999;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 let id = 0;
+
+
+
 export default class ScheduledJobDetails extends Component {
     constructor(props) {
+
         super(props);
+        const {navigation} = this.props;
+        const Latci = navigation.getParam('latCi');
+        const Longci = navigation.getParam('longCi');
+        const descr=navigation.getParam('descrp');
+
         console.disableYellowBox = true;
         this.state = {
+               descr:descr,
+
             region: {
                 latitude: LATITUDE,
                 longitude: LONGITUDE,
                 latitudeDelta: LATITUDE_DELTA,
                 longitudeDelta: LONGITUDE_DELTA,
             },
+            LatCrcl: null,
+            LongCrcl: null,
+
+            LATLNG: {
+                latitude: Latci,
+                longitude:Longci
+            },
             markers: [],
         };
 
         this.onMapPress = this.onMapPress.bind(this);
+
+
+
+
     }
-    onMapPress(e) {
+    componentDidMount() {
         this.setState({
             markers: [
                 ...this.state.markers,
                 {
-                    coordinate: e.nativeEvent.coordinate,
+                    coordinate: this.state.LATLNG,
                     key: `foo${id++}`,
                 },
             ],
         });
+        this.mapRef.fitToSuppliedMarkers(
+            this.state.markers,
+            true,
+        );
+
     }
+
+
+    onMapPress(e) {
+
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -69,27 +104,36 @@ export default class ScheduledJobDetails extends Component {
                             }}/></TouchableOpacity>
                     }/>
                 <ScrollView>
-                    <View style={{flexDirection:"column",width:"100%"}}>
-                        <View style={{flexDirection:"row",width:"100%",marginTop:15,marginStart:20}}>
+                    <View style={{flexDirection: "column", width: "100%"}}>
+                        <View style={{flexDirection: "row", width: "100%", marginTop: 15, marginStart: 20}}>
                             <Image source={require("../../../assets/images/pimg1.png")}
-                                   style={{resizeMode:"contain",width:60,height:60,}}
+                                   style={{resizeMode: "contain", width: 60, height: 60,}}
                             />
-                            <View style={{flexDirection:"column",width:"100%",
-                                marginStart:10,marginTop:15
+                            <View style={{
+                                flexDirection: "column", width: "100%",
+                                marginStart: 10, marginTop: 15
                             }}>
-                                <Text style={{color:"black",fontWeight:"bold",fontSize:15,marginBottom:10}} >{"John Doe"}</Text>
-                                <Text  style={{color:"#787878",fontSize:15}} >{"7800 Alison CT"}</Text>
-                                <Text style={{color:"#787878",fontSize:15,marginBottom:10}} >{"Raleigh NC 27615"}</Text>
-                                <Text style={{color:"#787878",fontSize:12}} >{"Scheduled 2/20"}</Text>
-                                <Text style={{color:"red",fontSize:13}} >{"02:00 PM - 05:00 PM"}</Text>
+                                <Text style={{
+                                    color: "black",
+                                    fontWeight: "bold",
+                                    fontSize: 15,
+                                    marginBottom: 10
+                                }}>{"John Doe"}</Text>
+                                <Text style={{color: "#787878", fontSize: 15}}>{"7800 Alison CT"}</Text>
+                                <Text style={{
+                                    color: "#787878",
+                                    fontSize: 15,
+                                    marginBottom: 10
+                                }}>{"Raleigh NC 27615"}</Text>
+                                <Text style={{color: "#787878", fontSize: 12}}>{"Scheduled 2/20"}</Text>
+                                <Text style={{color: "red", fontSize: 13}}>{"02:00 PM - 05:00 PM"}</Text>
                             </View>
 
                         </View>
 
 
                     </View>
-                    <View style={{width:"100%",height:150,marginTop:30}}>
-
+                    <View style={{width: "100%", height: 200, marginTop: 30,justifyContent:"center",alignItems:"center"}}>
 
 
                         <MapView
@@ -97,36 +141,65 @@ export default class ScheduledJobDetails extends Component {
                             style={styles.map}
                             initialRegion={this.state.region}
                             onPress={this.onMapPress}
+                            ref={(ref) => { this.mapRef = ref }}
+
                         >
                             {this.state.markers.map(marker => (
                                 <Marker
-                                    title={marker.key}
+                                    title={this.state.descr}
+                                    description={"1.5 MILES AROUND"}
                                     image={Redmarker}
                                     key={marker.key}
-                                    coordinate={marker.coordinate}
+                                    coordinate={this.state.LATLNG}
                                 />
-                            ))}
-                        </MapView>
-                        <View style={{backgroundColor:"white",justifyContent:"center",alignItems:"center",
-                            flexDirection:"row",}} >
-                            <View style={{width:"50%",justifyContent:"center",alignItems:'center',marginTop:10,marginBottom:10}}>
-                                <Text
-                                    style={{fontSize:15,fontWeight:"bold",color:"black"}}
-                                >{"Furniture Assembly"}</Text>
-                            </View>
-                            <View style={{width:"35%",justifyContent:"center",alignItems:'center',marginTop:10,marginBottom:10,
-                                marginStart:40
-                            }}>
-                                <Text
-                                    style={{fontSize:16,fontWeight:"bold",color:"black"}}
-                                >{"$25 / hr"}</Text>
-                            </View>
 
-                        </View>
+
+                            ))}
+                            <MapView.Circle
+                                key={(this.state.longitude + this.state.latitude).toString()}
+                                center={this.state.LATLNG}
+                                radius={RADIUS}
+                                strokeWidth={2}
+                                strokeColor={'red'}
+                                fillColor={'rgba(255,0,0,0.2)'}
+
+                            />
+                        </MapView>
+
                     </View>
-                    <View style={{justifyContent:"center",alignItems:"center"
-                    }} >
-                        <TouchableOpacity onPress={()=>this.props.navigation.navigate("TimeSlot")}
+                    <View style={{
+                        backgroundColor: "white", justifyContent: "center", alignItems: "center",
+                        flexDirection: "row",
+                    }}>
+                        <View style={{
+                            width: "50%",
+                            justifyContent: "center",
+                            alignItems: 'center',
+                            marginTop: 10,
+                            marginBottom: 10
+                        }}>
+                            <Text
+                                style={{fontSize: 15, fontWeight: "bold", color: "black"}}
+                            >{"Furniture Assembly"}</Text>
+                        </View>
+                        <View style={{
+                            width: "35%",
+                            justifyContent: "center",
+                            alignItems: 'center',
+                            marginTop: 10,
+                            marginBottom: 10,
+                            marginStart: 40
+                        }}>
+                            <Text
+                                style={{fontSize: 16, fontWeight: "bold", color: "black"}}
+                            >{"$25 / hr"}</Text>
+                        </View>
+
+                    </View>
+                    <View style={{
+                        justifyContent: "center", alignItems: "center"
+                    }}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate("TimeSlot")}
                                           style={{
                                               justifyContent: "center",
                                               alignItems: "center",
@@ -147,8 +220,9 @@ export default class ScheduledJobDetails extends Component {
                         </TouchableOpacity>
 
                     </View>
-                    <View style={{justifyContent:"center",alignItems:"center"
-                    }} >
+                    <View style={{
+                        justifyContent: "center", alignItems: "center"
+                    }}>
                         <TouchableOpacity
                             style={{
                                 justifyContent: "center",
@@ -172,4 +246,6 @@ export default class ScheduledJobDetails extends Component {
                     </View>
                 </ScrollView>
             </View>
-        )}}
+        )
+    }
+}

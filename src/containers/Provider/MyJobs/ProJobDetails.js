@@ -9,10 +9,11 @@ import Modal from "react-native-modal";
 import MapView, { Marker, ProviderPropType } from 'react-native-maps';
 import Redmarker from '../../../assets/images/markerred.png';
 const { width, height } = Dimensions.get('window');
+const RADIUS = 1609.34;
 
 const ASPECT_RATIO = width / height;
-const LATITUDE = 37.78825;
-const LONGITUDE = -122.4324;
+const LATITUDE =  35.8861371;
+const LONGITUDE = -78.64554749999999;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 let id = 0;
@@ -20,16 +21,26 @@ let id = 0;
 export default class ProJobsDetails extends Component {
     constructor(props) {
         super(props);
+        const {navigation} = this.props;
+        const Latci = navigation.getParam('latCi');
+        const Longci = navigation.getParam('longCi');
+        console.log("latlong"+Latci);
+        console.log("latlong"+Longci);
+
+
         console.disableYellowBox = true;
         this.state = {
             region: {
                 latitude: LATITUDE,
                 longitude: LONGITUDE,
                 latitudeDelta: LATITUDE_DELTA,
-                longitudeDelta: LONGITUDE_DELTA,
-            },
-            markers: [],
-        };
+                longitudeDelta: LONGITUDE_DELTA,},
+                LATLNG: {
+                    latitude: 35.8861371,
+                    longitude:-78.64554749999999
+                },
+                markers: [],
+            };
 
         this.onMapPress = this.onMapPress.bind(this);
     }
@@ -177,6 +188,15 @@ export default class ProJobsDetails extends Component {
                                     coordinate={marker.coordinate}
                                 />
                             ))}
+                            <MapView.Circle
+                                key={(this.state.longitude + this.state.latitude).toString()}
+                                center={this.state.LATLNG}
+                                radius={RADIUS}
+                                strokeWidth={2}
+                                strokeColor={'red'}
+                                fillColor={'rgba(255,0,0,0.2)'}
+
+                            />
                         </MapView>
                     </View>
                     <View style={{backgroundColor:"white",justifyContent:"center",alignItems:"center",
@@ -313,7 +333,7 @@ export default class ProJobsDetails extends Component {
                                 justifyContent: "center",
                                 alignItems: "center",
                             }}>
-                                <Text style={{color: "white", fontSize: 18}}>{"Email"}</Text>
+                                <Text style={{color: "white", fontSize: 18}}>{"Message"}</Text>
                             </View>
                         </TouchableOpacity>
 

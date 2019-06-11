@@ -13,6 +13,7 @@ import Completed from "./Completed/index.js"
 export default class ProJobs extends Component {
     constructor(props) {
         super(props);
+
         console.disableYellowBox = true;
         this.state = {
             text: 'Useless Placeholder',
@@ -24,6 +25,7 @@ export default class ProJobs extends Component {
             completed: false,
             current: true,
         };
+
         this.Completed = this.Completed.bind(this);
         this.Current = this.Current.bind(this);
     }

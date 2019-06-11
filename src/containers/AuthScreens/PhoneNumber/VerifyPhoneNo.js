@@ -136,7 +136,7 @@ export default class VerifyPhoneNo extends Component {
 
                         })}
 
-                        <TouchableOpacity onPress={this.onVerify()}
+                        <TouchableOpacity onPress={this.onVerify}
                                           style={{justifyContent: "center", alignItems: "center", marginTop: 25}}>
                             <View style={{
                                 flexDirection: "column",

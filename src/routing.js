@@ -36,7 +36,7 @@ import Payment from "./containers/Customer/Profile/UpdatePayment/Payment.js"
 import Promotions from "./containers/Customer/Profile/Promotions/index.js"
 import Notifications from "./containers/Customer/Profile/Notifications/index.js"
 import Help from "./containers/Customer/Profile/Help/index.js"
-import TaskerProfile from"./containers/Customer/Tasker/TaskerProfile/index.js"
+import TaskerProfile from "./containers/Customer/Tasker/TaskerProfile/index.js"
 import PaymentUpdate from "./containers/Customer/Tasker/PaymentUpdate/index.js"
 import Jobs from "./containers/Customer/Jobs/index.js"
 import Current from "./containers/Customer/Jobs/Current/index.js"
@@ -61,6 +61,9 @@ import Performance from "./containers/Provider/Performance/index.js"
 import ServicesAndRates from "./containers/Provider/Performance/ServicesAndRates"
 import ServicesAndRate2 from "./containers/Provider/Performance/ServicesAndRate2"
 import HomeJobs from "./containers/Provider/Home/HomeJobs"
+import Tip from "./containers/Customer/Jobs/Tip.js";
+import PerformanceSummary from "./containers/Provider/Performance/performanceSummary"
+import Invoice from "./containers/Provider/Performance/Invoice.js"
 
 
 
@@ -144,7 +147,7 @@ const ProviderTab= createBottomTabNavigator(
             headerTintColor: "#fff"
         },
         Availability: {
-            screen:Profile,
+            screen:TimeSlot,
             navigationOptions: {
                 tabBarLabel: "Availability"
             }
@@ -245,6 +248,7 @@ const AuthStack = createStackNavigator({
     TaskerProfile:TaskerProfile,
     PaymentUpdate:PaymentUpdate,
     Jobs:Jobs,
+    Tip:Tip,
     Current:Current,
     JobDetails:JobDetails,
     Contact:Contact,
@@ -267,7 +271,9 @@ const AuthStack = createStackNavigator({
     Performance:Performance,
     ServicesAndRates:ServicesAndRates,
     ServicesAndRate2:ServicesAndRate2,
-    HomeJobs:HomeJobs
+    HomeJobs:HomeJobs,
+    PerformanceSummary:PerformanceSummary,
+    Invoice:Invoice
 
 
 
@@ -276,7 +282,7 @@ const AuthStack = createStackNavigator({
 
 }, {
 
-    initialRouteName: 'ProviderTab',
+    initialRouteName: 'SelectScreen',
 
 
     headerMode: 'none'

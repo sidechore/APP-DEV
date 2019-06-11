@@ -38,7 +38,7 @@ this.state.userName=itemId;
 onVerify = () => {
     if(this.state.userName==="Client")
     this.props.navigation.navigate('TabNavigator', {User:this.state.userName});
-    else{
+    else if (this.state.userName==="Provider"){
 
        this.props.navigation.navigate("ProviderTab", {User:this.state.userName})
     }

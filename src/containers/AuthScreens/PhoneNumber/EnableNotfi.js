@@ -18,19 +18,19 @@ export default class EnableNotfi extends Component {
     onVerify = () => {
         if(this.state.userName==="Client")
             this.props.navigation.navigate('SelectLocation', {User:this.state.userName});
-        else {
+        else if (this.state.userName==="Provider"){
 
-            this.props.navigation.navigate("StayUpToDate", {User:this.state.userName})
+            this.props.navigation.navigate("ProviderTab", {User:this.state.userName})
         }
     };
-    componentDidMount(): void {
+    componentDidMount(){
         if (this.state.userName==="Client"){
 
             this.setState({NClient:true});
             this.setState({NProvider:false})
 
         }
-        if (this.state.userName==="Provider"){
+       else if (this.state.userName==="Provider"){
 
             this.setState({NClient:false});
             this.setState({NProvider:true})
@@ -118,7 +118,7 @@ export default class EnableNotfi extends Component {
 
                         })}
                         {this.renderRow({
-                            hintText: "Achore is complete",
+                            hintText: "A Chore is complete",
 
                         })}
                         <Text style={{
@@ -158,7 +158,7 @@ export default class EnableNotfi extends Component {
 
                         })}
                         {this.renderRow({
-                            hintText: "Achore is complete",
+                            hintText: "A Chore is complete",
 
                         })}
                         <Text style={{
