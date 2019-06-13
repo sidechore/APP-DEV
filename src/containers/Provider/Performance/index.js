@@ -108,9 +108,10 @@ export default class Performance extends Component {
                     </View>
                     <View  style={{flexDirection:"column",justifyContent:"center",alignItems:"center",width:"85%",
                         backgroundColor:"white",marginTop:20,borderRadius:5}}>
-                        <View style={{justifyContent:"center",alignItems:'center',width:"100%",marginTop:10,marginBottom:10}}>
+                        <TouchableOpacity onPress={()=>this.props.navigation.navigate("Reviews")}
+                         style={{justifyContent:"center",alignItems:'center',width:"100%",marginTop:10,marginBottom:10}}>
                             <Text style={{color:"red",fontSize:17}} >{"Ratings & Reviews"}</Text>
-                        </View>
+                        </TouchableOpacity>
                         <View style={{width:"100%",justifyContent:"center",alignItems:"center",flexDirection:"column",}}>
                             <View style={{height: 0.5,width:"100%" ,backgroundColor: "#DADADA", }}></View>
                             <View style={{flexDirection:"row",width:"100%",justifyContent:"center",alignItems:"center"}}>

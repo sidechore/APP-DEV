@@ -39,7 +39,7 @@ export default class Completed extends Component {
             <View style={{flexDirection:"column",width:"60%",marginTop:20,marginBottom:30
 
             }} >
-                <Text style={{color:"red",fontSize:17,}} >{"Furniture Assembly"}</Text>
+                <Text  onPress={()=>this.props.navigation.navigate("Receipt")} style={{color:"red",fontSize:17,}} >{"Furniture Assembly"}</Text>
                 <View style={{flexDirection:"row",alignItems:'center',marginTop:25}}>
                     <Image
                         source={require("../../../../assets/images/calendargrey.png")}

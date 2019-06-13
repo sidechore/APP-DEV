@@ -64,6 +64,8 @@ import HomeJobs from "./containers/Provider/Home/HomeJobs"
 import Tip from "./containers/Customer/Jobs/Tip.js";
 import PerformanceSummary from "./containers/Provider/Performance/performanceSummary"
 import Invoice from "./containers/Provider/Performance/Invoice.js"
+import Reviews from "./containers/Provider/Performance/Reviews.js"
+import Receipt from "./containers/Customer/Jobs/JobDetails/Receipt"
 
 
 
@@ -273,13 +275,10 @@ const AuthStack = createStackNavigator({
     ServicesAndRate2:ServicesAndRate2,
     HomeJobs:HomeJobs,
     PerformanceSummary:PerformanceSummary,
-    Invoice:Invoice
-
-
-
-
-
-
+    Invoice:Invoice,
+    Reviews:Reviews,
+    Receipt:Receipt
+    
 }, {
 
     initialRouteName: 'SelectScreen',

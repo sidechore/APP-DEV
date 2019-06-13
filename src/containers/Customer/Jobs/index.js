@@ -108,7 +108,7 @@ export default class Jobs extends Component {
                     {this.state.current &&
                     <Current  navigation={this.props.navigation}/>}
                     {this.state.completed &&
-                    <Completed/>
+                    <Completed navigation={this.props.navigation}/>
                     }
                 </ScrollView>
             </View>
