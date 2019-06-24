@@ -192,17 +192,14 @@ export default class ProMessage extends Component {
                                       txt: item.body,
                                       txt2:item.time
                                   })}
-
                                   {this.renderImagetext({
                                       txt2:item.time}
                                       )}
-
                                   {this.renderreceiveText({
                                       txt: item.body,
                                       txt2:item.time
 
                                   })}
-
                               </View>
 
                           }

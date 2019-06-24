@@ -140,6 +140,7 @@ export default class InitialScreen extends Component {
                             }}>
                                 <Text style={{color: "white", fontWeight: "bold"}}>{"Sign Up"}</Text>
                             </View>
+                          
                         </TouchableOpacity>
                     </View>
                 </View>

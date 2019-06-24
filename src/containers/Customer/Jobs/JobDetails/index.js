@@ -26,7 +26,6 @@ componentDidMount() {
         this.RBSheet5.close();
         this.props.navigation.navigate("Review")
 
-
     }
 
 
@@ -101,7 +100,7 @@ componentDidMount() {
                         </View>
                     </TouchableOpacity>
 
-</View>
+                         </View>
                     <Text style={{color:"red",fontSize:15,margin:20}}>{"Details"}</Text>
                     <View style={{flexDirection:"column",width:"100%",backgroundColor:"white"}}>
                         <View  style={{flexDirection:"row",width:"100%",

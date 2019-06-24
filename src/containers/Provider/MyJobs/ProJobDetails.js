@@ -197,6 +197,7 @@ export default class ProJobsDetails extends Component {
                                 fillColor={'rgba(255,0,0,0.2)'}
 
                             />
+
                         </MapView>
                     </View>
                     <View style={{backgroundColor:"white",justifyContent:"center",alignItems:"center",
@@ -283,7 +284,7 @@ export default class ProJobsDetails extends Component {
 
                             })}
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={()=>this.props.navigation.navigate("ProJobsDetailsInvoice")} >
+                            <TouchableOpacity onPress={()=>this.props.navigation.navigate("SubmitInvoice")} >
                             {this.renderRowProfile({
                                 text2:"Send Invoice",
                                 text1:"Sends once job is completed.",
@@ -318,7 +319,6 @@ export default class ProJobsDetails extends Component {
                             style={{
                                 justifyContent: "center",
                                 alignItems: "center",
-
                                 marginBottom:10,
                                 width: "85%",
                                 backgroundColor: "red",
