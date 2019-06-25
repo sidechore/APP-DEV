@@ -352,7 +352,7 @@ const AuthStack = createStackNavigator(
         SubmitInvoice: SubmitInvoice
     },
     {
-        initialRouteName: "SelectScreen",
+        initialRouteName: "Receipt",
 
         headerMode: "none"
     }
