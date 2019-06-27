@@ -1,18 +1,9 @@
-import React, {Component} from "react";
-import {
-    ImageBackground,
-    Text,
-    View,
-    TouchableOpacity, TouchableWithoutFeedback,
-    TextInput,
-    ScrollView, Switch
-} from "react-native";
-import {SafeAreaView} from "react-navigation";
-import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
-import {styles} from "./styles";
-import {Header, Image} from "react-native-elements";
-import RBSheet from "react-native-raw-bottom-sheet";
+import React, { Component } from "react";
+import { ScrollView, Switch, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import DatePicker from "react-native-date-picker";
+import { Header, Image } from "react-native-elements";
+import RBSheet from "react-native-raw-bottom-sheet";
+import { styles } from "./styles";
 
 
      
@@ -31,26 +22,82 @@ export default class SubmitInvoice extends Component {
 
     renderRowItem(item) {
         return (
-            <TouchableWithoutFeedback onPress={() => this.checkHours(item)}>
-                <View style={{flexDirection: "column", width: "100%"}}>
-                    <View style={{alignItems: "center", width: "100%", flexDirection: "row"}}>
-                        <View style={{width: "60%", height: 60, justifyContent: "center"}}>
-                            <Text style={{fontSize: 18, color: "black", marginStart: 20}}>{item.text1}</Text>
+            <TouchableWithoutFeedback
+                onPress={() => this.checkHours(item)}
+            >
+                <View
+                    style={{ flexDirection: "column", width: "100%" }}
+                >
+                    <View
+                        style={{
+                            alignItems: "center",
+                            width: "100%",
+                            flexDirection: "row"
+                        }}
+                    >
+                        <View
+                            style={{
+                                width: "60%",
+                                height: 60,
+                                justifyContent: "center",
+                                marginStart: 25
+                            }}
+                        >
+                            <Text
+                                style={{
+                                    fontSize: 16,
+                                    color: "black",
+                                    fontWeight: "400"
+                                }}
+                            >
+                                {item.text1}
+                            </Text>
                         </View>
-                        <View style={{width: "40%", height: 60, justifyContent: "center", alignItems: "flex-end",}}>
-                            <Text style={{fontSize: 18, color: item.Colortext, marginEnd: 20}}>{item.text2}</Text>
+                        <View
+                            style={{
+                                width: "30%",
+                                height: 60,
+                                marginStart: 15,
+                                justifyContent: "center",
+                                alignItems: "center"
+                            }}
+                        >
+                            <Text
+                                style={{
+                                    fontSize: 16,
+                                    fontWeight: "400",
+                                    color: item.Colortext
+                                }}
+                            >
+                                {item.text2}
+                            </Text>
                         </View>
                     </View>
-                    <View style={{height: 0.3, width: "100%", backgroundColor: "black"}}/>
+                    <View
+                        style={{
+                            height: 0.3,
+                            width: "100%",
+                            backgroundColor: "#595959"
+                        }}
+                    />
                 </View>
             </TouchableWithoutFeedback>
-        )
+        );
     }
     checkHours(itm) {
+        if(this.state.showHours===false){
         if (itm.text1 === "Hours Worked") {
             this.setState({showHours: true});
         } else {
             this.setState({showHours: false});
+        }
+        }
+        else {
+            if (itm.text1 === "Hours Worked") {
+            this.setState({showHours: false});
+        } else {
+            this.setState({showHours: true});
+        }
         }
 
     }
@@ -69,12 +116,12 @@ export default class SubmitInvoice extends Component {
 
     renderRowSheet(item) {
         return <View style={{flexDirection: "column", width: "100%"}}>
-            <View style={{alignItems: "center", width: "100%", flexDirection: "row"}}>
-                <View style={{width: "60%", justifyContent: "center"}}>
-                    <Text style={{fontSize: 15, color: "black", marginStart: 30,fontWeight:"300"}}>{item.text1}</Text>
+            <View style={{ alignItems: "center", width: "100%", flexDirection: "row", marginBottom: 5 }}>
+                <View style={{width: "60%", justifyContent: "center",marginStart:30}}>
+                    <Text style={{fontSize: 15, color: "black",fontWeight:"400"}}>{item.text1}</Text>
                 </View>
-                <View style={{width: "40%", justifyContent: "center", alignItems: "flex-end",}}>
-                    <Text style={{fontSize: 15, color: "black", marginEnd: 20,fontWeight:"300"}}>{item.text2}</Text>
+                <View style={{width: "30%", justifyContent: "center", alignItems: "center",marginStart:10}}>
+                    <Text style={{fontSize: 15, color: "black",fontWeight:"400"}}>{item.text2}</Text>
                 </View>
             </View>
         </View>
@@ -100,14 +147,15 @@ export default class SubmitInvoice extends Component {
                         backgroundColor: "white",
                         justifyContent: "space-around"
                     }}
-                    leftComponent={
+                    rightComponent={
                         <TouchableOpacity
                             onPress={() =>
                                 this.props.navigation.goBack()
                             }
+                            style={{ marginEnd: 15 }}
                         >
                             <Image
-                                source={require("../../../assets/images/arrowback.png")}
+                                source={require("../../../assets/images/close.png")}
                                 style={{
                                     marginStart: 10,
                                     height: 14,
@@ -218,23 +266,31 @@ export default class SubmitInvoice extends Component {
                                         width: "60%",
                                         height: 60,
                                         justifyContent: "center",
-                                        flexDirection: "column"
+                                        flexDirection: "column",
+                                        marginStart: 25
                                     }}
                                 >
-                                    <Text
+                                    <View
                                         style={{
-                                            fontSize: 11,
-                                            color: "black",
-                                            marginStart: 20
+                                            flexDirection: "row",
+                                            marginBottom: 5
                                         }}
                                     >
-                                        {"Your service Pro Rate"}
-                                    </Text>
+                                        <Text
+                                            style={{
+                                                fontSize: 11,
+                                                color: "#595959",
+                                                fontWeight: "400"
+                                            }}
+                                        >
+                                            {"Your Service Pro Rate"}
+                                        </Text>
+                                    </View>
                                     <Text
                                         style={{
-                                            fontSize: 18,
+                                            fontSize: 16,
                                             color: "black",
-                                            marginStart: 20
+                                            fontWeight: "400"
                                         }}
                                     >
                                         {"$32/hr"}
@@ -242,17 +298,18 @@ export default class SubmitInvoice extends Component {
                                 </View>
                                 <View
                                     style={{
-                                        width: "40%",
+                                        width: "30%",
                                         height: 60,
                                         justifyContent: "center",
-                                        alignItems: "flex-end"
+                                        alignItems: "center",
+                                        marginStart: 15
                                     }}
                                 >
                                     <Text
                                         style={{
-                                            fontSize: 18,
+                                            fontSize: 16,
                                             color: "black",
-                                            marginEnd: 20
+                                            fontWeight: "400"
                                         }}
                                     >
                                         {"$32/hr"}
@@ -263,81 +320,28 @@ export default class SubmitInvoice extends Component {
                                 style={{
                                     height: 0.3,
                                     width: "100%",
-                                    backgroundColor: "black"
+                                    backgroundColor: "#595959",
+                                    marginBottom:10
                                 }}
                             />
                         </View>
-                        <View
-                            style={{
-                                height: 0.3,
-                                width: "100%",
-                                backgroundColor: "black"
-                            }}
-                        />
-                        <View>
-                            <View
-                                style={{
-                                    alignItems: "center",
-                                    width: "100%",
-                                    flexDirection: "row"
-                                }}
-                            >
-                                <View
-                                    style={{
-                                        width: "45%",
-                                        height: 60,
-                                        justifyContent: "center"
-                                    }}
-                                >
-                                    <Text
-                                        style={{
-                                            fontSize: 18,
-                                            color: "black"
-                                        }}
-                                    >
-                                        {"Is this on going job?"}
-                                    </Text>
-                                </View>
-                                <View
-                                    style={{
-                                        width: "45%",
-                                        height: 60,
-                                        justifyContent: "center",
-                                        alignItems: "flex-end"
-                                    }}
-                                >
-                                    <Switch
-                                        onTintColor="red"
-                                        thumbTintColor="white"
-                                        value={true}
-                                        style={{
-                                            position: "absolute",
-                                            tintColor: "red"
-                                        }}
-                                    />
-                                </View>
-                            </View>
-                            <View
-                                style={{
-                                    height: 0.3,
-                                    width: "100%",
-                                    backgroundColor: "black"
-                                }}
-                            />
-                        </View>
+               
                         <View
                             style={{
                                 width: "100%",
                                 backgroundColor: "white",
-                                flexDirection: "column"
+                                flexDirection: "column",
+                                alignItems: "flex-start"
                             }}
                         >
                             <Text
                                 style={{
-                                    fontSize: 18,
+                                    fontSize: 16,
                                     color: "red",
-                                    marginStart: 20,
-                                    marginTop: 20
+                                    marginStart: 25,
+                                    marginTop: 20,
+                                    fontWeight:"400"
+                                  
                                 }}
                             >
                                 {"CLOSING MESSAGE"}
@@ -346,9 +350,13 @@ export default class SubmitInvoice extends Component {
                                 style={{
                                     fontSize: 17,
                                     color: "black",
-                                    marginStart: 20,
-                                    marginTop: 20,
-                                    marginBottom: 30
+                                    marginStart: 22,
+                                    marginEnd:25,
+                                    marginTop: 10,
+                                    marginBottom: 30,
+                                    fontWeight: "400",
+                                    lineHeight:25
+                                    
                                 }}
                             >
                                 {
@@ -366,9 +374,10 @@ export default class SubmitInvoice extends Component {
                         >
                             <Text
                                 style={{
-                                    fontSize: 18,
+                                    fontSize: 16,
                                     color: "black",
-                                    marginEnd: 20
+                                    marginEnd: 20,
+                                    fontWeight:"400",
                                 }}
                             >
                                 {"266/500"}
@@ -414,7 +423,7 @@ export default class SubmitInvoice extends Component {
                     }}
                     animationType="fade"
                     duration={500}
-                    height={400}
+                    height={380}
                     customStyles={{
                         container: { alignItems: "center" }
                     }}
@@ -430,7 +439,7 @@ export default class SubmitInvoice extends Component {
                     >
                         <Text
                             style={{
-                                fontSize: 24,
+                                fontSize: 20,
                                 color: "black",
                                 marginBottom: 10,
                                 fontWeight: "500"
@@ -440,7 +449,7 @@ export default class SubmitInvoice extends Component {
                         </Text>
                         <Text
                             style={{
-                                fontSize: 15,
+                                fontSize: 13,
                                 color: "#646464"
                             }}
                         >
@@ -448,12 +457,12 @@ export default class SubmitInvoice extends Component {
                         </Text>
                         <Text
                             style={{
-                                fontSize: 15,
+                                fontSize: 13,
                                 color: "#646464",
                                 marginBottom: 20
                             }}
                         >
-                            {"Furniture Assembly Rckwood"}
+                            {"Furniture Assembly"}
                         </Text>
                         {this.renderRowSheet({
                             text1: "Hours Worked",
@@ -471,15 +480,7 @@ export default class SubmitInvoice extends Component {
                             text1: "Service Pro Total",
                             text2: "$50.00"
                         })}
-                        <Text
-                            style={{
-                                fontSize: 13,
-                                color: "black",
-                                marginTop: 20
-                            }}
-                        >
-                            {"This is NOT an ongoing job."}
-                        </Text>
+                  
                         <TouchableOpacity
                             onPress={() => this.RBSheet.close()}
                             style={{
