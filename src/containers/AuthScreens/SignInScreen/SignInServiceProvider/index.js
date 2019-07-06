@@ -7,6 +7,8 @@ import {Header, Image} from "react-native-elements";
 
 import {checkEmail} from '../../../../utils';
 import {Colors} from "../../../../themes";
+import {constants} from "../../../../utils/constants";
+import Preference from "react-native-preference";
 
 
 export default class SignInProvider extends Component {
@@ -19,13 +21,80 @@ export default class SignInProvider extends Component {
             showIconLeftEmail: false,
             showIconLeftpass: false,
             userName: undefined,
+            email: '',
+            password: '',
+            isConnected: true,
+            accessToken: null,
+            dataFacebook: undefined,
         };
         const {navigation} = this.props;
         const itemId = navigation.getParam('User', 'NO-ID');
         console.log("gettingUSer--->" + itemId);
         this.state.userName=itemId;
     }
+    moveToHome() {
+        this.props.navigation.navigate("ProviderTab");
+    }
+    //this.
+    onLogin = () => {
 
+        if (this.state.isConnected) {
+            if (this.state.email === "" || this.state.password === "") {
+                alert("Please fill all fields");
+            } else {
+                this.setState({showLoading: true});
+                const {email, password} = this.state;
+                var details = {
+                    email: email,
+                    password: password,
+                };
+                var formBody = [];
+                for (var property in details) {
+                    var encodedKey = encodeURIComponent(property);
+                    var encodedValue = encodeURIComponent(details[property]);
+                    formBody.push(encodedKey + "=" + encodedValue);
+                }
+                formBody = formBody.join("&");
+                fetch(constants.ProviderLogin, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: formBody
+                }).then(response => response.json())
+                    .then(response => {
+                        console.log("responseClientlogin-->", "-" + JSON.stringify(response));
+                        if (response.ResultType === 1) {
+                            this.setState({showLoading: false});
+                            Preference.set({
+                                clientlogin: true,
+                                userEmail: response.Data.email,
+                                userId: response.Data.id,
+                                userName: response.Data.firstname + " " + response.Data.lastname,
+                                userToken: response.Data.token
+                            });
+
+                            this.moveToHome();
+
+                        } else {
+                            this.setState({showLoading: false});
+                            if (response.ResultType === 0) {
+                                alert(response.Message);
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        //console.error('Errorr:', error);
+                        console.log('Error:', error);
+                        alert("Error: " + error);
+                    });
+                //Keyboard.dismiss();
+            }
+        } else {
+            alert("Please connect Internet");
+        }
+    };
     onSignUp = () => {
         this.props.navigation.navigate('ServiceProviderSignUp', {User:this.state.userName});
     };
@@ -37,6 +106,8 @@ export default class SignInProvider extends Component {
 
 
     renderRowInputEmail(item) {
+        const {email,} = this.state;
+
         return <View style={{flexDirection: 'column', width: "100%"}}>
             <View style={{flexDirection: "row", marginStart: 20, marginEnd: 20}}>
                 <TextInput
@@ -44,6 +115,7 @@ export default class SignInProvider extends Component {
                     onChangeText={(text) => this.checkEmail(text)}
                     textContentType={"Email"}
                     placeholder={item.hintText}
+                    value={email}
                 />
 
                 {this.state.showIconLeftEmail &&
@@ -61,6 +133,7 @@ export default class SignInProvider extends Component {
     }
 
     renderRowInput(item) {
+        const {password} = this.state;
         return <View style={{flexDirection: 'column', width: "100%"}}>
             <View style={{flexDirection: "row", marginStart: 20, marginEnd: 20}}>
                 <TextInput
@@ -69,6 +142,7 @@ export default class SignInProvider extends Component {
                     secureTextEntry={true}
                     maxLength={12}
                     placeholder={item.hintText}
+                    value={password}
                 />
 
                 {this.state.showIconLeftpass &&
@@ -98,22 +172,28 @@ export default class SignInProvider extends Component {
             return true;
         }
     };
-
+    onChangeText = (key, value) => {
+        this.setState({[key]: value});
+    };
     checkPassword(text) {
         if (text.length >= 8 && text.length <= 12) {
-            this.setState({showIconLeftpass: true})
+            this.setState({showIconLeftpass: true});
+
         }else {
             this.setState({showIconLeftpass: false})
         }
+        this.onChangeText('password', text)
     }
 
     checkEmail(email) {
         if (this.validate(email)) {
-            this.setState({showIconLeftEmail: true})
+            this.setState({showIconLeftEmail: true});
+
         } else {
             this.setState({showIconLeftEmail: false})
         }
 
+        this.onChangeText('email', email)
     }
 
     render() {
@@ -159,7 +239,7 @@ export default class SignInProvider extends Component {
                     {this.renderRowInput({
                         hintText: "Password"
                     })}
-                    <TouchableOpacity style={{justifyContent: "center", alignItems: "center", marginTop: 25}}>
+                    <TouchableOpacity style={{justifyContent: "center", alignItems: "center", marginTop: 25}} onPress={this.onLogin}>
                         <View style={{
                             flexDirection: "column",
                             backgroundColor: "#FA2021",
@@ -248,7 +328,17 @@ export default class SignInProvider extends Component {
 
                 </ScrollView>
 
-
+                {this.state.showLoading && <View style={{
+                    width: "100%",
+                    height: "100%",
+                    backgroundColor: "transparent",
+                    position: "absolute",
+                    opacity: 1,
+                    alignItems: "center",
+                    justifyContent: "center"
+                }}>
+                    <Image resizeMode={"contain"} source={require("../../../../assets/images/loading.gif")} style={{width:100,height:100, opacity: 1,}}/>
+                </View>}
             </View>
 
 

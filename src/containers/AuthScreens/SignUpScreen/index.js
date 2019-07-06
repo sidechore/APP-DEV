@@ -7,6 +7,8 @@ import {Header, Image} from "react-native-elements";
 
 import {checkEmail} from '../../../utils';
 import {Colors} from "../../../themes";
+import {constants} from "../../../utils/constants";
+import Preference from "react-native-preference";
 
 export default class SignUpScreen extends Component {
     constructor(props) {
@@ -22,32 +24,109 @@ export default class SignUpScreen extends Component {
             showIconLeftpass5: false,
             showIconLeftpass6: false,
             showIconLeftpass7: false,
-            Cross1:false,
-            Cross2:false,
-            Cross3:false,
-            Cross4:false,
-            Cross5:false,
-            Cross6:false,
-            Cross7:false,
-            Password:'',
-            Cpassword:"",}
+            Cross1: false,
+            Cross2: false,
+            Cross3: false,
+            Cross4: false,
+            Cross5: false,
+            Cross6: false,
+            Cross7: false,
+            Password1: '',
+            Cpassword: "",
+            showLoading: false,
+            email: '',
+            firstName: '',
+            lastName: '',
+            phone: '',
+            Password: '',
+            isConnected: true,
 
-            const {navigation} = this.props;
-        const itemId = navigation.getParam('User', 'NO-ID');
-        console.log("gettingUSer--->" + itemId);
-        this.state.userName=itemId;
-    }
-        onSignUp = () => {
-            this.props.navigation.navigate('PhoneNumber', {User:this.state.userName});
+
         };
 
+        const {navigation} = this.props;
+        const itemId = navigation.getParam('User', 'NO-ID');
+        console.log("gettingUSer--->" + itemId);
+        this.state.userName = itemId;
+    }
+
+    onSignUp = () => {
+        this.props.navigation.navigate('PhoneNumber', {User: this.state.userName});
+    };
+
+    moveTo() {
+        this.props.navigation.navigate('PhoneNumber', {User: this.state.userName});
+    }
+
+    onSignUp1 = () => {
+
+        if (this.state.isConnected) {
+
+                this.setState({showLoading: true});
+                const {email, password, phone, firstName, lastName} = this.state;
+                var details = {
+                    email: email,
+                    password: password,
+                    phone: phone,
+                    firstName: firstName,
+                    lastName: lastName
+                };
+                var formBody = [];
+                for (var property in details) {
+                    var encodedKey = encodeURIComponent(property);
+                    var encodedValue = encodeURIComponent(details[property]);
+                    formBody.push(encodedKey + "=" + encodedValue);
+                }
+                formBody = formBody.join("&");
+                fetch(constants.ClientSignUp, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: formBody
+                }).then(response => response.json())
+                    .then(response => {
+                        console.log("responseClientlogin-->", "-" + JSON.stringify(response));
+                        if (response.ResultType === 1) {
+                            this.setState({showLoading: false});
+                            Preference.set({
+                                clientlogin: true,
+                                userEmail: response.Data.email,
+                                userId: response.Data.id,
+                                userName: response.Data.firstname + " " + response.Data.lastname,
+                                userToken: response.Data.token
+                            });
+
+                            this.moveTo();
+
+                        } else {
+                            this.setState({showLoading: false});
+                            if (response.ResultType === 0) {
+                                alert(response.Message);
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        //console.error('Errorr:', error);
+                        console.log('Error:', error);
+                        alert("Error: " + error);
+                    });
+                //Keyboard.dismiss();
+
+        } else {
+            alert("Please connect Internet");
+        }
+    };
+
     renderRowInputText(item) {
-        return<View style={{flexDirection: 'column', width: "100%"}}>
+        const {firstName} = this.props;
+        return <View style={{flexDirection: 'column', width: "100%"}}>
             <View style={{flexDirection: "row", marginStart: 20, marginEnd: 20}}>
                 <TextInput
                     style={{height: 50, width: "100%"}}
                     onChangeText={(text) => this.checklength(text)}
-
+                    value={firstName}
                     maxLength={12}
                     placeholder={item.hintText}
                 />
@@ -75,13 +154,15 @@ export default class SignUpScreen extends Component {
             <View style={{height: 0.5, backgroundColor: "#52525D", marginStart: 25, marginEnd: 25,}}></View>
         </View>;
     }
+
     renderRowInputText2(item) {
-        return<View style={{flexDirection: 'column', width: "100%"}}>
+        const {lastName} = this.props;
+        return <View style={{flexDirection: 'column', width: "100%"}}>
             <View style={{flexDirection: "row", marginStart: 20, marginEnd: 20}}>
                 <TextInput
                     style={{height: 50, width: "100%"}}
                     onChangeText={(text) => this.checklength2(text)}
-
+                    value={lastName}
                     maxLength={12}
                     placeholder={item.hintText}
                 />
@@ -109,7 +190,9 @@ export default class SignUpScreen extends Component {
             <View style={{height: 0.5, backgroundColor: "#52525D", marginStart: 25, marginEnd: 25,}}></View>
         </View>;
     }
+
     renderRowInputEmail(item) {
+        const {email}=this.props;
         return <View style={{flexDirection: 'column', width: "100%"}}>
             <View style={{flexDirection: "row", marginStart: 20, marginEnd: 20}}>
                 <TextInput
@@ -118,6 +201,7 @@ export default class SignUpScreen extends Component {
                     textContentType={"Email"}
                     placeholder={item.hintText}
                     keyboardType={"email-address"}
+                    value={email}
                 />
 
                 {this.state.showIconLeftpass3 &&
@@ -144,7 +228,9 @@ export default class SignUpScreen extends Component {
             <View style={{height: 0.5, backgroundColor: "#52525D", marginStart: 25, marginEnd: 25,}}></View>
         </View>;
     }
+
     renderRowInputPhone(item) {
+        const {phone}=this.props
         return <View style={{flexDirection: 'column', width: "100%"}}>
             <View style={{flexDirection: "row", marginStart: 20, marginEnd: 20}}>
                 <TextInput
@@ -153,6 +239,7 @@ export default class SignUpScreen extends Component {
                     textContentType={"Email"}
                     placeholder={item.hintText}
                     keyboardType={"email-address"}
+                    value={phone}
                 />
 
                 {this.state.showIconLeftpass4 &&
@@ -179,7 +266,9 @@ export default class SignUpScreen extends Component {
             <View style={{height: 0.5, backgroundColor: "#52525D", marginStart: 25, marginEnd: 25,}}></View>
         </View>;
     }
+
     renderRowInputPassword(item) {
+        const {password}=this.props;
         return <View style={{flexDirection: 'column', width: "100%"}}>
             <View style={{flexDirection: "row", marginStart: 20, marginEnd: 20}}>
                 <TextInput
@@ -187,7 +276,9 @@ export default class SignUpScreen extends Component {
                     onChangeText={(text) => this.checkPassword(text)}
                     textContentType={"Email"}
                     placeholder={item.hintText}
+                    value={password}
                     keyboardType={"email-address"}
+                    secureTextEntry={true}
                 />
 
                 {this.state.showIconLeftpass5 &&
@@ -214,6 +305,7 @@ export default class SignUpScreen extends Component {
             <View style={{height: 0.5, backgroundColor: "#52525D", marginStart: 25, marginEnd: 25,}}></View>
         </View>;
     }
+
     renderRowcnfrPassword(item) {
         return <View style={{flexDirection: 'column', width: "100%"}}>
             <View style={{flexDirection: "row", marginStart: 20, marginEnd: 20}}>
@@ -223,6 +315,7 @@ export default class SignUpScreen extends Component {
                     textContentType={"Email"}
                     placeholder={item.hintText}
                     keyboardType={"email-address"}
+                    secureTextEntry={true}
                 />
 
                 {this.state.showIconLeftpass6 &&
@@ -249,6 +342,7 @@ export default class SignUpScreen extends Component {
             <View style={{height: 0.5, backgroundColor: "#52525D", marginStart: 25, marginEnd: 25,}}></View>
         </View>;
     }
+
     renderRowPostal(item) {
         return <View style={{flexDirection: 'column', width: "100%"}}>
             <View style={{flexDirection: "row", marginStart: 20, marginEnd: 20}}>
@@ -285,55 +379,57 @@ export default class SignUpScreen extends Component {
         </View>;
     }
 
-
-
+    onChangeText = (key, value) => {
+        this.setState({[key]: value});
+    };
     checklength(text) {
         if (text.length >= 3) {
             this.setState({showIconLeftpass1: true});
-            this.setState({Cross1:false})
-        }else if(text.length===0){
+            this.setState({Cross1: false})
+        } else if (text.length === 0) {
             this.setState({showIconLeftpass1: false})
-            this.setState({Cross1:true})
-        }
-        else{
+            this.setState({Cross1: true})
+        } else {
             this.setState({showIconLeftpass1: false})
-            this.setState({Cross1:true})
+            this.setState({Cross1: true})
 
 
         }
+        this.onChangeText('firstName', text)
     }
+
     checklength2(text) {
         if (text.length >= 3) {
             this.setState({showIconLeftpass2: true});
-            this.setState({Cross2:false})
-        }else if(text.length===0){
+            this.setState({Cross2: false})
+        } else if (text.length === 0) {
             this.setState({showIconLeftpass2: false})
-            this.setState({Cross2:true})
-        }
-        else{
+            this.setState({Cross2: true})
+        } else {
             this.setState({showIconLeftpass2: false})
-            this.setState({Cross2:true})
+            this.setState({Cross2: true})
 
 
         }
+        this.onChangeText('lastName', text)
     }
 
 
     checkEmail(email) {
         if (this.validate(email)) {
             this.setState({showIconLeftpass3: true});
-            this.setState({Cross3:false})
-        }else if(email.length===0){
+            this.setState({Cross3: false})
+        } else if (email.length === 0) {
             this.setState({showIconLeftpass3: false})
-            this.setState({Cross3:true})
-        }
-
-        else {
+            this.setState({Cross3: true})
+        } else {
             this.setState({showIconLeftEmail3: false});
-            this.setState({Cross3:true})
+            this.setState({Cross3: true})
         }
+        this.onChangeText('email', email)
 
     }
+
     validate = (text) => {
         console.log(text);
         let reg = /^[\w]{1,}[\w.+-]{0,}@[\w-]{2,}([.][a-zA-Z]{2,}|[.][\w-]{2,}[.][a-zA-Z]{2,})$/;
@@ -349,58 +445,57 @@ export default class SignUpScreen extends Component {
     };
 
     checkPhone(text) {
-        if (text.length >=11 && text.length <= 13) {
+        if (text.length >= 11 && text.length <= 13) {
             this.setState({showIconLeftpass4: true});
-            this.setState({Cross4:false})
-        }else if(text.length===0 ||text.length>13){
+            this.setState({Cross4: false})
+        } else if (text.length === 0 || text.length > 13) {
             this.setState({showIconLeftpass4: false})
-            this.setState({Cross4:true})
-        }
-        else{
+            this.setState({Cross4: true})
+        } else {
             this.setState({showIconLeftpass4: false})
-            this.setState({Cross4:true})
+            this.setState({Cross4: true})
 
 
         }
+        this.onChangeText('phone', text)
     }
 
     checkPassword(text) {
-        this.setState({Password:text});
+        this.setState({Password1: text});
         if (text.length >= 8 && text.length <= 12) {
             this.setState({showIconLeftpass5: true});
-            this.setState({Cross5:false})
-        }else {
+            this.setState({Cross5: false})
+        } else {
             this.setState({showIconLeftpass5: false})
-            this.setState({Cross5:true})
+            this.setState({Cross5: true})
         }
+        this.onChangeText('password', text)
     }
+
     cnfrPassword(text) {
-        this.setState({Cpassword:text});
-        if (this.state.Password === text){
+        this.setState({Cpassword: text});
+        if (this.state.Password1 === text) {
             this.setState({showIconLeftpass6: true});
-            this.setState({Cross6:false})
-        }else if(text.length===0){
+            this.setState({Cross6: false})
+        } else {
             this.setState({showIconLeftpass6: false})
-            this.setState({Cross6:true})
-        }
-        else{
-            this.setState({showIconLeftpass6: false})
-            this.setState({Cross6:true})
+            this.setState({Cross6: true})
         }
     }
+
     postal(text) {
         if (text.length >= 5 && text.length <= 6) {
             this.setState({showIconLeftpass7: true});
-            this.setState({Cross7:false})
-        }else if(text.length===0){
+            this.setState({Cross7: false})
+        } else if (text.length === 0) {
             this.setState({showIconLeftpass7: false})
-            this.setState({Cross7:true})
-        }
-        else{
+            this.setState({Cross7: true})
+        } else {
             this.setState({showIconLeftpass7: false})
-            this.setState({Cross7:true})
+            this.setState({Cross7: true})
         }
     }
+
     render() {
 
         return (
@@ -438,11 +533,11 @@ export default class SignUpScreen extends Component {
 
                     </View>
 
-                    {this. renderRowInputText({
+                    {this.renderRowInputText({
                         hintText: "First Name",
 
                     })}
-                    {this. renderRowInputText2({
+                    {this.renderRowInputText2({
                         hintText: "Last Name",
 
                     })}
@@ -454,36 +549,37 @@ export default class SignUpScreen extends Component {
                         hintText: "Phone",
 
                     })}
-                    {this. renderRowInputPassword({
+                    {this.renderRowInputPassword({
                         hintText: "Password",
 
                     })}
-                    {this.  renderRowcnfrPassword({
+                    {this.renderRowcnfrPassword({
                         hintText: "Confirm Password",
 
                     })}
-                    {this.   renderRowPostal({
+                    {this.renderRowPostal({
                         hintText: "Postal Code",
 
                     })}
-                    <View style={{flexDirection:"column",width:"100%",backgroundColor:"white",marginTop:10}} >
-                    <TouchableOpacity onPress={this.onSignUp}  style={{justifyContent: "center", alignItems: "center", marginTop: 25}}>
-                        <View style={{
-                            flexDirection: "column",
-                            backgroundColor: "#FA2021",
-                            width: "85%",
-                            height: 50,
-                            justifyContent: "center",
-                            alignItems: "center",
-                            borderRadius: 7
+                    <View style={{flexDirection: "column", width: "100%", backgroundColor: "white", marginTop: 10}}>
+                        <TouchableOpacity onPress={this.onSignUp1}
+                                          style={{justifyContent: "center", alignItems: "center", marginTop: 25}}>
+                            <View style={{
+                                flexDirection: "column",
+                                backgroundColor: "#FA2021",
+                                width: "85%",
+                                height: 50,
+                                justifyContent: "center",
+                                alignItems: "center",
+                                borderRadius: 7
 
 
-                        }}>
-                            <Text style={{color: "white", fontWeight: "bold"}}>{"Sign Up"}</Text>
+                            }}>
+                                <Text style={{color: "white", fontWeight: "bold"}}>{"Sign Up"}</Text>
 
 
-                        </View>
-                    </TouchableOpacity   >
+                            </View>
+                        </TouchableOpacity>
                         <View style={{marginTop: 30, width: "100%", flexDirection: "row", alignItems: "center"}}>
                             <View style={{width: "40%", height: 0.5, backgroundColor: Colors.lightGrey}}></View>
 
@@ -524,29 +620,39 @@ export default class SignUpScreen extends Component {
                         </TouchableOpacity>
 
 
-                        <View style={{flexDirection:"row",justifyContent:"center",alignItems:"center",marginTop:20,backgroundColor:"#F3F3F3",height:70  }} >
-                            <Text style={{color:'black'}} >{"Already have an account?"}</Text>
-                            <Text style={{color:"red", fontWeight:"bold" }}>{" Sign In"}</Text>
+                        <View style={{
+                            flexDirection: "row",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            marginTop: 20,
+                            backgroundColor: "#F3F3F3",
+                            height: 70
+                        }}>
+                            <Text style={{color: 'black'}}>{"Already have an account?"}</Text>
+                            <Text style={{color: "red", fontWeight: "bold"}}>{" Sign In"}</Text>
                         </View>
 
                     </View>
 
 
-
                 </ScrollView>
-
-
-
+                {this.state.showLoading && <View style={{
+                    width: "100%",
+                    height: "100%",
+                    backgroundColor: "transparent",
+                    position: "absolute",
+                    opacity: 1,
+                    alignItems: "center",
+                    justifyContent: "center"
+                }}>
+                    <Image resizeMode={"contain"} source={require("../../../assets/images/loading.gif")} style={{width:100,height:100, opacity: 1,}}/>
+                </View>}
 
             </View>
 
 
-
-
-
-        )}
-
-
+        )
+    }
 
 
 }

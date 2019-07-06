@@ -4,9 +4,10 @@ import {SafeAreaView} from 'react-navigation';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {styles} from './styles';
 import {Header, Image} from "react-native-elements";
-
-import {checkEmail} from '../../../utils';
+import Preference from 'react-native-preference';
 import {Colors} from "../../../themes";
+import {checkEmail} from '../../../utils';
+import {constants} from "../../../utils/constants";
 
 
 export default class SignInScreen extends Component {
@@ -18,23 +19,98 @@ export default class SignInScreen extends Component {
             text: 'Useless Placeholder',
             showIconLeftEmail: false,
             showIconLeftpass: false,
-            userName: undefined,
+            showLoading: false,
+            email: '',
+            password: '',
+            isConnected: true,
+            accessToken: null,
+            dataFacebook: undefined,
         };
         const {navigation} = this.props;
         const itemId = navigation.getParam('User', 'NO-ID');
         console.log("gettingUSer--->" + itemId);
-        this.state.userName=itemId;
+        this.state.userName = itemId;
     }
+
     onSignUp = () => {
-        this.props.navigation.navigate('SignUpScreen', {User:this.state.userName});
+        this.props.navigation.navigate('SignUpScreen', {User: this.state.userName});
     };
 
     onSignIn = () => {
-        this.props.navigation.navigate('SignInScreen', {User:this.state.userName});
+        this.props.navigation.navigate('SignInScreen', {User: this.state.userName});
     };
 
+    onLogin = () => {
+
+        if (this.state.isConnected) {
+            if (this.state.email === "" || this.state.password === "") {
+                alert("Please fill all fields");
+            } else {
+                this.setState({showLoading: true});
+                const {email, password} = this.state;
+                var details = {
+                    email: email,
+                    password: password,
+                };
+                var formBody = [];
+                for (var property in details) {
+                    var encodedKey = encodeURIComponent(property);
+                    var encodedValue = encodeURIComponent(details[property]);
+                    formBody.push(encodedKey + "=" + encodedValue);
+                }
+                formBody = formBody.join("&");
+                fetch(constants.ClientLogin, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: formBody
+                }).then(response => response.json())
+                    .then(response => {
+                        console.log("responseClientlogin-->", "-" + JSON.stringify(response));
+                        if (response.ResultType === 1) {
+                            this.setState({showLoading: false});
+                            Preference.set({
+                                clientlogin: true,
+                                userEmail: response.Data.email,
+                                userId: response.Data.id,
+                                userName: response.Data.firstname + " " + response.Data.lastname,
+                                userToken: response.Data.token
+                            });
+
+                                this.moveToHome();
+
+                        } else {
+                            this.setState({showLoading: false});
+                            if (response.ResultType === 0) {
+                                alert(response.Message);
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        //console.error('Errorr:', error);
+                        console.log('Error:', error);
+                        alert("Error: " + error);
+                    });
+                //Keyboard.dismiss();
+            }
+        } else {
+            alert("Please connect Internet");
+        }
+    };
+
+    moveToHome() {
+
+
+
+            this.props.navigation.navigate("TabNavigator");
+
+    }
+    //this.props.navigation.navigate('ClientTabNavigator');
 
     renderRowInputEmail(item) {
+        const {email,} = this.state;
         return <View style={{flexDirection: 'column', width: "100%"}}>
             <View style={{flexDirection: "row", marginStart: 20, marginEnd: 20}}>
                 <TextInput
@@ -43,6 +119,7 @@ export default class SignInScreen extends Component {
                     textContentType={"Email"}
                     placeholder={item.hintText}
                     keyboardType={"email-address"}
+                    value={email}
                 />
 
                 {this.state.showIconLeftEmail &&
@@ -52,7 +129,8 @@ export default class SignInScreen extends Component {
                            height: 20,
                            position: "absolute",
                            right: 10,
-                           top: 15
+                           top: 15,
+
                        }}/>}
 
 
@@ -71,6 +149,7 @@ export default class SignInScreen extends Component {
     }
 
     renderRowInput(item) {
+        const {password} = this.state;
         return <View style={{flexDirection: 'column', width: "100%"}}>
             <View style={{flexDirection: "row", marginStart: 20, marginEnd: 20}}>
                 <TextInput
@@ -79,6 +158,7 @@ export default class SignInScreen extends Component {
                     secureTextEntry={true}
                     maxLength={12}
                     placeholder={item.hintText}
+                    value={password}
                 />
 
                 {this.state.showIconLeftpass &&
@@ -118,36 +198,40 @@ export default class SignInScreen extends Component {
             return true;
         }
     };
+    onChangeText = (key, value) => {
+        this.setState({[key]: value});
+    };
 
     checkPassword(text) {
+
         if (text.length >= 8 && text.length <= 12) {
             this.setState({showIconLeftpass: true});
-            this.setState({Cross2:false})
-        }else if(text.length===0){
+            this.setState({Cross2: false})
+        } else if (text.length === 0) {
             this.setState({showIconLeftpass: false})
-            this.setState({Cross2:true})
-        }
-        else{
+            this.setState({Cross2: true})
+        } else {
             this.setState({showIconLeftpass: false})
-            this.setState({Cross2:true})
+            this.setState({Cross2: true})
 
 
         }
+        this.onChangeText('password', text)
     }
 
     checkEmail(email) {
+
         if (this.validate(email)) {
             this.setState({showIconLeftEmail: true});
-            this.setState({Cross1:false})
-        }else if(email.length===0){
+            this.setState({Cross1: false})
+        } else if (email.length === 0) {
             this.setState({showIconLeftEmail: false})
-            this.setState({Cross1:true})
-        }
-
-        else {
+            this.setState({Cross1: true})
+        } else {
             this.setState({showIconLeftEmail: false});
-            this.setState({Cross1:true})
+            this.setState({Cross1: true})
         }
+        this.onChangeText('email', email)
 
     }
 
@@ -194,7 +278,7 @@ export default class SignInScreen extends Component {
                     {this.renderRowInput({
                         hintText: "Password"
                     })}
-                    <TouchableOpacity style={{justifyContent: "center", alignItems: "center", marginTop: 25}}>
+                    <TouchableOpacity style={{justifyContent: "center", alignItems: "center", marginTop: 25}} onPress={this.onLogin} >
                         <View style={{
                             flexDirection: "column",
                             backgroundColor: "#FA2021",
@@ -282,7 +366,17 @@ export default class SignInScreen extends Component {
 
                 </ScrollView>
 
-
+                {this.state.showLoading && <View style={{
+                    width: "100%",
+                    height: "100%",
+                    backgroundColor: "transparent",
+                    position: "absolute",
+                    opacity: 1,
+                    alignItems: "center",
+                    justifyContent: "center"
+                }}>
+                    <Image resizeMode={"contain"} source={require("../../../assets/images/loading.gif")} style={{width:100,height:100, opacity: 1,}}/>
+                </View>}
             </View>
 
 
