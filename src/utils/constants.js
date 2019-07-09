@@ -13,4 +13,6 @@ export const constants = {
     ClientLogin : Base_url + clientAuthPath + "customerLogin",
     ClientSignUp : Base_url + clientAuthPath + "customerSignup",
 
+    SocialLogin : Base_url + clientAuthPath + "socialLogin",
+
 };

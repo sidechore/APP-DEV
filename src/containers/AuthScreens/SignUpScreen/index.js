@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {ImageBackground, Text, View, TouchableOpacity, TextInput, ScrollView} from 'react-native';
+import {ImageBackground, Text, View, TouchableOpacity, TextInput, ScrollView, Keyboard} from 'react-native';
 import {SafeAreaView} from 'react-navigation';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {styles} from './styles';
@@ -9,6 +9,14 @@ import {checkEmail} from '../../../utils';
 import {Colors} from "../../../themes";
 import {constants} from "../../../utils/constants";
 import Preference from "react-native-preference";
+
+const FBSDK = require('react-native-fbsdk');
+const {
+    LoginManager,
+    AccessToken,
+    GraphRequest,
+    GraphRequestManager,
+} = FBSDK;
 
 export default class SignUpScreen extends Component {
     constructor(props) {
@@ -48,6 +56,127 @@ export default class SignUpScreen extends Component {
         const itemId = navigation.getParam('User', 'NO-ID');
         console.log("gettingUSer--->" + itemId);
         this.state.userName = itemId;
+    }
+
+    onSignUpWithFBClick = async () => {
+        try {
+            const result = await LoginManager.logInWithPermissions(['public_profile', "email"]);
+
+            if (result.isCancelled) {
+                alert('Login was cancelled');
+                return
+            } else {
+                this.FBGraphRequest('id, email, first_name, last_name', this.FBLoginCallback);
+            }
+
+
+        } catch (e) {
+            alert("error: " + e)
+        }
+    }
+
+    async FBGraphRequest(fields, callback) {
+        const accessData = await AccessToken.getCurrentAccessToken();
+        // Create a graph request asking for user information
+        const infoRequest = new GraphRequest('/me', {
+            accessToken: accessData.accessToken,
+            parameters: {
+                fields: {
+                    string: fields
+                }
+            }
+        }, callback.bind(this));
+        // Execute the graph request created above
+        new GraphRequestManager().addRequest(infoRequest).start();
+    }
+
+    async FBLoginCallback(error, result) {
+
+        if (error) {
+            alert(JSON.stringify(error))
+        } else {
+            console.log("FBLoginCallback: " + JSON.stringify(result))
+            this.socialSignUp(
+                result.id,
+                'facebook',
+                result.email,
+                result.first_name,
+                result.last_name
+            )
+
+        }
+    }
+
+    socialSignUp(authId, authType, email, firsyName, lastName ){
+
+        var details = {
+            'authId': authId,
+            'authType': authType,
+            'email': email,
+            'firstName': firsyName,
+            'lastName': lastName
+        };
+        
+        var formBody = [];
+        for (var property in details) {
+          var encodedKey = encodeURIComponent(property);
+          var encodedValue = encodeURIComponent(details[property]);
+          formBody.push(encodedKey + "=" + encodedValue);
+        }
+        formBody = formBody.join("&");
+
+
+        // hide keyboard if open
+        Keyboard.dismiss();
+
+        if (this.state.isConnected) {
+
+            // show loading
+            this.setState({
+                showLoading: true
+            })
+
+            // call api
+            fetch(constants.SocialLogin, {
+                method: 'POST',
+                body: formBody,
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+                }
+            }).then(response => response.json())
+            .then(response => {
+                    this.setState({showLoading: false});
+                    console.log('Social Login response: ' + JSON.stringify(response))
+
+                    if (response.ResultType === 1) {
+                        this.setState({showLoading: false});
+                        Preference.set({
+                            clientlogin: true,
+                            userEmail: response.Data.email,
+                            userId: response.Data.id,
+                            userName: response.Data.firstname + " " + response.Data.lastname,
+                            userToken: response.Data.token
+                        });
+
+                        this.moveTo();
+
+                    } else {
+                        this.setState({showLoading: false});
+                        if (response.ResultType === 0) {
+                            alert(response.Message);
+                        }
+                    }
+
+            })
+            .catch(error => {
+                this.setState({showLoading: false});
+                console.error('Social Login api error: ', error);
+            })
+        } else {
+            alert("Please connect Internet");
+        }
+
     }
 
     onSignUp = () => {
@@ -351,7 +480,7 @@ export default class SignUpScreen extends Component {
                     onChangeText={(text) => this.postal(text)}
                     textContentType={"Email"}
                     placeholder={item.hintText}
-                    keyboardType={"email-address"}
+                    
                 />
 
                 {this.state.showIconLeftpass7 &&
@@ -603,6 +732,9 @@ export default class SignUpScreen extends Component {
                                 style={{width: "100%", height: 0.5, backgroundColor: Colors.lightGrey}}></View>
                         </View>
                         <TouchableOpacity
+                            onPress={()=>{
+                                this.onSignUpWithFBClick()
+                            }}
                             style={{justifyContent: "center", alignItems: "center", marginTop: 30, marginBottom: 10}}>
                             <View style={{
                                 flexDirection: "row",
