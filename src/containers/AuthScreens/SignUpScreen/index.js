@@ -73,7 +73,7 @@ export default class SignUpScreen extends Component {
         } catch (e) {
             alert("error: " + e)
         }
-    }
+    };
 
     async FBGraphRequest(fields, callback) {
         const accessData = await AccessToken.getCurrentAccessToken();
@@ -137,7 +137,7 @@ export default class SignUpScreen extends Component {
             })
 
             // call api
-            fetch(constants.SocialLogin, {
+            fetch(constants.ClientSocialLogin, {
                 method: 'POST',
                 body: formBody,
                 headers: {

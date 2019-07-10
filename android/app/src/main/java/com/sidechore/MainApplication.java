@@ -61,7 +61,7 @@ public class MainApplication extends Application implements ReactApplication {
         super.onCreate();
         SoLoader.init(this, /* native exopackage */ false);
 
-        FacebookSdk.setApplicationId("497413490798340");
+        FacebookSdk.setApplicationId("565983903931223");
         FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(this);
     }

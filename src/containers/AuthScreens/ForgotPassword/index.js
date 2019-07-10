@@ -1,19 +1,8 @@
-import React, { Component } from "react";
-import {
-    ImageBackground,
-    Text,
-    View,
-    TouchableOpacity,
-    TextInput,
-    ScrollView
-} from "react-native";
-import { SafeAreaView } from "react-navigation";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { styles } from "./styles";
-import { Header, Image } from "react-native-elements";
-
-import { checkEmail } from "../../../utils";
-import { Colors } from "../../../themes";
+import React, {Component} from "react";
+import {ScrollView, Text, TextInput,SafeAreaView ,TouchableOpacity, View,KeyboardAvoidingView} from "react-native";
+import {styles} from "./styles";
+import {Header, Image} from "react-native-elements";
+import {constants} from "../../../utils/constants";
 
 export default class ForgotPassword extends Component {
     constructor(props) {
@@ -22,11 +11,68 @@ export default class ForgotPassword extends Component {
         this.state = {
             text: "Useless Placeholder",
             showIconLeftEmail: false,
-            Cross1: false
+            Cross1: false,
+            isVisible: false,
+            email: '',
+            pin: "",
+            isConnected: false,
+            sendMail: true,
+            resetPassword: false,
+            forgetpassword_pin: "5463", password: "", repassword: "",
         };
+        this.onForgot = this.onForgot.bind(this);
     }
-
+    onChangeText = (key, value) => {
+        this.setState({[key]: value});
+    };
+    moveTo(){
+        
+        this.props.navigation.navigate("ResetPassword",{email:this.state.email})
+    }
+    onForgot = () => {
+            if (this.state.email === "") {
+                alert("Please enter email?");
+            } else {
+                var details = {
+                    email: this.state.email,
+                    forgetpassword_pin: this.state.forgetpassword_pin
+                };
+                var formBody = [];
+                for (var property in details) {
+                    var encodedKey = encodeURIComponent(property);
+                    var encodedValue = encodeURIComponent(details[property]);
+                    formBody.push(encodedKey + "=" + encodedValue);
+                }
+                formBody = formBody.join("&");
+                fetch(constants.ForgetPassword, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: formBody
+                }).then(response => response.json())
+                    .then(response => {
+                        console.log("responseforgetPasswordClient-->", "-" + JSON.stringify(response));
+                        if (response.ResultType === 1) {
+                            this.moveTo();
+                        } else {
+                            if (response.ResultType === 0) {
+                                alert(response.Message);
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        //console.error('Errorr:', error);
+                        console.log('Error:', error);
+                        alert("Error: "+error);
+                    });
+                //Keyboard.dismiss();
+            }
+        
+    };
     renderRowInputEmail(item) {
+        const {email}=this.state;
         return (
             <View style={{ flexDirection: "column", width: "100%" }}>
                 <View
@@ -38,10 +84,11 @@ export default class ForgotPassword extends Component {
                 >
                     <TextInput
                         style={{ height: 50, width: "100%" }}
-                        onChangeText={text => this.checkEmail(text)}
+                        onChangeText={email =>this.checkEmail(email) }
                         textContentType={"Email"}
                         placeholder={item.hintText}
                         keyboardType={"email-address"}
+                        value={email}
                     />
 
                     {this.state.showIconLeftEmail && (
@@ -109,11 +156,13 @@ export default class ForgotPassword extends Component {
             this.setState({ showIconLeftEmail: false });
             this.setState({ Cross1: true });
         }
+        this.onChangeText('email', email)
     }
 
     render() {
         return (
-            <View style={styles.container}>
+           
+                <SafeAreaView  style={styles.container}  >
                 <Header
                     statusBarProps={{ barStyle: "light-content" }}
                     barStyle="light-content" // or directly
@@ -196,7 +245,7 @@ export default class ForgotPassword extends Component {
 
                         <TouchableOpacity
                             onPress={() =>
-                                this.props.navigation.navigate("ResetPassword")
+                                this.onForgot()
                             }
                             style={{
                                 justifyContent: "center",
@@ -231,7 +280,8 @@ export default class ForgotPassword extends Component {
                         }}
                     />
                 </ScrollView>
-            </View>
+                </SafeAreaView>
+           
         );
     }
 }

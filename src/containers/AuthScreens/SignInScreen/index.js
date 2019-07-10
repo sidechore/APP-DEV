@@ -119,7 +119,7 @@ export default class SignInScreen extends Component {
             })
 
             // call api
-            fetch(constants.SocialLogin, {
+            fetch(constants.ClientSocialLogin, {
                 method: 'POST',
                 body: formBody,
                 headers: {
@@ -421,7 +421,7 @@ export default class SignInScreen extends Component {
                             <Text style={{color: "white", fontWeight: "bold"}}>{"Sign In"}</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={this.onSignUp}>
+                    <TouchableOpacity onPress={()=>this.props.navigation.navigate("ForgotPassword")}>
                         <View style={{
                             flexDirection: "column",
                             justifyContent: "center",

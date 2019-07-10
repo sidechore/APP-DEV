@@ -121,7 +121,7 @@ export default class SignInProvider extends Component {
             })
 
             // call api
-            fetch(constants.SocialLogin, {
+            fetch(constants.ProviderSocialLogin, {
                 method: 'POST',
                 body: formBody,
                 headers: {

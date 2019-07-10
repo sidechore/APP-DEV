@@ -1,12 +1,9 @@
 import React, {Component} from 'react';
-import {ImageBackground, Text, View, TouchableOpacity, TextInput, ScrollView} from 'react-native';
-import {SafeAreaView} from 'react-navigation';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {ScrollView, Text, TextInput, TouchableOpacity, SafeAreaView,View} from 'react-native';
 import {styles} from './styles';
 import {Header, Image} from "react-native-elements";
+import {constants} from "../../../utils/constants";
 
-import {checkEmail} from '../../../utils';
-import {Colors} from "../../../themes";
 
 export default class ResetPassword extends Component {
 
@@ -18,19 +15,66 @@ export default class ResetPassword extends Component {
             showIconLeftpass2: false,
             Cross1:false,
             Cross2:false,
-            Password:'',
+            password:'',
             Cpassword:"",
+            email:"",
+            forgetpassword_pin:"5463"
         };
         const {navigation} = this.props;
-        const itemId = navigation.getParam('User', 'NO-ID');
+        const itemId = navigation.getParam('email', 'NO-ID');
         console.log("gettingUSer--->" + itemId);
-        this.state.userName=itemId;
+        this.state.email=itemId;
     }
-    onVerify = () => {
-        this.props.navigation.navigate('ResetPassword', {User:this.state.userName});
-    };
 
+    onResetPassword = () => {
+        //alert('forgot');
+        
+            if (this.state.password === "") {
+                alert("Please enter password?");
+            } else {
+                var details = {
+                    password: this.state.password,
+                    email: this.state.email,
+                    forgetpassword_pin: this.state.forgetpassword_pin
+                };
+                var formBody = [];
+                for (var property in details) {
+                    var encodedKey = encodeURIComponent(property);
+                    var encodedValue = encodeURIComponent(details[property]);
+                    formBody.push(encodedKey + "=" + encodedValue);
+                }
+                formBody = formBody.join("&");
+
+                fetch(constants.ResetPassword, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: formBody
+                }).then(response => response.json())
+                    .then(response => {
+                        console.log("response-->", "-" + JSON.stringify(response));
+                        if (response.ResultType === 1) {
+                           
+                            this.moveTo();
+                        } else {
+                            if (response.ResultType === 0) {
+                                alert(response.Message);
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        //console.error('Errorr:', error);
+                        console.log('Error:', error);
+                        alert("Error: "+error);
+                    });
+                //Keyboard.dismiss();
+            }
+        
+    };
     renderRowInputPassword(item) {
+        const {password}=this.state;
         return <View style={{flexDirection: 'column', width: "100%"}}>
             <View style={{flexDirection: "row", marginStart: 20, marginEnd: 20}}>
                 <TextInput
@@ -38,7 +82,9 @@ export default class ResetPassword extends Component {
                     onChangeText={(text) => this.checkPassword(text)}
                     textContentType={"Email"}
                     placeholder={item.hintText}
-                    keyboardType={"email-address"}
+                    secureTextEntry={true}
+                    
+                    value={password}
                 />
 
                 {this.state.showIconLeftpass1&&
@@ -73,7 +119,8 @@ export default class ResetPassword extends Component {
                     onChangeText={(text) => this.cnfrPassword(text)}
                     textContentType={"Email"}
                     placeholder={item.hintText}
-                    keyboardType={"email-address"}
+                    
+                    secureTextEntry={true}
                 />
 
                 {this.state.showIconLeftpass2 &&
@@ -102,7 +149,7 @@ export default class ResetPassword extends Component {
     }
 
     checkPassword(text) {
-        this.setState({Password:text});
+        
         if (text.length >= 8 && text.length <= 12) {
             this.setState({showIconLeftpass1: true});
             this.setState({Cross1:false})
@@ -110,6 +157,7 @@ export default class ResetPassword extends Component {
             this.setState({showIconLeftpass1: false})
             this.setState({Cross1:true})
         }
+        this.onChangeText('password', text)
     }
     cnfrPassword(text) {
         this.setState({Cpassword:text});
@@ -125,10 +173,15 @@ export default class ResetPassword extends Component {
             this.setState({Cross2:true})
         }
     }
-
+    onChangeText = (key, value) => {
+        this.setState({[key]: value});
+    };
+    moveTo(){
+        this.props.navigation.navigate("InitialScreen")
+    }
     render() {
         return (
-            <View style={styles.container}>
+            <SafeAreaView style={styles.container}>
 
 
                 <Header
@@ -180,7 +233,7 @@ export default class ResetPassword extends Component {
 
                         })}
 
-                        <TouchableOpacity  onPress={()=>this.props.navigation.navigate("SignInScreen")}  style={{justifyContent: "center", alignItems: "center", marginTop: 25}}>
+                        <TouchableOpacity  onPress={()=>this.onResetPassword()}  style={{justifyContent: "center", alignItems: "center", marginTop: 25}}>
                             <View style={{
                                 flexDirection: "column",
                                 backgroundColor: "#FA2021",
@@ -205,7 +258,7 @@ export default class ResetPassword extends Component {
                 </ScrollView>
 
 
-            </View>
+            </SafeAreaView>
 
         )
 
