@@ -36,6 +36,7 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
+            new FBSDKPackage(),
                     new PreferencePackage(),
                     new MapsPackage(),
                     new DatePickerPackage(),
