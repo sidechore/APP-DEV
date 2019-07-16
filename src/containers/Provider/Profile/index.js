@@ -5,17 +5,18 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {styles} from './styles';
 import {Header, Image} from "react-native-elements";
 import RBSheet from "react-native-raw-bottom-sheet";
-
+import ImagePicker from 'react-native-image-picker';
 
 export default class ProProfile extends Component {
     constructor(props) {
         super(props);
         console.disableYellowBox = true;
-        this.setState({
-            Greytext:true
+        this.state={ avatarSource:null,
+
+            Greytext:true,}
 
 
-        })
+
     }
     renderRowProfile(item){
         return(
@@ -40,7 +41,7 @@ export default class ProProfile extends Component {
 
 
                         <Image style={{resizeMode:"contain",
-                            height:14,width:14
+                            height:14,width:14,
                         }}  source={require("../../../assets/images/arrowforward.png")}/>
                     </View>
 
@@ -50,6 +51,33 @@ export default class ProProfile extends Component {
             </View>
         )
 
+    }
+
+    onAvatarPress() {
+
+        const options = {
+            title: 'Select Avatar',
+            storageOptions: {
+                skipBackup: true,
+                path: 'H2H',
+            },
+        };
+        ImagePicker.showImagePicker(options, (response) => {
+            console.log('Response = ', response);
+
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            } else {
+                const source = {uri: response.uri};
+
+                this.setState({
+                    avatarSource: source,
+                });
+            }
+        });
+        this.setState({cameraicon: false});
     }
 
     render() {
@@ -81,9 +109,9 @@ export default class ProProfile extends Component {
                     <View style={{width:"100%",justifyContent:"center",alignItems:"center",
                         marginTop:20
                     }}>
-                        <TouchableOpacity >
-                            <Image source={require("../../../assets/images/pimg1.png")}
-                                   style={{resizeMode:"contain",height:110,width:110}}
+                        <TouchableOpacity onPress={() => this.onAvatarPress()}>
+                            <Image source={this.state.avatarSource ? this.state.avatarSource : require("../../../assets/images/pimg1.png")}
+                                   style={{resizeMode:"cover",height:110,width:110,borderRadius:55}}
 
                             />
                         </TouchableOpacity>

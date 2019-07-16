@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   ImageBackground,
   Text,
@@ -7,55 +7,56 @@ import {
   TextInput,
   ScrollView,
   Switch
-} from "react-native";
-import { SafeAreaView } from "react-navigation";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { styles } from "./styles";
-import { Header, Image } from "react-native-elements";
+} from 'react-native';
+import { SafeAreaView } from 'react-navigation';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { styles } from './styles';
+import { Header, Image } from 'react-native-elements';
 
-import { checkEmail } from "../../../utils";
-import { Colors } from "../../../themes";
+import { checkEmail } from '../../../utils';
+import { Colors } from '../../../themes';
 
 export default class PhoneNumber extends Component {
   constructor(props) {
     super(props);
+    this.params = this.props.navigation.state.params;
     console.disableYellowBox = true;
     this.state = {
-      text: "Useless Placeholder",
+      text: 'Useless Placeholder',
       Cross1: false,
       showIconLeftpass1: false
     };
     const { navigation } = this.props;
-    const itemId = navigation.getParam("User", "NO-ID");
-    console.log("gettingUSer--->" + itemId);
+    const itemId = navigation.getParam('User', 'NO-ID');
+    console.log('gettingUSer--->PhoneNumber' + itemId);
     this.state.userName = itemId;
   }
   onSUbmit = () => {
-    this.props.navigation.navigate("VerifyPhoneNo", {
-      User: this.state.userName
+    this.props.navigation.navigate('VerifyPhoneNo', {
+      User: this.params.User
     });
   };
 
   renderRowInputPhone(item) {
     return (
-      <View style={{ flexDirection: "column", width: "100%" }}>
-        <View style={{ flexDirection: "row", marginStart: 20, marginEnd: 20 }}>
+      <View style={{ flexDirection: 'column', width: '100%' }}>
+        <View style={{ flexDirection: 'row', marginStart: 20, marginEnd: 20 }}>
           <TextInput
-            style={{ height: 50, width: "100%" }}
+            style={{ height: 50, width: '100%' }}
             onChangeText={text => this.checkPhone(text)}
-            textContentType={"Email"}
+            textContentType={'Email'}
             placeholder={item.hintText}
-            keyboardType={"email-address"}
+            keyboardType={'email-address'}
           />
 
           {this.state.showIconLeftpass1 && (
             <Image
-              resizeMode={"contain"}
-              source={require("../../../assets/images/checked.png")}
+              resizeMode={'contain'}
+              source={require('../../../assets/images/checked.png')}
               style={{
                 width: 20,
                 height: 20,
-                position: "absolute",
+                position: 'absolute',
                 right: 10,
                 top: 15
               }}
@@ -64,12 +65,12 @@ export default class PhoneNumber extends Component {
 
           {this.state.Cross1 && (
             <Image
-              resizeMode={"contain"}
-              source={require("../../../assets/images/close.png")}
+              resizeMode={'contain'}
+              source={require('../../../assets/images/close.png')}
               style={{
                 width: 20,
                 height: 20,
-                position: "absolute",
+                position: 'absolute',
                 right: 10,
                 top: 15
               }}
@@ -79,7 +80,7 @@ export default class PhoneNumber extends Component {
         <View
           style={{
             height: 0.5,
-            backgroundColor: "#52525D",
+            backgroundColor: '#52525D',
             marginStart: 25,
             marginEnd: 25
           }}
@@ -103,27 +104,27 @@ export default class PhoneNumber extends Component {
     return (
       <View style={styles.container}>
         <Header
-          statusBarProps={{ barStyle: "light-content" }}
+          statusBarProps={{ barStyle: 'light-content' }}
           barStyle="light-content" // or directly
-          style={{ backgroundColor: "white" }}
-          outerContainerStyles={{ backgroundColor: "white" }}
+          style={{ backgroundColor: 'white' }}
+          outerContainerStyles={{ backgroundColor: 'white' }}
           centerComponent={{
-            text: "Submit Phone Number ",
-            style: { fontWeight: "bold", color: "black", fontSize: 18 }
+            text: 'Submit Phone Number ',
+            style: { fontWeight: 'bold', color: 'black', fontSize: 18 }
           }}
           containerStyle={{
-            backgroundColor: "white",
-            justifyContent: "space-around"
+            backgroundColor: 'white',
+            justifyContent: 'space-around'
           }}
           leftComponent={
             <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
               <Image
-                source={require("../../../assets/images/arrowback.png")}
+                source={require('../../../assets/images/arrowback.png')}
                 style={{
                   marginStart: 10,
                   height: 14,
                   width: 14,
-                  resizeMode: "contain"
+                  resizeMode: 'contain'
                 }}
               />
             </TouchableOpacity>
@@ -133,46 +134,46 @@ export default class PhoneNumber extends Component {
         <ScrollView>
           <View
             style={{
-              flexDirection: "column",
-              width: "100%",
+              flexDirection: 'column',
+              width: '100%',
               height: 200,
-              backgroundColor: "#F3F3F3",
-              justifyContent: "center",
-              alignItems: "center"
+              backgroundColor: '#F3F3F3',
+              justifyContent: 'center',
+              alignItems: 'center'
             }}
           >
             <Image
-              resizeMode={"contain"}
-              source={require("../../../assets/images/logo3x.png")}
+              resizeMode={'contain'}
+              source={require('../../../assets/images/logo3x.png')}
               style={{ width: 180, height: 150 }}
             />
             <View
               style={{
-                flexDirection: "column",
+                flexDirection: 'column',
                 marginBottom: 40,
-                justifyContent: "center",
-                alignItems: "center",
-                color: "black"
+                justifyContent: 'center',
+                alignItems: 'center',
+                color: 'black'
               }}
             >
-              <Text style={{ color: "black" }}>
-                {"Please enter few more details to"}
+              <Text style={{ color: 'black' }}>
+                {'Please enter few more details to'}
               </Text>
-              <Text style={{ color: "black" }}>{" complete registration"}</Text>
+              <Text style={{ color: 'black' }}>{' complete registration'}</Text>
             </View>
           </View>
           <View
-            style={{ width: "100%", height: 250, backgroundColor: "white" }}
+            style={{ width: '100%', height: 250, backgroundColor: 'white' }}
           >
             {this.renderRowInputPhone({
-              hintText: "Phone Number"
+              hintText: 'Phone Number'
             })}
             <View
               style={{
-                flexDirection: "row",
+                flexDirection: 'row',
 
-                justifyContent: "center",
-                alignItems: "center",
+                justifyContent: 'center',
+                alignItems: 'center',
 
                 marginTop: 40,
                 marginLeft: 20,
@@ -181,10 +182,10 @@ export default class PhoneNumber extends Component {
             >
               <View
                 style={{
-                  flexDirection: "column",
-                  width: "15%",
-                  justifyContent: "center",
-                  alignItems: "center"
+                  flexDirection: 'column',
+                  width: '15%',
+                  justifyContent: 'center',
+                  alignItems: 'center'
                 }}
               >
                 <Switch
@@ -192,20 +193,20 @@ export default class PhoneNumber extends Component {
                   thumbTintColor="white"
                   value={false}
                   style={{
-                    position: "absolute",
+                    position: 'absolute',
                     right: 15,
-                    tintColor: "red"
+                    tintColor: 'red'
                   }}
                 />
               </View>
-              <View style={{ flexDirection: "column", width: "75%" }}>
-                <Text style={{ color: "black" }}>
-                  {" "}
-                  {"I agree to SideChore's Terms of Use "}{" "}
+              <View style={{ flexDirection: 'column', width: '75%' }}>
+                <Text style={{ color: 'black' }}>
+                  {' '}
+                  {"I agree to SideChore's Terms of Use "}{' '}
                 </Text>
-                <Text style={{ color: "black" }}>
-                  {" "}
-                  {"and Privacy Policy "}{" "}
+                <Text style={{ color: 'black' }}>
+                  {' '}
+                  {'and Privacy Policy '}{' '}
                 </Text>
               </View>
             </View>
@@ -213,28 +214,28 @@ export default class PhoneNumber extends Component {
             <TouchableOpacity
               onPress={this.onSUbmit}
               style={{
-                justifyContent: "center",
-                alignItems: "center",
+                justifyContent: 'center',
+                alignItems: 'center',
                 marginTop: 25
               }}
             >
               <View
                 style={{
-                  flexDirection: "column",
-                  backgroundColor: "#FA2021",
-                  width: "85%",
+                  flexDirection: 'column',
+                  backgroundColor: '#FA2021',
+                  width: '85%',
                   height: 50,
-                  justifyContent: "center",
-                  alignItems: "center",
+                  justifyContent: 'center',
+                  alignItems: 'center',
                   borderRadius: 7
                 }}
               >
-                <Text style={{ color: "white", fontSize: 18 }}>{"Submit"}</Text>
+                <Text style={{ color: 'white', fontSize: 18 }}>{'Submit'}</Text>
               </View>
             </TouchableOpacity>
           </View>
           <View
-            style={{ width: "100%", height: 250, backgroundColor: "#F3F3F3" }}
+            style={{ width: '100%', height: 250, backgroundColor: '#F3F3F3' }}
           />
         </ScrollView>
       </View>

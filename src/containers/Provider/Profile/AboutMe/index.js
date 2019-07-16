@@ -44,9 +44,11 @@ export default class ProAbout extends Component {
                         }}/></TouchableOpacity>}
                 />
                 <View style={{flexDirection:"column",width:"100%",marginStart:20,marginTop:30}}>
+                    <View style={{}}  >
                 <Text style={{color:"black"}} >
                     {"Official start date: 2017"}
                 </Text>
+                </View>
                     <Text style={{color:"black",marginTop:5,marginBottom:5}} >
                         {"Total amount of jobs completed: 108 "}
                     </Text>
