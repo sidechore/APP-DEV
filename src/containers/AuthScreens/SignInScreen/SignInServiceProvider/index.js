@@ -34,6 +34,7 @@ export default class SignInProvider extends Component {
             isConnected: true,
             accessToken: null,
             dataFacebook: undefined,
+
         };
         const {navigation} = this.props;
         const itemId = navigation.getParam('User', 'NO-ID');
@@ -139,7 +140,7 @@ export default class SignInProvider extends Component {
                             clientlogin: true,
                             userEmail: response.Data.email,
                             userId: response.Data.id,
-                            userName: response.Data.firstname + " " + response.Data.lastname,
+                            userName: response.Data.firstName + " " + response.Data.lastName,
                             userToken: response.Data.token
                         });
 

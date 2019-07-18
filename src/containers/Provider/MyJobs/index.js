@@ -1,11 +1,7 @@
 import React, {Component} from 'react';
-import {ImageBackground, Text, View, TouchableOpacity, TextInput, ScrollView} from 'react-native';
-import {SafeAreaView} from 'react-navigation';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import {styles} from './styles';
 import {Header, Image} from "react-native-elements";
-import RBSheet from "react-native-raw-bottom-sheet";
-import Modal from "react-native-modal";
 import Current from "./Current/index.js"
 import Completed from "./Completed/index.js"
 

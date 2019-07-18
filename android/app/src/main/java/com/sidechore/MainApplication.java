@@ -3,11 +3,12 @@ package com.sidechore;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.henninghall.date_picker.DatePickerPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import im.shimo.react.preference.PreferencePackage;
 import com.airbnb.android.react.maps.MapsPackage;
-import com.henninghall.date_picker.DatePickerPackage;
+
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.facebook.react.ReactNativeHost;
@@ -38,7 +39,6 @@ public class MainApplication extends Application implements ReactApplication {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
             new ImagePickerPackage(),
-            new FBSDKPackage(),
                     new PreferencePackage(),
                     new MapsPackage(),
                     new DatePickerPackage(),

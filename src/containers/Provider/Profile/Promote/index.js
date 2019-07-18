@@ -1,20 +1,71 @@
 import React, {Component} from 'react';
-import {ImageBackground, Text, View, TouchableOpacity, TextInput, ScrollView, Switch} from 'react-native';
-import {SafeAreaView} from 'react-navigation';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {Text, TouchableOpacity, View} from 'react-native';
 import {styles} from './styles';
 import {Header, Image} from "react-native-elements";
-import RBSheet from "react-native-raw-bottom-sheet";
+
+import Preference from "react-native-preference";
+
 export default class Promote extends Component {
     constructor(props) {
         super(props);
         console.disableYellowBox = true;
-        this.setState({
+        this.state={
+            parmote_code:Preference.get("PromoteCode"),
+            showLoading:false,
+            isConnected:true
 
 
-
-        })
+        }
     }
+   /* componentDidMount=()=>{
+        console.log("userId--"+JSON.stringify(Preference.get("userId")))
+        if (this.state.isConnected) {
+            this.setState({showLoading: true});
+
+            fetch(constants.Promote + "/" +Preference.get("userId"), {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+
+            })
+                .then(response => response.json())
+                .then(response => {
+                    console.log(
+                        'responseClientlogin-->',
+                        '-' + JSON.stringify(response)
+                    );
+                    if (response.ResultType === 1) {
+                        let Data=response.Data;
+                        this.setState({showLoading: false,parmote_code:Data.parmote_code});
+                        Preference.set({
+                            clientlogin: true,
+                            userEmail: response.Data.email,
+                            userId: response.Data.id,
+                            userName:
+                                response.Data.firstname + ' ' + response.Data.lastname,
+                            userToken: response.Data.token,
+                            PromoteCode:Data.parmote_code,
+                        });
+                    } else {
+                        this.setState({showLoading: false});
+                        if (response.ResultType === 0) {
+                            alert(response.Message);
+                        }
+                    }
+                })
+                .catch(error => {
+                    //console.error('Errorr:', error);
+                    console.log('Error:', error);
+                    alert('Error: ' + error);
+                });
+
+            //Keyboard.dismiss();
+        } else {
+            alert('Please connect Internet');
+        }
+    };*/
     renderRowProfile(item){
         return(
             <View style={{alignItems: "center", width: "100%"}}>
@@ -78,7 +129,7 @@ export default class Promote extends Component {
                 <View style={{flexDirection:"column"}}>
                     {this.renderRowProfile({
 
-                        text2:"26SJX3",
+                        text2:this.state.parmote_code,
                         text1:"Give clients $10 off their next job",
                         Greytext:false
                     })}
@@ -91,6 +142,25 @@ export default class Promote extends Component {
 
 
                 </View>
+                {this.state.showLoading && (
+                    <View
+                        style={{
+                            width: '100%',
+                            height: '100%',
+                            backgroundColor: 'transparent',
+                            position: 'absolute',
+                            opacity: 1,
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                        }}
+                    >
+                        <Image
+                            resizeMode={'contain'}
+                            source={require('../../../../assets/images/loading.gif')}
+                            style={{ width: 100, height: 100, opacity: 1 }}
+                        />
+                    </View>
+                )}
             </View>
         )
     }

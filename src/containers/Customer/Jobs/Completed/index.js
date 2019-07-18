@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
-import {ImageBackground, Text, View, TouchableOpacity, TextInput, ScrollView} from 'react-native';
-import {SafeAreaView} from 'react-navigation';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {styles} from './styles';
-import {Header, Image} from "react-native-elements";
-import RBSheet from "react-native-raw-bottom-sheet";
-import Modal from "react-native-modal";
+import {FlatList, Text, TouchableOpacity, View} from 'react-native';
+import {Image} from "react-native-elements";
+import Preference from 'react-native-preference';
+import {constants} from '../../../../utils/constants';
+import moment from "moment";
 
 export default class Completed extends Component {
     constructor(props) {
@@ -13,14 +11,64 @@ export default class Completed extends Component {
         console.disableYellowBox = true;
         this.state = {
             text: 'Useless Placeholder',
-            JobsCOpen:false,
-            JobCClose:true,
+            JobsCOpen:true,
+            JobCClose:false,
             Cancelled:true,
-            Cost:true
+            isConnected:true,
+            auth_token: Preference.get("userToken"),
+            completedJobs: []
 
 
         };
     }
+    callCompletedJobApi = () => {
+
+        if (this.state.isConnected) {
+            this.setState({showLoading: true});
+            fetch(constants.CustomerCompletedJobs, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'x-auth-token': this.state.auth_token
+                },
+            }).then(response => response.json())
+                .then(response => {
+                    this.setState({showLoading: false});
+                    console.log("responseClientlogin-->", "-" + JSON.stringify(response));
+                    if (response.ResultType === 1) {
+                        let data = response.Data;
+                        if (data) {
+                            this.setState({
+                                showLoading: false,
+                                completedJobs: data
+
+                            });
+                        }
+
+
+                    } else {
+                        if (response.ResultType === 0) {
+                            alert(response.Message);
+                        }
+                    }
+                })
+                .catch(error => {
+                    //console.error('Errorr:', error);
+                    console.log('Error:', error);
+                    alert("Error: " + error);
+                });
+            //Keyboard.dismiss();
+
+
+        } else {
+            alert("Please connect Internet");
+        }
+    };
+
+    componentDidMount = () => {
+        this.callCompletedJobApi();
+    };
     renderJobsOpen(item){
 
         return<View style={{flexDirection:"column",width:"100%",backgroundColor:"white",marginTop:20}} >
@@ -34,37 +82,27 @@ export default class Completed extends Component {
                     style={{resizeMode: "contain",width:70,height:70}}
                 />
 
-                <Text style={{color:"black",marginTop:5,fontSize:15}} >{"John Brown"}</Text>
+                <Text style={{color:"black",marginTop:5,fontSize:15}} >{item.fName + item.sName}FF</Text>
             </View>
             <View style={{flexDirection:"column",width:"60%",marginTop:20,marginBottom:30
 
             }} >
-                <Text  onPress={()=>this.props.navigation.navigate("Receipt")} style={{color:"red",fontSize:17,}} >{"Furniture Assembly"}</Text>
+                <Text  onPress={()=>this.props.navigation.navigate("Receipt")} style={{color:"red",fontSize:17,}} > {item.JobTitle}</Text>
                 <View style={{flexDirection:"row",alignItems:'center',marginTop:25}}>
                     <Image
                         source={require("../../../../assets/images/calendargrey.png")}
                         style={{resizeMode:"contain",width:13,height:13,marginEnd:10}}
                     />
-                    <Text style={{color:"#606366"}} >{"Mar 29, 2019"}</Text>
+                    <Text style={{color:"#606366"}} >{item.date}</Text>
                 </View>
                 <View style={{flexDirection:"row",alignItems:'center',marginTop:5}}>
                     <Image
                         source={require("../../../../assets/images/pingrey.png")}
                         style={{resizeMode:"contain",width:13,height:13,marginEnd:10}}
                     />
-                    <Text style={{color:"#606366"}} >{"Carpenter Village"}</Text>
+                    <Text style={{color:"#606366"}} >{item.address}</Text>
 
                 </View>
-                {item.cost &&
-                    <View style={{flexDirection: "row", alignItems: 'center', marginTop: 5}}>
-                        <Image
-                            source={require("../../../../assets/images/Cash.png")}
-                            style={{resizeMode: "contain", width: 13, height: 13, marginEnd: 10}}
-                        />
-                        <Text style={{color: "#606366"}}>{"Total Cost $50"}</Text>
-
-                    </View>
-                }
             </View>
 
 
@@ -115,39 +153,55 @@ export default class Completed extends Component {
                 {this.state.JobsCOpen &&
 
 
-                <View style={{marginTop:15,marginStart:20,marginEnd:20,marginBottom:20}}>
-                    <Text style={{color:"red",fontSize:15}} >March 2019</Text>
+                <FlatList style={{width: "100%"}}
+                          data={this.state.completedJobs}
+                          showsVerticalScrollIndicator={false}
+                          extraData={this.state.completedJobs}
+                          renderItem={({item}) =>
+                              <View
+                                  style={{
+                                      marginTop: 15,
+                                      marginStart: 20,
+                                      marginEnd: 20,
+                                      marginBottom: 20
+                                  }}
+                              >
+                                  <Text style={{color: 'red', fontSize: 15}}>{moment(item.job_date).format("MMM YYYY")}</Text>
+
+                                  {this.renderJobsOpen({
+                                      fName: item.provider.local.firstName,
+                                      sName: item.provider.local.lastName,
+                                      JobTitle: item.additional_job_details,
+                                      date: moment(item.job_date).format('ll'),
+                                      address: item.starting_address,
+                                      cancelled: item.is_cancelled,})}
 
 
-                    {this.renderJobsOpen({
-                        cancelled:true,
-                        cost:true
-                    })}
-                    {this.renderJobsOpen({
-                        cancelled:false,
-                        cost:false
-                    })}
-                    <Text style={{color:"red",fontSize:15,marginTop:15}} >November 2018</Text>
-
-                    {this.renderJobsOpen({
-                        cancelled:false,
-                        cost:false
-                    })}
-                    {this.renderJobsOpen({
-                        cancelled:false,
-                        cost:false
-                    })}
-                    {this.renderJobsOpen( {
-                        cancelled:false,
-                        cost:false
-                    })}
-
-                </View>
+                              </View>}/>
 
 
 
 
                 }
+                {this.state.showLoading && (
+                    <View
+                        style={{
+                            width: '100%',
+                            height: '100%',
+                            backgroundColor: 'transparent',
+                            position: 'absolute',
+                            opacity: 1,
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                        }}
+                    >
+                        <Image
+                            resizeMode={'contain'}
+                            source={require('../../../../assets/images/loading.gif')}
+                            style={{width: 100, height: 100, opacity: 1}}
+                        />
+                    </View>
+                )}
 
 
             </View>

@@ -1,12 +1,9 @@
 import React, {Component} from 'react';
-import {ImageBackground, Text, View, TouchableOpacity, TextInput, ScrollView, Keyboard} from 'react-native';
-import {SafeAreaView} from 'react-navigation';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {Keyboard, ScrollView, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {styles} from './styles';
 import {Header, Image} from "react-native-elements";
 import Preference from 'react-native-preference';
 import {Colors} from "../../../themes";
-import {checkEmail} from '../../../utils';
 import {constants} from "../../../utils/constants";
 
 const FBSDK = require('react-native-fbsdk');
@@ -171,63 +168,63 @@ export default class SignInScreen extends Component {
 
     onLogin = () => {
 
-        if (this.state.isConnected) {
-            if (this.state.email === "" || this.state.password === "") {
-                alert("Please fill all fields");
-            } else {
-                this.setState({showLoading: true});
-                const {email, password} = this.state;
-                var details = {
-                    email: email,
-                    password: password,
-                };
-                var formBody = [];
-                for (var property in details) {
-                    var encodedKey = encodeURIComponent(property);
-                    var encodedValue = encodeURIComponent(details[property]);
-                    formBody.push(encodedKey + "=" + encodedValue);
-                }
-                formBody = formBody.join("&");
-                fetch(constants.ClientLogin, {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    body: formBody
-                }).then(response => response.json())
-                    .then(response => {
-                        console.log("responseClientlogin-->", "-" + JSON.stringify(response));
-                        if (response.ResultType === 1) {
-                            this.setState({showLoading: false});
-                            Preference.set({
-                                clientlogin: true,
-                                userEmail: response.Data.email,
-                                userId: response.Data.id,
-                                userName: response.Data.firstname + " " + response.Data.lastname,
-                                userToken: response.Data.token
-                            });
-
-                            this.moveToHome();
-
-                        } else {
-                            this.setState({showLoading: false});
-                            if (response.ResultType === 0) {
-                                alert(response.Message);
-                            }
-                        }
-                    })
-                    .catch(error => {
-                        //console.error('Errorr:', error);
-                        console.log('Error:', error);
-                        alert("Error: " + error);
-                    });
-                //Keyboard.dismiss();
-            }
-        } else {
-            alert("Please connect Internet");
-        }
+          if (this.state.isConnected) {
+    if (this.state.email === "" || this.state.password === "") {
+    alert("Please fill all fields");
+} else {
+    this.setState({showLoading: true});
+    const {email, password} = this.state;
+    var details = {
+        email: email,
+        password: password,
     };
+    var formBody = [];
+    for (var property in details) {
+        var encodedKey = encodeURIComponent(property);
+        var encodedValue = encodeURIComponent(details[property]);
+        formBody.push(encodedKey + "=" + encodedValue);
+    }
+    formBody = formBody.join("&");
+    fetch(constants.ClientLogin, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: formBody
+    }).then(response => response.json())
+        .then(response => {
+            console.log("responseClientlogin-->", "-" + JSON.stringify(response));
+            if (response.ResultType === 1) {
+                this.setState({showLoading: false});
+                Preference.set({
+                    clientlogin: true,
+                    userEmail: response.Data.email,
+                    userId: response.Data.id,
+                    userName: response.Data.firstname + " " + response.Data.lastname,
+                    userToken: response.Data.token
+                });
+
+                this.moveToHome();
+
+            } else {
+                this.setState({showLoading: false});
+                if (response.ResultType === 0) {
+                    alert(response.Message);
+                }
+            }
+        })
+        .catch(error => {
+            //console.error('Errorr:', error);
+            console.log('Error:', error);
+            alert("Error: " + error);
+        });
+    //Keyboard.dismiss();
+}
+} else {
+    alert("Please connect Internet");
+}
+};
 
     moveToHome() {
 

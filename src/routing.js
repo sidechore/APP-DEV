@@ -352,7 +352,7 @@ const AuthStack = createStackNavigator(
         SubmitInvoice: SubmitInvoice
     },
     {
-        initialRouteName: "Vehicles",
+        initialRouteName: "SignInProvider",
 
         headerMode: "none"
     }

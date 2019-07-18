@@ -1,17 +1,10 @@
-import MapView, {
-    Marker,
-    Polygon,
-
-    ProviderPropType,
-} from 'react-native-maps';
+import MapView, {Marker, Polygon, ProviderPropType,} from 'react-native-maps';
 import {Header, Image} from "react-native-elements";
 import React, {Component} from 'react';
-import {ImageBackground, Text, View, TouchableOpacity, Dimensions, TextInput, ScrollView, Switch} from 'react-native';
-import {SafeAreaView} from 'react-navigation';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {Dimensions, Text, TouchableOpacity, View} from 'react-native';
 import {styles} from './styles';
-import RBSheet from "react-native-raw-bottom-sheet";
-import Redmarker from "../../../../assets/images/markerred.png";
+import {constants} from "../../../../utils/constants";
+import Preference from "react-native-preference";
 
 const {width, height} = Dimensions.get('window');
 
@@ -37,8 +30,11 @@ export default class ServiceArea extends Component {
             polyCords: [],
             markers: [],
             editing: null,
+            showLoading:false,
 
             creatingHole: false,
+            isConnected:true,
+            User_id:Preference.get("userId")
         };
     }
 
@@ -54,6 +50,51 @@ export default class ServiceArea extends Component {
             creatingHole: false,
 
         });
+    }
+    onSubmit(){
+        if (this.state.isConnected) {
+                this.setState({showLoading: true});
+                const {markers,User_id} = this.state;
+                var details = {
+                    workArea:markers,
+                    user_id:User_id,
+                };
+                var formBody = [];
+                for (var property in details) {
+                    var encodedKey = encodeURIComponent(property);
+                    var encodedValue = encodeURIComponent(details[property]);
+                    formBody.push(encodedKey + "=" + encodedValue);
+                }
+                formBody = formBody.join("&");
+                fetch(constants.ServiceArea, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                    },
+                    body: formBody
+                }).then(response => response.json())
+                    .then(response => {
+                        this.setState({showLoading: false});
+                        console.log("servicearea-->", "-" + JSON.stringify(response));
+                        if (response.ResultType === 1) {
+
+                            this.props.navigation.goBack();
+                        } else {
+                            if (response.ResultType === 0) {
+                                alert(response.Message);
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        //console.error('Errorr:', error);
+                        console.log('Error:', error);
+                        alert("Error: " + error);
+                    });
+                //Keyboard.dismiss();
+
+        } else {
+            alert("Please connect Internet");
+        }
     }
 
     createHole() {
@@ -90,7 +131,7 @@ export default class ServiceArea extends Component {
     onPress(e) {
         let arryCords = this.state.polyCords;
         console.log("savingCords");
-        if (arryCords.length <6){
+        if (arryCords.length < 6) {
             console.log("savingCordsinside");
             arryCords.push(e.nativeEvent.coordinate);
             this.setState({polyCords: arryCords});
@@ -105,6 +146,7 @@ export default class ServiceArea extends Component {
                 },
             ],
         });
+        console.log("markers" + JSON.stringify(this.state.markers))
     }
 
 
@@ -209,7 +251,7 @@ export default class ServiceArea extends Component {
                     </View>
                 </View>
                 <View style={{justifyContent: "center", alignItems: "center",}}>
-                    <TouchableOpacity onPress={() => this.props.navigation.goBack()}
+                    <TouchableOpacity onPress={() => this.onSubmit()}
                                       style={{
                                           justifyContent: "center",
                                           alignItems: "center",
@@ -229,7 +271,18 @@ export default class ServiceArea extends Component {
                         </View>
                     </TouchableOpacity>
                 </View>
-
+                {this.state.showLoading && <View style={{
+                    width: "100%",
+                    height: "100%",
+                    backgroundColor: "transparent",
+                    position: "absolute",
+                    opacity: 1,
+                    alignItems: "center",
+                    justifyContent: "center"
+                }}>
+                    <Image resizeMode={"contain"} source={require("../../../../assets/images/loading.gif")}
+                           style={{width: 100, height: 100, opacity: 1,}}/>
+                </View>}
 
             </View>
         )
