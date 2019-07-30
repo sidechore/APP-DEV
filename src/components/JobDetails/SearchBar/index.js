@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View, TextInput, FlatList} from 'react-native';
+import {Text, View, FlatList} from 'react-native';
 import {Image} from "react-native-elements";
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
@@ -35,6 +35,7 @@ export default class SearchBar extends Component {
                     this.state.places.push(details);
                     this.setState({places:this.state.places});
                     console.log("hello2"+JSON.stringify(this.state.places));
+                    this.props.onGetSAddress(data, details);
                 }}
                 getDefaultValue={() => ''}
 
@@ -65,14 +66,9 @@ export default class SearchBar extends Component {
                     },
                     poweredContainer:{color:"red"},
                     powered:{
-
-
-
                     }
 
                 }}
-
-
                 currentLocation={true} // Will add a 'Current location' button at the top of the predefined places list
                 currentLocationLabel="Current location"
                 nearbyPlacesAPI='GooglePlacesSearch' // Which API to use: GoogleReverseGeocoding or GooglePlacesSearch

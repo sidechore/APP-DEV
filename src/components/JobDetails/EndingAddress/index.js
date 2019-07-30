@@ -38,7 +38,9 @@ export default class EndingAddress extends Component {
 
                     this.state.places.push(details);
                     this.setState({places:this.state.places});
+                    this.props.onGetEAddress(data, details);
                     console.log("hello2"+JSON.stringify(this.state.places));
+
                 }}
 
 

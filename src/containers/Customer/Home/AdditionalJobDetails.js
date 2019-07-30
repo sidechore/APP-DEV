@@ -39,6 +39,9 @@ export default class AdditionalJobDetails extends Component {
             console.log("itempassed--" + item);
             this.setState({ProgresStatus: 0.16})
         }
+        this.addressDetail = null;
+        this.addressEDetail=null;
+        this.JobDate=null
     }
 
 
@@ -193,10 +196,26 @@ export default class AdditionalJobDetails extends Component {
                     unfilledColor={'white'}
                     //animationType={"timing"}
                 />
-                {this.state.StartingAddress && <SearchBar/>}
-                {this.state.EndingAddress && <EndingAddress/>}
-                {this.state.JobDate && <JobDate/>}
-                {this.state.Vehicle && <Vehicle/>}
+                {this.state.StartingAddress &&
+                    <SearchBar
+                        onGetSAddress={(data, details = null,)=>{
+                            this.addressDetail = details
+                        }}
+                    />
+                }
+                {this.state.EndingAddress && <EndingAddress
+                    onGetSAddress={(data, details = null,)=>{
+                        this.addressEDetail = details
+                    }}
+                />}
+                {this.state.JobDate && <JobDate
+                    onGetDate={(date)=>{
+                        this.JobDate = date
+                    }}
+                />}
+                {this.state.Vehicle && <Vehicle
+
+                />}
                 {this.state.JobSize && <JobSize/>}
                 {this.state.AddJob && <AddJob/>}
 
@@ -208,7 +227,8 @@ export default class AdditionalJobDetails extends Component {
                     position: "absolute",
                     bottom: 0
                 }} onPress={this.NextStep1}>
-                    <View style={{}}>
+                    <View
+                    >
                         <Text style={{color: "white", fontSize: 15, marginTop: 15}}>NEXT</Text>
                     </View>
                 </TouchableOpacity>

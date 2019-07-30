@@ -68,7 +68,7 @@ export default class SignUpScreen extends Component {
 
       if (result.isCancelled) {
         alert('Login was cancelled');
-        return;
+
       } else {
         this.FBGraphRequest(
           'id, email, first_name, last_name',

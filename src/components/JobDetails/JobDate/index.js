@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Text, View} from 'react-native';
+import {Text, View} from 'react-native';
 import DatePicker from 'react-native-date-picker';
 
 export default class JobDate extends Component {
@@ -33,7 +33,10 @@ export default class JobDate extends Component {
                 }}>
                     <DatePicker
                         date={this.state.date}
-                        onDateChange={date => this.setState({date})}
+                        onDateChange={date => {
+                            this.setState({date});
+                            this.props.onGetDate(date)
+                        }}
                         mode={"datetime"}
 
                     />

@@ -48,7 +48,7 @@ export default class SignInProvider extends Component {
 
             if (result.isCancelled) {
                 alert('Login was cancelled');
-                return
+
             } else {
                 this.FBGraphRequest('id, email, name', this.FBLoginCallback);
             }
@@ -57,7 +57,7 @@ export default class SignInProvider extends Component {
         } catch (e) {
             alert("error: " + e)
         }
-    }
+    };
 
     async FBGraphRequest(fields, callback) {
         const accessData = await AccessToken.getCurrentAccessToken();
@@ -79,7 +79,7 @@ export default class SignInProvider extends Component {
         if (error) {
             alert(JSON.stringify(error))
         } else {
-            console.log("FBLoginCallback: " + JSON.stringify(result))
+            console.log("FBLoginCallback: " + JSON.stringify(result));
             // this.socialLogin(
             //     'sd23h3k39sdk2932',
             //     'facebook',
@@ -119,7 +119,7 @@ export default class SignInProvider extends Component {
             // show loading
             this.setState({
                 showLoading: true
-            })
+            });
 
             // call api
             fetch(constants.ProviderSocialLogin, {
@@ -132,7 +132,7 @@ export default class SignInProvider extends Component {
             }).then(response => response.json())
             .then(response => {
                     this.setState({showLoading: false});
-                    console.log('Social Login response: ' + JSON.stringify(response))
+                    console.log('Social Login response: ' + JSON.stringify(response));
 
                     if (response.ResultType === 1) {
                         this.setState({showLoading: false});
@@ -296,10 +296,10 @@ export default class SignInProvider extends Component {
         let reg = /^[\w]{1,}[\w.+-]{0,}@[\w-]{2,}([.][a-zA-Z]{2,}|[.][\w-]{2,}[.][a-zA-Z]{2,})$/;
         if (reg.test(text) === false) {
             console.log("Email is Not Correct");
-            this.setState({email: text})
+            this.setState({email: text});
             return false;
         } else {
-            this.setState({email: text})
+            this.setState({email: text});
             console.log("Email is Correct");
             return true;
         }

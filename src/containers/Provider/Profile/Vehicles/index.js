@@ -1,10 +1,7 @@
 import React, {Component} from 'react';
-import {ImageBackground, Text, View, TouchableOpacity, TextInput, ScrollView, Switch} from 'react-native';
-import {SafeAreaView} from 'react-navigation';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {Switch, Text, TouchableOpacity, View} from 'react-native';
 import {styles} from './styles';
 import {Header, Image} from "react-native-elements";
-import RBSheet from "react-native-raw-bottom-sheet";
 import {constants} from "../../../../utils/constants";
 import Preference from "react-native-preference";
 

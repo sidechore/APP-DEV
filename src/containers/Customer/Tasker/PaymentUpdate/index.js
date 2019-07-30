@@ -56,11 +56,11 @@ export default class PaymentUpdate extends Component {
             this.setState({showIconLeftpass1: true});
             this.setState({Cross1:false})
         }else if(text.length===0 ||text.length>13){
-            this.setState({showIconLeftpass1: false})
+            this.setState({showIconLeftpass1: false});
             this.setState({Cross1:true})
         }
         else{
-            this.setState({showIconLeftpass1: false})
+            this.setState({showIconLeftpass1: false});
             this.setState({Cross1:true})
 
 
@@ -68,7 +68,7 @@ export default class PaymentUpdate extends Component {
     }
     toggleModal2  () {
         this.RBSheet.close();
-        this.props.navigation.navigate("JobDetails",{Screen:"payside"})
+        this.props.navigation.navigate("JobDetails",{Screen:"payside"});
         this.setState({isModalVisible:false});
 
 

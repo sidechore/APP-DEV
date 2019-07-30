@@ -352,7 +352,7 @@ const AuthStack = createStackNavigator(
         SubmitInvoice: SubmitInvoice
     },
     {
-        initialRouteName: "SignInProvider",
+        initialRouteName: "AdditionalJobDetails",
 
         headerMode: "none"
     }

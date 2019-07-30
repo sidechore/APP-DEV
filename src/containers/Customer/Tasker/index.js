@@ -59,7 +59,7 @@ export default class Tasker extends Component {
                 },
 
             ]
-        }
+        };
         this.toggleModal2 = this.toggleModal2.bind(this);
     }
 
@@ -70,7 +70,7 @@ export default class Tasker extends Component {
     };
 
     toggleModal2() {
-        this.props.navigation.navigate("PaymentUpdate")
+        this.props.navigation.navigate("PaymentUpdate");
         this.setState({isModalVisible: false});
         this.RBSheet.close();
 

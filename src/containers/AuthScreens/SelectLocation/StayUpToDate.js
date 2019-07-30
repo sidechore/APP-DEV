@@ -49,7 +49,7 @@ onVerify = () => {
             this.setState({showIconLeftpass1: true});
             this.setState({Cross1: false})
         } else if (email.length === 0) {
-            this.setState({showIconLeftpass1: false})
+            this.setState({showIconLeftpass1: false});
             this.setState({Cross1: true})
         } else {
             this.setState({showIconLeftEmail1: false});
@@ -63,10 +63,10 @@ onVerify = () => {
             this.setState({showIconLeftpass2: true});
             this.setState({Cross2: false})
         } else if (text.length === 0) {
-            this.setState({showIconLeftpass2: false})
+            this.setState({showIconLeftpass2: false});
             this.setState({Cross2: true})
         } else {
-            this.setState({showIconLeftpass2: false})
+            this.setState({showIconLeftpass2: false});
             this.setState({Cross2: true})
 
 
@@ -78,10 +78,10 @@ onVerify = () => {
             this.setState({showIconLeftpass3: true});
             this.setState({Cross3: false})
         } else if (text.length === 0) {
-            this.setState({showIconLeftpass3: false})
+            this.setState({showIconLeftpass3: false});
             this.setState({Cross3: true})
         } else {
-            this.setState({showIconLeftpass3: false})
+            this.setState({showIconLeftpass3: false});
             this.setState({Cross3: true})
 
 
@@ -93,10 +93,10 @@ onVerify = () => {
             this.setState({showIconLeftpass4: true});
             this.setState({Cross4: false})
         } else if (text.length === 0) {
-            this.setState({showIconLeftpass4: false})
+            this.setState({showIconLeftpass4: false});
             this.setState({Cross4: true})
         } else {
-            this.setState({showIconLeftpass4: false})
+            this.setState({showIconLeftpass4: false});
             this.setState({Cross4: true})
         }
     }
@@ -107,10 +107,10 @@ onVerify = () => {
         let reg = /^[\w]{1,}[\w.+-]{0,}@[\w-]{2,}([.][a-zA-Z]{2,}|[.][\w-]{2,}[.][a-zA-Z]{2,})$/;
         if (reg.test(text) === false) {
             console.log("Email is Not Correct");
-            this.setState({email: text})
+            this.setState({email: text});
             return false;
         } else {
-            this.setState({email: text})
+            this.setState({email: text});
             console.log("Email is Correct");
             return true;
         }

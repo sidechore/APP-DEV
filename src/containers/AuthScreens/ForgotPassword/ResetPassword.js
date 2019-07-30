@@ -154,7 +154,7 @@ export default class ResetPassword extends Component {
             this.setState({showIconLeftpass1: true});
             this.setState({Cross1:false})
         }else {
-            this.setState({showIconLeftpass1: false})
+            this.setState({showIconLeftpass1: false});
             this.setState({Cross1:true})
         }
         this.onChangeText('password', text)
@@ -165,11 +165,11 @@ export default class ResetPassword extends Component {
             this.setState({showIconLeftpass2: true});
             this.setState({Cross2:false})
         }else if(text.length===0){
-            this.setState({showIconLeftpass2: false})
+            this.setState({showIconLeftpass2: false});
             this.setState({Cross2:true})
         }
         else{
-            this.setState({showIconLeftpass2: false})
+            this.setState({showIconLeftpass2: false});
             this.setState({Cross2:true})
         }
     }

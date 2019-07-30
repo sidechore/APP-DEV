@@ -137,7 +137,7 @@ export default class ChangePassword extends Component {
             this.setState({showIconLeftpass1: true});
             this.setState({Cross1:false})
         }else {
-            this.setState({showIconLeftpass1: false})
+            this.setState({showIconLeftpass1: false});
             this.setState({Cross1:true})
         }
     }
@@ -147,7 +147,7 @@ export default class ChangePassword extends Component {
             this.setState({showIconLeftpass0: true});
             this.setState({Cross0:false})
         }else {
-            this.setState({showIconLeftpass0: false})
+            this.setState({showIconLeftpass0: false});
             this.setState({Cross0:true})
         }
     }
@@ -157,11 +157,11 @@ export default class ChangePassword extends Component {
             this.setState({showIconLeftpass2: true});
             this.setState({Cross2:false})
         }else if(text.length===0){
-            this.setState({showIconLeftpass2: false})
+            this.setState({showIconLeftpass2: false});
             this.setState({Cross2:true})
         }
         else{
-            this.setState({showIconLeftpass2: false})
+            this.setState({showIconLeftpass2: false});
             this.setState({Cross2:true})
         }
     }

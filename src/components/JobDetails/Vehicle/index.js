@@ -1,7 +1,6 @@
-import React, { Component } from "react";
-import { Text, View } from "react-native";
-import DatePicker from "react-native-date-picker";
-import { CheckBox, Image } from "react-native-elements";
+import React, {Component} from "react";
+import {Text, View} from "react-native";
+import {CheckBox} from "react-native-elements";
 
 export default class Vehicle extends Component {
     constructor(props) {
@@ -11,9 +10,15 @@ export default class Vehicle extends Component {
             text: "Useless Placeholder",
             showIconLeftEmail: false,
             Cross1: false,
-            date: new Date()
+            date: new Date(),
+            checked: false,
+            checked2: false,
+            checked3: false,
+            VehicleValue: ""
+
         };
     }
+
     renderRowWithChecks(item) {
         return (
             <CheckBox
@@ -27,10 +32,41 @@ export default class Vehicle extends Component {
                     borderWidth: 0,
                     marginStart: 10
                 }}
-                textStyle={{ fontWeight: "normal", color: "black" }}
+                onPress={item.onpressed}
+                textStyle={{fontWeight: "normal", color: "black"}}
             />
         );
     }
+
+    VehiclePressed = () => {
+        this.setState({checked: !this.state.checked, checked2: false, checked3: false});
+        if(this.state.checked===true){
+        this.setState({VehicleValue: "No Vehicle Needed"});
+
+       }else{
+            this.setState({vehicleValue:null});
+            alert("Vvalue" + this.state.VehicleValue)
+        }
+    };
+    VehiclePressed2 = () => {
+        this.setState({checked2: !this.state.checked2, checked: false, checked3: false})
+        if(this.state.checked2===true) {
+            this.setState({VehicleValue: "A car is needed"});
+            alert("Vvalue" + this.state.VehicleValue)
+        }else{ this.setState({vehicleValue:null});
+            alert("Vvalue" + this.state.VehicleValue)}
+
+    };
+    VehiclePressed3 = () => {
+        this.setState({checked3: !this.state.checked3, checked2: false, checked: false})
+        if(this.state.checked3===true) {
+        this.setState({VehicleValue: "A truck is needed"});
+        alert("Vvalue" + this.state.VehicleValue)}else{
+            this.setState({vehicleValue:null});
+            alert("Vvalue" + this.state.VehicleValue)
+        }
+    };
+
     render() {
         return (
             <View
@@ -42,84 +78,36 @@ export default class Vehicle extends Component {
                     marginTop: 20
                 }}
             >
-                <Text style={{ color: "red", fontSize: 18 }}>
+                <Text style={{color: "red", fontSize: 18}}>
                     {"Does this job require a car or truck?"}
                 </Text>
                 <View
                     style={{
-                        flexDirection: "row",
+                        flexDirection: "column",
                         backgroundColor: "white",
                         marginTop: 20,
                         height: 170,
                         width: "100%",
-
-                        alignItems: "center"
                     }}
                 >
-                    <View style={{ flexDirection: "column" }}>
-                        <View style={{ flexDirection: "row", margin: 15 }}>
-                            <Image
-                                source={require("../../../assets/images/radioUN.png")}
-                                style={{
-                                    resizeMode: "contain",
-                                    height: 20,
-                                    width: 20
-                                }}
-                            />
-                            <View style={{ flexDirection: "column" }}>
-                                <Text
-                                    style={{
-                                        marginStart: 10,
-                                        color: "black",
-                                        fontSize: 16
-                                    }}
-                                >
-                                    {"No vehicle needed"}
-                                </Text>
-                            </View>
-                        </View>
+                    <View style={{flexDirection: "column"}}>
+                        <View style={{flexDirection: "column"}}>
+                            {this.renderRowWithChecks({
+                                title: "No Vehicle Needed",
+                                checked: this.state.checked,
+                                onpressed: this.VehiclePressed
+                            })}
+                            {this.renderRowWithChecks({
+                                title: "A car is needed",
+                                checked: this.state.checked2,
+                                onpressed: this.VehiclePressed2
+                            })}
+                            {this.renderRowWithChecks({
+                                title: "A truck is needed",
+                                checked: this.state.checked3,
+                                onpressed: this.VehiclePressed3
+                            })}
 
-                        <View style={{ flexDirection: "row", margin: 15 }}>
-                            <Image
-                                source={require("../../../assets/images/radioCH.png")}
-                                style={{
-                                    resizeMode: "contain",
-                                    height: 20,
-                                    width: 20
-                                }}
-                            />
-                            <View style={{ flexDirection: "column" }}>
-                                <Text
-                                    style={{
-                                        marginStart: 10,
-                                        color: "black",
-                                        fontSize: 16
-                                    }}
-                                >
-                                    {"A car is needed"}
-                                </Text>
-                            </View>
-                        </View>
-                        <View style={{ flexDirection: "row", margin: 15 }}>
-                            <Image
-                                source={require("../../../assets/images/radioUN.png")}
-                                style={{
-                                    resizeMode: "contain",
-                                    height: 20,
-                                    width: 20
-                                }}
-                            />
-                            <View style={{ flexDirection: "column" }}>
-                                <Text
-                                    style={{
-                                        marginStart: 10,
-                                        color: "black",
-                                        fontSize: 16
-                                    }}
-                                >
-                                    {"A truck is needed"}
-                                </Text>
-                            </View>
                         </View>
                     </View>
                 </View>

@@ -3,7 +3,7 @@ import {FlatList, Text, TouchableOpacity, View} from 'react-native';
 import {Image} from 'react-native-elements';
 import Preference from 'react-native-preference';
 import {constants} from '../../../../utils/constants';
-import moment from "../Completed";
+import moment from "moment";
 
 export default class Current extends Component {
     constructor(props) {
