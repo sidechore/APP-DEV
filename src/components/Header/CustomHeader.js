@@ -12,7 +12,7 @@ const { height, width } = Dimensions.get("window");
 
 export default class Header extends Component {
   render() {
-    this.props.bgIcon;
+    this.props.bgIcon
     return (
       <ImageBackground
         source= {this.props.bgIcon}

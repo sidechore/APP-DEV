@@ -28,7 +28,7 @@ const BType = [
 const BType2 = [
     {
         label: 'Furniture Assembly',
-        value: 'Furniture Assembly'
+        value: 'FurnitureAssembly'
     },
     {
         label: 'Mounting',
@@ -36,7 +36,7 @@ const BType2 = [
     },
     {
         label: "Home Repair",
-        value: 'Home Repair'
+        value: 'HomeRepair'
     },
     {
         label: "Moving",
@@ -44,7 +44,7 @@ const BType2 = [
     },
     {
         label: "Junk Removal",
-        value: 'Junk Removal'
+        value: 'JunkRemoval'
     },
     {
         label: "Cleaning",
@@ -121,7 +121,7 @@ export default class ServiceProviderSignUp extends Component {
             phone: '',
             Password: '',
             serviceType: '',
-            ServiceCost: "",
+            serviceCost: "",
             companyName: '',
             streetAdrress: '',
             city: '',
@@ -145,7 +145,7 @@ export default class ServiceProviderSignUp extends Component {
 
             if (result.isCancelled) {
                 alert('Login was cancelled');
-
+                return;
             } else {
                 this.FBGraphRequest(
                     'id, email, first_name, last_name',
@@ -236,8 +236,8 @@ export default class ServiceProviderSignUp extends Component {
                         Preference.set({
                             clientlogin: true,
                             userEmail: response.Data.email,
-                            userId: response.Data.id,
-                            userName: response.Data.firstname + ' ' + response.Data.lastname,
+                            ProviderId: response.Data.id,
+                            ProviderName: response.Data.firstname + ' ' + response.Data.lastname,
                             userToken: response.Data.token
                         });
 
@@ -260,6 +260,7 @@ export default class ServiceProviderSignUp extends Component {
 
     serviceCost(text) {
         this.setState({ServiceCost: text})
+        this.onChangeText('serviceCost', text);
 
     }
 
@@ -317,18 +318,17 @@ export default class ServiceProviderSignUp extends Component {
     }
 
     renderRowServiceCost(item) {
-        const {ServiceCost} = this.state;
+        const {serviceCost} = this.state;
         return (
             <View style={{flexDirection: 'column', width: '100%'}}>
                 <View style={{flexDirection: 'row', marginStart: 20, marginEnd: 20}}>
                     <TextInput
                         style={{height: 50, width: '100%'}}
                         onChangeText={text => this.serviceCost(text)}
-                        value={ServiceCost}
+                        value={serviceCost}
                         maxLength={12}
                         placeholder={item.hintText}
-                        keyboardType={"number-pad"}
-                        placeholderTextColor={""} />
+                        keyboardType={"number-pad"}/>
 
                     {this.state.showIconLeftpass2 && (
                         <Image
@@ -541,6 +541,7 @@ export default class ServiceProviderSignUp extends Component {
                         value={zipcode}
                         maxLength={12}
                         placeholder={item.hintText}
+                        keyboardType={"number-pad"}
                     />
 
                     {this.state.showIconLeftpass6 && (
@@ -953,6 +954,7 @@ export default class ServiceProviderSignUp extends Component {
                         style={{height: 50, width: '100%'}}
                         onChangeText={text => this.EmailOnPress(text)}
                         keyboardType={'email-address'}
+                        autoCapitalize={'none'}
                         placeholder={item.hintText}
                         value={email}
                     />
@@ -1005,7 +1007,7 @@ export default class ServiceProviderSignUp extends Component {
                     <TextInput
                         style={{height: 50, width: '100%'}}
                         onChangeText={text => this.PhoneOnPress(text)}
-                        keyboardType={'email-address'}
+                        keyboardType={'phone-pad'}
                         placeholder={item.hintText}
                         value={phone}
                     />
@@ -1528,6 +1530,7 @@ export default class ServiceProviderSignUp extends Component {
                 serviceType,
                 companyName,
                 streetAdrress,
+                serviceCost,
                 city,
                 state,
                 zipcode,
@@ -1545,6 +1548,7 @@ export default class ServiceProviderSignUp extends Component {
                 lastName: lastName,
                 businessType: businessType,
                 serviceType: serviceType,
+                serviceCost:serviceCost,
                 companyName: companyName,
                 streetAdrress: streetAdrress,
                 city: city,
@@ -1580,7 +1584,7 @@ export default class ServiceProviderSignUp extends Component {
                             clientlogin: true,
                             userEmail: response.Data.email,
                             userId: response.Data.id,
-                            userName: response.Data.firstname + ' ' + response.Data.lastname
+                            userName: response.Data.firstname + ' ' + response.Data.lastname,
                         });
 
                         this.moveTo();

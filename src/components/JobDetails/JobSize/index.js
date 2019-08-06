@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Text, View} from 'react-native';
+import {Text, View} from 'react-native';
 
 import {CheckBox, Image} from "react-native-elements";
 
@@ -12,28 +12,90 @@ export default class JobSize extends Component {
             text: 'Useless Placeholder',
             showIconLeftEmail: false,
             Cross1: false,
-            date: new Date()
+            checked: false,
+            checked2: false,
+            checked3: false,
+            JobValue: null,
         };
 
     }
+
+    JobPressed = () => {
+        this.setState({
+            checked: !this.state.checked,
+            checked2: false,
+            checked3: false,
+            JobValue: "Small"
+        }, () => {
+            if (!this.state.checked) {
+                this.setState({JobValue: null}, () => {
+                    alert("first " + this.state.JobValue)
+                })
+
+            } else {
+                this.props.onJobSize(this.state.JobValue);
+            }
+
+        });
+
+    };
+    JobPressed2 = () => {
+        this.setState({
+            checked2: !this.state.checked2,
+            checked: false,
+            checked3: false,
+            JobValue: "Medium"
+        }, () => {
+            if (!this.state.checked2) {
+                this.setState({JobValue: null}, () => {
+                    alert("first " + this.state.JobValue)
+                })
+
+            } else {
+                this.props.onJobSize(this.state.JobValue);
+            }
+        });
+
+    };
+    JobPressed3 = () => {
+        this.setState({
+            checked3: !this.state.checked3,
+            checked: false,
+            checked2: false,
+            JobValue: "Large"
+        }, () => {
+            if (!this.state.checked3) {
+                this.setState({JobValue: null}, () => {
+                    alert("first " + this.state.JobValue)
+                })
+
+            } else {
+                this.props.onJobSize(this.state.JobValue);
+            }
+        });
+    }
+
     renderRowWithChecks(item) {
-        return<CheckBox
+        return <CheckBox
 
-            /*title={item.title}*/
-
-            checkedIcon='dot-circle-o'
-            uncheckedIcon='circle-o'
+            title={item.title}
+            checkedIcon="dot-circle-o"
+            uncheckedIcon="circle-o"
             checked={item.checked}
             checkedColor={"red"}
-            containerStyle={{backgroundColor:"grey", borderWidth:0,marginStart:10}}
-            textStyle={{fontWeight:"normal",color:"black"}}
-
+            containerStyle={{
+                backgroundColor: "white",
+                borderWidth: 0,
+                marginStart: 10
+            }}
+            onPress={item.onpressed}
+            textStyle={{fontWeight: "normal", color: "black"}}
 
         />;
 
 
-
     }
+
     render() {
         return (
             <View style={{
@@ -45,50 +107,32 @@ export default class JobSize extends Component {
                     flexDirection: "row",
                     backgroundColor: "white",
                     marginTop: 20,
-                    height: 200,
+                    height: 250,
                     width: "100%",
-                    marginStart:20,
+                    marginStart: 20,
 
                     alignItems: "center"
                 }}>
-                    <View style={{flexDirection:"column",}}>
-                        <View style={{flexDirection:"row",margin:10}}>
-                            <Image source={require("../../../assets/images/radioUN.png")}
-                            style={{resizeMode:"contain",
-                            height:20,
-                                width:20
-                            }}
-                            />
-                            <View style={{flexDirection:"column"}} >
-                                <Text  style={{marginStart:10,color:"black",fontSize:16}} >{"Small"}</Text>
-                                <Text  style={{marginStart:10,color:"#B9B9B9"}} >{"Estimate 1 hour or less"}</Text>
-                            </View>
-                        </View>
+                    <View style={{flexDirection: "column",}}>
 
-                        <View style={{flexDirection:"row",margin:10}}>
-                            <Image source={require("../../../assets/images/radioCH.png")}
-                                   style={{resizeMode:"contain",
-                                       height:20,
-                                       width:20
-                                   }}
-                            />
-                            <View style={{flexDirection:"column"}} >
-                                <Text  style={{marginStart:10,color:"black",fontSize:16}} >{"Medium"}</Text>
-                                <Text  style={{marginStart:10,color:"#B9B9B9"}} >{"Estimate 2 to 4 hours"}</Text>
-                            </View>
-                        </View>
-                        <View style={{flexDirection:"row",margin:10}}>
-                            <Image source={require("../../../assets/images/radioUN.png")}
-                                   style={{resizeMode:"contain",
-                                       height:20,
-                                       width:20
-                                   }}
-                            />
-                            <View style={{flexDirection:"column"}} >
-                                <Text  style={{marginStart:10,color:"black",fontSize:16}} >{"Large"}</Text>
-                                <Text  style={{marginStart:10,color:"#B9B9B9"}} >{"Estimate 4 hours or more"}</Text>
-                            </View>
-                        </View>
+                        {this.renderRowWithChecks({
+                            title: "Small",
+                            checked: this.state.checked,
+                            onpressed: this.JobPressed
+                        })}
+                        <Text style={{color:"black",marginStart:25}}>{"Estimate 1 hour or less"}</Text>
+                        {this.renderRowWithChecks({
+                            title: "Medium",
+                            checked: this.state.checked2,
+                            onpressed: this.JobPressed2
+                        })}
+                        <Text style={{color:"black",marginStart:25}}>{"Estimate 1 hour or less"}</Text>
+                        {this.renderRowWithChecks({
+                            title: "Large",
+                            checked: this.state.checked3,
+                            onpressed: this.JobPressed3
+                        })}
+                        <Text style={{color:"black",marginStart:25}}>{"Estimate 1 hour or less"}</Text>
 
 
                     </View>

@@ -55,27 +55,31 @@ export default class ServiceArea extends Component {
         if (this.state.isConnected) {
                 this.setState({showLoading: true});
                 const {markers,User_id} = this.state;
+
+                const workArea = markers.map((item, index) => {
+                    return item.coordinate
+                })
+
                 var details = {
-                    workArea:markers,
+                    workArea:workArea,
                     user_id:User_id,
                 };
-                var formBody = [];
-                for (var property in details) {
-                    var encodedKey = encodeURIComponent(property);
-                    var encodedValue = encodeURIComponent(details[property]);
-                    formBody.push(encodedKey + "=" + encodedValue);
-                }
-                formBody = formBody.join("&");
+
+
                 fetch(constants.ServiceArea, {
                     method: 'POST',
                     headers: {
-                        'Accept': 'application/json',
+                        Accept: 'application/json',
+                        'Content-Type':'application/json'
                     },
-                    body: formBody
-                }).then(response => response.json())
+                    body: JSON.stringify(details)
+                }).then(response => {
+
+
+                    return response.json()
+                })
                     .then(response => {
                         this.setState({showLoading: false});
-                        console.log("servicearea-->", "-" + JSON.stringify(response));
                         if (response.ResultType === 1) {
 
                             this.props.navigation.goBack();
@@ -86,8 +90,6 @@ export default class ServiceArea extends Component {
                         }
                     })
                     .catch(error => {
-                        //console.error('Errorr:', error);
-                        console.log('Error:', error);
                         alert("Error: " + error);
                     });
                 //Keyboard.dismiss();
@@ -130,9 +132,9 @@ export default class ServiceArea extends Component {
 
     onPress(e) {
         let arryCords = this.state.polyCords;
-        console.log("savingCords");
+
         if (arryCords.length < 6) {
-            console.log("savingCordsinside");
+
             arryCords.push(e.nativeEvent.coordinate);
             this.setState({polyCords: arryCords});
         }
@@ -146,7 +148,15 @@ export default class ServiceArea extends Component {
                 },
             ],
         });
-        console.log("markers" + JSON.stringify(this.state.markers))
+
+        // this.setState({
+        //     markers: [
+        //         ...this.state.markers,
+        //         e.nativeEvent.coordinate
+        //     ],
+        // });
+
+
     }
 
 

@@ -42,7 +42,7 @@ export default class SignInScreen extends Component {
 
             if (result.isCancelled) {
                 alert('Login was cancelled');
-
+                return
             } else {
                 this.FBGraphRequest('id, email, name', this.FBLoginCallback);
             }
@@ -51,7 +51,7 @@ export default class SignInScreen extends Component {
         } catch (e) {
             alert("error: " + e)
         }
-    };
+    }
 
     async FBGraphRequest(fields, callback) {
         const accessData = await AccessToken.getCurrentAccessToken();
@@ -73,7 +73,7 @@ export default class SignInScreen extends Component {
         if (error) {
             alert(JSON.stringify(error))
         } else {
-            console.log("FBLoginCallback: " + JSON.stringify(result));
+            console.log("FBLoginCallback: " + JSON.stringify(result))
             // this.socialLogin(
             //     'sd23h3k39sdk2932',
             //     'facebook',
@@ -113,7 +113,7 @@ export default class SignInScreen extends Component {
             // show loading
             this.setState({
                 showLoading: true
-            });
+            })
 
             // call api
             fetch(constants.ClientSocialLogin, {
@@ -126,7 +126,7 @@ export default class SignInScreen extends Component {
             }).then(response => response.json())
             .then(response => {
                     this.setState({showLoading: false});
-                    console.log('Social Login response: ' + JSON.stringify(response));
+                    console.log('Social Login response: ' + JSON.stringify(response))
 
                     if (response.ResultType === 1) {
                         this.setState({showLoading: false});
@@ -160,10 +160,6 @@ export default class SignInScreen extends Component {
 
     onSignUp = () => {
         this.props.navigation.navigate('SignUpScreen', {User: this.state.userName});
-    };
-
-    onSignIn = () => {
-        this.props.navigation.navigate('SignInScreen', {User: this.state.userName});
     };
 
     onLogin = () => {
@@ -246,6 +242,7 @@ export default class SignInScreen extends Component {
                     placeholder={item.hintText}
                     keyboardType={"email-address"}
                     value={email}
+                    autoCapitalize={'none'}
                 />
 
                 {this.state.showIconLeftEmail &&
@@ -316,10 +313,10 @@ export default class SignInScreen extends Component {
         let reg = /^[\w]{1,}[\w.+-]{0,}@[\w-]{2,}([.][a-zA-Z]{2,}|[.][\w-]{2,}[.][a-zA-Z]{2,})$/;
         if (reg.test(text) === false) {
             console.log("Email is Not Correct");
-            this.setState({email: text});
+            this.setState({email: text})
             return false;
         } else {
-            this.setState({email: text});
+            this.setState({email: text})
             console.log("Email is Correct");
             return true;
         }
@@ -334,10 +331,10 @@ export default class SignInScreen extends Component {
             this.setState({showIconLeftpass: true});
             this.setState({Cross2: false})
         } else if (text.length === 0) {
-            this.setState({showIconLeftpass: false});
+            this.setState({showIconLeftpass: false})
             this.setState({Cross2: true})
         } else {
-            this.setState({showIconLeftpass: false});
+            this.setState({showIconLeftpass: false})
             this.setState({Cross2: true})
 
 
@@ -351,7 +348,7 @@ export default class SignInScreen extends Component {
             this.setState({showIconLeftEmail: true});
             this.setState({Cross1: false})
         } else if (email.length === 0) {
-            this.setState({showIconLeftEmail: false});
+            this.setState({showIconLeftEmail: false})
             this.setState({Cross1: true})
         } else {
             this.setState({showIconLeftEmail: false});

@@ -1,13 +1,9 @@
 import React, {Component} from 'react';
-import {ImageBackground, Text, View, TouchableOpacity, TextInput, ScrollView} from 'react-native';
-import {SafeAreaView} from 'react-navigation';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import {styles} from './styles';
 import {Header, Image} from "react-native-elements";
 import RBSheet from "react-native-raw-bottom-sheet";
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import {checkEmail} from '../../../utils';
-import {Colors} from "../../../themes";
+import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 
 export default class SelectLocation extends Component {
 
@@ -24,6 +20,7 @@ export default class SelectLocation extends Component {
         console.log("gettingUSer--->" + itemId);
         this.state.userName = itemId;
     }
+
     onVerify = () => {
         this.RBSheet.close();
         this.props.navigation.navigate('StayUpToDate', {User: this.state.userName});
@@ -33,12 +30,13 @@ export default class SelectLocation extends Component {
     renderRowInputSheet(item) {
         return <View style={{flexDirection: "column", justifyContent: "center", alignItems: "center", width: "100%"}}>
             <View style={{height: 1.5, width: "100%", backgroundColor: "#DADADA", marginTop: 15}}></View>
-            <View style={{marginTop: 10,}} >
+            <View style={{marginTop: 10,}}>
                 <Text style={{color: "red", fontSize: 15}}>
                     {item.text}
                 </Text></View>
         </View>
     }
+
     renderGooglePlacesInput = () => {
         return (
             <GooglePlacesAutocomplete
@@ -50,13 +48,13 @@ export default class SelectLocation extends Component {
                 fetchDetails={true}
                 renderDescription={row => row.description} // custom description render
                 onPress={(data, details = null,) => { // 'details' is provided when fetchDetails = true
-                    console.log("hello"+data, details);
+                    console.log("hello" + data, details);
 
-                    this.setState({places:[]});
+                    this.setState({places: []});
 
                     this.state.places.push(details);
-                    this.setState({places:this.state.places});
-                    console.log("hello2"+JSON.stringify(this.state.places));
+                    this.setState({places: this.state.places});
+                    console.log("hello2" + JSON.stringify(this.state.places));
                 }}
                 getDefaultValue={() => ''}
                 query={{
@@ -69,18 +67,19 @@ export default class SelectLocation extends Component {
 
                     textInputContainer: {
                         width: '100%',
-                        backgroundColor:"#ffffff",
-                        borderTopWidth: 0,},
+                        backgroundColor: "#ffffff",
+                        borderTopWidth: 0,
+                    },
                     description: {
 
-                        color:"red"
+                        color: "red"
                     },
                     predefinedPlacesDescription: {
                         color: 'red'
                     },
-                    poweredContainer:{color:"red"},
-                    powered:{
-                    }}}
+                    poweredContainer: {color: "red"},
+                    powered: {}
+                }}
                 currentLocation={true} // Will add a 'Current location' button at the top of the predefined places list
                 currentLocationLabel="Current location"
                 nearbyPlacesAPI='GooglePlacesSearch' // Which API to use: GoogleReverseGeocoding or GooglePlacesSearch
@@ -94,17 +93,23 @@ export default class SelectLocation extends Component {
                 }}
                 GooglePlacesDetailsQuery={{
                     // available options for GooglePlacesDetails API : https://developers.google.com/places/web-service/details
-                    fields: ["name",'formatted_address']}}
+                    fields: ["name", 'formatted_address']
+                }}
                 filterReverseGeocodingByTypes={['locality', 'administrative_area_level_3']} // filter the reverse geocoding results by types - ['locality', 'administrative_area_level_3'] if you want to display only cities
                 debounce={200} // debounce the requests in ms. Set to 0 to remove debounce. By default 0ms.
-                renderLeftButton={()  => <Image source={require('../../../assets/images/searchleft.png')}
-                                                style={{resizeMode:"contain",width:20,height:20,marginTop:12,marginStart:5}}/>}
+                renderLeftButton={() => <Image source={require('../../../assets/images/searchleft.png')}
+                                               style={{
+                                                   resizeMode: "contain",
+                                                   width: 20,
+                                                   height: 20,
+                                                   marginTop: 12,
+                                                   marginStart: 5
+                                               }}/>}
 
 
             />
         );
     };
-
 
 
     render() {
@@ -155,24 +160,27 @@ export default class SelectLocation extends Component {
                     </View>
 
                     <View style={{width: "100%", backgroundColor: "white",}}>
-                        <View style={{width:"100%",flexDirection:"column"}} >
-                        <View style={{width:"80%", backgroundColor:"white",marginStart:20,
-                            flexDirection:"row",marginEnd:20,
-                        marginTop:20}} >
-                            {this.renderGooglePlacesInput()}
-                        <View style={{width:"20%",marginTop:15,left:25,
-                          flexDirection:"row"}} >
-                                <Text style={{fontSize:16,color:"red",}}  >
-                                    {"Cancel"}
-                                </Text>
-                        </View>
-                        </View>
-
+                        <View style={{width: "100%", flexDirection: "column"}}>
+                            <View style={{
+                                width: "80%", backgroundColor: "white", marginStart: 20,
+                                flexDirection: "row", marginEnd: 20,
+                                marginTop: 20
+                            }}>
+                                {this.renderGooglePlacesInput()}
+                                <View style={{
+                                    width: "20%", marginTop: 15, left: 25,
+                                    flexDirection: "row"
+                                }}>
+                                    <Text style={{fontSize: 16, color: "red",}}>
+                                        {"Cancel"}
+                                    </Text>
+                                </View>
+                            </View>
 
 
                         </View>
                         <View style={{
-                            flexDirection: "row", width: "100%",marginStart:25,marginTop:40
+                            flexDirection: "row", width: "100%", marginStart: 25, marginTop: 40
 
                         }}>
                             <Image source={require("../../../assets/images/pin.png")}
@@ -213,11 +221,11 @@ export default class SelectLocation extends Component {
                                         color: "black"
                                     }}>{"notify you when SideChore becomes"}</Text>
                                     <Text style={{fontSize: 16, color: "black"}}>{"availaible?"}</Text>
-                                <TouchableOpacity onPress={this.onVerify} >
-                                    {this.renderRowInputSheet({
-                                        text: "Notify me",
-                                    })}
-                                </TouchableOpacity>
+                                    <TouchableOpacity onPress={this.onVerify}>
+                                        {this.renderRowInputSheet({
+                                            text: "Notify me",
+                                        })}
+                                    </TouchableOpacity>
                                     {this.renderRowInputSheet({
                                         text: "Browse the app",
                                     })}
@@ -227,8 +235,8 @@ export default class SelectLocation extends Component {
                                 </View>
                             </RBSheet>
                         </View>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate("ResetPassword")}
-                                          style={{justifyContent: "center", alignItems: "center", marginTop: 35}}>
+                        <TouchableOpacity
+                            style={{justifyContent: "center", alignItems: "center", marginTop: 35}}>
                             <View style={{
                                 flexDirection: "column",
                                 backgroundColor: "#FA2021",
@@ -237,7 +245,7 @@ export default class SelectLocation extends Component {
                                 justifyContent: "center",
                                 alignItems: "center",
                                 borderRadius: 7,
-                                marginBottom:20
+                                marginBottom: 20
                             }}>
                                 <Text style={{color: "white", fontSize: 18}}>{"Select"}</Text>
                             </View>

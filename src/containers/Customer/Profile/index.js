@@ -198,7 +198,7 @@ export default class Profile extends Component {
                     })}
                         </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate("TabNavigator")}
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate("InitialScreen")}
                                       style={{
                                           justifyContent: "center",
                                           alignItems: "center",

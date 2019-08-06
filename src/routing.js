@@ -159,7 +159,7 @@ const TabNavigator = createBottomTabNavigator(
 const ProviderTab = createBottomTabNavigator(
     {
         Home: {
-            screen: ProviderHome,
+            screen: HomeJobs,
             navigationOptions: {
                 tabBarLabel: "Home"
             }
@@ -352,7 +352,7 @@ const AuthStack = createStackNavigator(
         SubmitInvoice: SubmitInvoice
     },
     {
-        initialRouteName: "AdditionalJobDetails",
+        initialRouteName: "SelectScreen" ,
 
         headerMode: "none"
     }

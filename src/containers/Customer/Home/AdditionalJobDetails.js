@@ -1,16 +1,14 @@
 import React, {Component} from 'react';
-import {Text, View, TouchableOpacity, Dimensions} from 'react-native';
+import {Dimensions, Text, TouchableOpacity, View} from 'react-native';
 import {styles} from './styles';
 import {Header, Image} from "react-native-elements";
 import * as Progress from 'react-native-progress';
-
 import SearchBar from "../../../components/JobDetails/SearchBar/index.js"
 import EndingAddress from "../../../components/JobDetails/EndingAddress/index.js"
 import JobDate from "../../../components/JobDetails/JobDate/index.js"
 import Vehicle from "../../../components/JobDetails/Vehicle/index.js"
 import JobSize from "../../../components/JobDetails/JobSize/index.js"
 import AddJob from "../../../components/JobDetails/AddJobDetails/index.js"
-
 let width = Math.round(Dimensions.get('window').width);
 console.log("ProgressWidth:-->" + width);
 
@@ -18,7 +16,8 @@ export default class AdditionalJobDetails extends Component {
     constructor(props) {
         super(props);
         const {navigation} = this.props;
-        const item = navigation.getParam('item');
+        const item = navigation.getParam('item', "NO-ID");
+        const Servicetype = navigation.getParam("Servicetype", "NO-SERVICE");
         console.log("itempassed--" + item);
         console.disableYellowBox = true;
         this.state = {
@@ -31,6 +30,15 @@ export default class AdditionalJobDetails extends Component {
             JobSize: false,
             AddJob: false,
             JobItem: item,
+            addressDetail: null,
+            addressSDetail: null,
+            jobDate: null,
+            vehicleSize: null,
+            jobSize: null,
+            addJob: null,
+            Service_Type: Servicetype,
+            isConnected: true,
+            showLoading: false
         };
         if (this.state.JobItem === "Moving") {
             console.log("itempassed--" + item);
@@ -39,15 +47,14 @@ export default class AdditionalJobDetails extends Component {
             console.log("itempassed--" + item);
             this.setState({ProgresStatus: 0.16})
         }
-        this.addressDetail = null;
-        this.addressEDetail=null;
-        this.JobDate=null
+
+
     }
 
 
     NextStep1 = () => {
         if (this.state.JobItem === "Moving") {
-            if (this.state.StartingAddress ===true) {
+            if (this.state.StartingAddress === true) {
                 this.setState(prevState => ({
                     ProgressStatus: prevState.ProgressStatus + 0.14,
                     StartingAddress: false,
@@ -151,7 +158,15 @@ export default class AdditionalJobDetails extends Component {
                 }));
             } else {
 
-                this.props.navigation.navigate("Tasker");
+                this.props.navigation.navigate("Tasker", {
+                    addressDetail: this.state.addressDetail,
+                    addressSDetail: this.state.addressSDetail,
+                    jobDate: this.state.jobDate,
+                    vehicleSize: this.state.vehicleSize,
+                    jobSize: this.state.jobSize,
+                    addJob: this.state.addJob,
+                    Service_Type: this.state.Service_Type,
+                });
             }
         }
 
@@ -197,27 +212,45 @@ export default class AdditionalJobDetails extends Component {
                     //animationType={"timing"}
                 />
                 {this.state.StartingAddress &&
-                    <SearchBar
-                        onGetSAddress={(data, details = null,)=>{
-                            this.addressDetail = details
-                        }}
-                    />
+                <SearchBar
+                    onGetAddress={(data, details = null,) => {
+                        this.state.addressDetail = details;
+                        console.log("dataADD", this.state.addressDetail)
+                    }}
+                />
                 }
                 {this.state.EndingAddress && <EndingAddress
-                    onGetSAddress={(data, details = null,)=>{
-                        this.addressEDetail = details
+                    onGetSAddress={(data, details = null,) => {
+                        this.state.addressSDetail = details;
+                        console.log("dataADD", this.state.addressSDetail)
                     }}
                 />}
                 {this.state.JobDate && <JobDate
-                    onGetDate={(date)=>{
-                        this.JobDate = date
+                    onGetDate={(date) => {
+                        this.state.jobDate = date;
+                        console.log("dataADD", this.state.jobDate)
                     }}
                 />}
                 {this.state.Vehicle && <Vehicle
+                    onVehicle={(size) => {
+                        this.state.vehicleSize = size;
+                        console.log("dataADD", this.state.vehicleSize)
+                    }}
+
 
                 />}
-                {this.state.JobSize && <JobSize/>}
-                {this.state.AddJob && <AddJob/>}
+                {this.state.JobSize && <JobSize
+                    onJobSize={(size) => {
+                        this.state.jobSize = size;
+                        console.log("dataADD", this.state.jobSize)
+                    }}
+                />}
+                {this.state.AddJob && <AddJob
+                    onAddJob={(text) => {
+                        this.state.addJob = text;
+                        console.log("dataADD", this.state.addJob)
+                    }}
+                />}
 
                 <TouchableOpacity style={{
                     backgroundColor: "red",
@@ -232,6 +265,25 @@ export default class AdditionalJobDetails extends Component {
                         <Text style={{color: "white", fontSize: 15, marginTop: 15}}>NEXT</Text>
                     </View>
                 </TouchableOpacity>
+                {this.state.showLoading && (
+                    <View
+                        style={{
+                            width: '100%',
+                            height: '100%',
+                            backgroundColor: 'transparent',
+                            position: 'absolute',
+                            opacity: 1,
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                        }}
+                    >
+                        <Image
+                            resizeMode={'contain'}
+                            source={require('../../../assets/images/loading.gif')}
+                            style={{width: 100, height: 100, opacity: 1}}
+                        />
+                    </View>
+                )}
             </View>
         )
     }

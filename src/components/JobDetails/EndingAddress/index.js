@@ -19,8 +19,6 @@ export default class EndingAddress extends Component {
     }
 
 
-
-
     renderGooglePlacesInput = () => {
         return (
             <GooglePlacesAutocomplete
@@ -32,14 +30,14 @@ export default class EndingAddress extends Component {
                 fetchDetails={true}
                 renderDescription={row => row.description} // custom description render
                 onPress={(data, details = null,) => { // 'details' is provided when fetchDetails = true
-                    console.log("hello"+data, details);
+                    console.log("hello" + data, details);
 
-                    this.setState({places:[]});
+                    this.setState({places: []});
 
                     this.state.places.push(details);
-                    this.setState({places:this.state.places});
-                    this.props.onGetEAddress(data, details);
-                    console.log("hello2"+JSON.stringify(this.state.places));
+                    this.setState({places: this.state.places});
+                    this.props.onGetSAddress(data, details.formatted_address);
+                    console.log("hello2" + JSON.stringify(this.state.places));
 
                 }}
 
@@ -58,25 +56,21 @@ export default class EndingAddress extends Component {
 
                     textInputContainer: {
                         width: '90%',
-                        backgroundColor:"#ffffff",
+                        backgroundColor: "#ffffff",
                         borderTopWidth: 0,
-                        margin:15
+                        margin: 15
 
 
                     },
                     description: {
 
-                        color:"red"
+                        color: "red"
                     },
                     predefinedPlacesDescription: {
                         color: 'red'
                     },
-                    poweredContainer:{color:"red"},
-                    powered:{
-
-
-
-                    }
+                    poweredContainer: {color: "red"},
+                    powered: {}
 
                 }}
 
@@ -94,7 +88,7 @@ export default class EndingAddress extends Component {
                 }}
                 GooglePlacesDetailsQuery={{
                     // available options for GooglePlacesDetails API : https://developers.google.com/places/web-service/details
-                    fields: ["name",'formatted_address']
+                    fields: ["name", 'formatted_address']
                 }}
 
 
@@ -102,8 +96,14 @@ export default class EndingAddress extends Component {
 
 
                 debounce={200} // debounce the requests in ms. Set to 0 to remove debounce. By default 0ms.
-                renderLeftButton={()  => <Image source={require('../../../assets/images/searchleft.png')}
-                                                style={{resizeMode:"contain",width:20,height:20,marginTop:12,marginStart:5}}
+                renderLeftButton={() => <Image source={require('../../../assets/images/searchleft.png')}
+                                               style={{
+                                                   resizeMode: "contain",
+                                                   width: 20,
+                                                   height: 20,
+                                                   marginTop: 12,
+                                                   marginStart: 5
+                                               }}
 
 
                 />}
@@ -117,13 +117,13 @@ export default class EndingAddress extends Component {
         return (
             <View style={{flexDirection: "column", width: "100%"}}>
 
-                    <View style={{flexDirection: "row", width: "100%", backgroundColor: "white",}}>
-                        <View style={{flexDirection: "row", width: "100%", alignItems: "center",}}>
-                            {this.renderGooglePlacesInput({
-                                hintText: "Job Location",
-                            })}
-                        </View>
+                <View style={{flexDirection: "row", width: "100%", backgroundColor: "white",}}>
+                    <View style={{flexDirection: "row", width: "100%", alignItems: "center",}}>
+                        {this.renderGooglePlacesInput({
+                            hintText: "Job Location",
+                        })}
                     </View>
+                </View>
                 <FlatList style={{width: "100%",}}
                           data={this.state.places}
                           showsVerticalScrollIndicator={false}

@@ -1,13 +1,7 @@
 import React, {Component} from 'react';
-import {ImageBackground, Text, View, TouchableOpacity, TextInput, ScrollView, FlatList} from 'react-native';
-import {SafeAreaView} from 'react-navigation';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {FlatList, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {styles} from './styles';
-import {Header, Image} from "react-native-elements";
-
-
-import {checkEmail} from '../../../utils';
-import {Colors} from "../../../themes";
+import {Image} from "react-native-elements";
 
 export default class JobSearch extends Component {
 
@@ -22,9 +16,9 @@ export default class JobSearch extends Component {
             ListData: [
                 {
                     id: 1,
-
                     imgpath: require("../../../assets/images/listimg2.png"),
                     heading: "Furniture Assembly",
+                    value:"FurnitureAssembly",
                     Text1: "Bed | Dresser | Table",
                     Text2: "Grill | Bookcase | Desk"
                 },
@@ -33,6 +27,7 @@ export default class JobSearch extends Component {
 
                     imgpath: require("../../../assets/images/listimg3.png"),
                     heading: "Mounting",
+                    value:"Mounting",
                     Text1: "TV Mount | Mirror",
                     Text2: "Curtain Rods | Signs"
                 },
@@ -41,6 +36,7 @@ export default class JobSearch extends Component {
 
                     imgpath: require("../../../assets/images/listimg4.png"),
                     heading: "Home Repair",
+                    value:"HomeRepair",
                     Text1: "Doors | Flooring",
                     Text2: "Light Fixtures"
                 },
@@ -48,6 +44,7 @@ export default class JobSearch extends Component {
                     id: 4,
                     imgpath: require("../../../assets/images/listimg1.png"),
                     heading: "Moving",
+                    value:"Moving",
                     Text1: "Furniture | Boxes",
                     Text2: "Bedframe"
                 },
@@ -56,6 +53,7 @@ export default class JobSearch extends Component {
 
                     imgpath: require("../../../assets/images/listimg6.png"),
                     heading: "Junk Removal",
+                    value:"JunkRemoval",
                     Text1: "Haul off boxes",
                     Text2: "Standard pickup load"
                 },
@@ -63,6 +61,7 @@ export default class JobSearch extends Component {
                     id: 6,
                     imgpath: require("../../../assets/images/listimg5.png"),
                     heading: "Cleaning",
+                    value:"Cleaning",
                     Text1: "Basic or Deep Cleaning",
                     Text2: "Entire House"
                 },
@@ -152,7 +151,7 @@ export default class JobSearch extends Component {
                     </View>
                 </View>
                 <View style={{
-                    flexDirection: "column", marginTop: 20,marginBottom:10
+                    flexDirection: "column", marginTop: 20, marginBottom: 10
                 }}>
                     <Text style={{
                         color: "black",
@@ -180,9 +179,15 @@ export default class JobSearch extends Component {
                                 <TouchableOpacity
                                     onPress={() => {
                                         if (item.heading === "Moving")
-                                            this.props.navigation.navigate("AdditionalJobDetails", {item: "Moving"});
+                                            this.props.navigation.navigate("AdditionalJobDetails", {
+                                                item: "Moving",
+                                                Servicetype: item.value
+                                            });
                                         else
-                                            this.props.navigation.navigate("AdditionalJobDetails", {item: "NotMoving"});
+                                            this.props.navigation.navigate("AdditionalJobDetails", {
+                                                item: "NotMoving",
+                                                Servicetype: item.value
+                                            });
                                     }}>
                                     <View style={{
                                         backgroundColor: "white",
@@ -196,10 +201,12 @@ export default class JobSearch extends Component {
                                         }}/>
                                     </View>
                                 </TouchableOpacity>
-                                <Text style={{color: "black", marginTop: 7,fontWeight:"bold",
-                                fontSize:15,marginStart:10}}>{item.heading}</Text>
-                                <Text style={{marginTop: 5,marginStart:10,fontSize:13}}>{item.Text1}</Text>
-                                <Text style={{marginTop: 0,marginStart:10,fontSize:13}}>{item.Text2}</Text>
+                                <Text style={{
+                                    color: "black", marginTop: 7, fontWeight: "bold",
+                                    fontSize: 15, marginStart: 10
+                                }}>{item.heading}</Text>
+                                <Text style={{marginTop: 5, marginStart: 10, fontSize: 13}}>{item.Text1}</Text>
+                                <Text style={{marginTop: 0, marginStart: 10, fontSize: 13}}>{item.Text2}</Text>
                             </View>
                         }
                     />

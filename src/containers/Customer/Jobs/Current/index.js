@@ -3,7 +3,8 @@ import {FlatList, Text, TouchableOpacity, View} from 'react-native';
 import {Image} from "react-native-elements";
 import Preference from "react-native-preference";
 import {constants} from "../../../../utils/constants";
-import moment from "../Completed";
+import moment from "moment";
+
 
 export default class Current extends Component {
     constructor(props) {
@@ -16,7 +17,9 @@ export default class Current extends Component {
             isConnected: true,
             showLoading: false,
             auth_token: Preference.get("userToken"),
-            CurrentJobs: []
+            CurrentJobs: [],
+            JobId:"",
+            tipStatus:true,
 
 
         };
@@ -49,11 +52,13 @@ export default class Current extends Component {
                             if (data) {
                                 this.setState({
                                     showLoading: false,
-                                    completedJobs: data
+                                    completedJobs: data,
+                                    JobId: response.Data[0]._id,
+
 
                                 });
-                            }
 
+                            }
 
                         } else {
                             alert(response.Message);
@@ -121,7 +126,7 @@ export default class Current extends Component {
 
             </View>
             {item.Tip &&
-            <TouchableOpacity onPress={() => this.props.navigation.navigate("Tip")}
+            <TouchableOpacity onPress={() => this.props.navigation.navigate("Tip",{jobId:this.state.JobId,TipStatus:this.state.tipStatus})}
                               style={{
                                   flexDirection: "column",
                                   width: "100%",
@@ -192,12 +197,12 @@ export default class Current extends Component {
                                   <Text style={{color: 'red', fontSize: 15}}>{moment(item.job_date).format("MMM YYYY")}</Text>
 
                                   {this.renderJobsOpen({
-                                      fName: item.customer.local.firstName,
-                                      sName: item.customer.local.lastName,
+                                      fName: item.provider.local.firstName,
+                                      sName: item.provider.local.lastName,
                                       JobTitle: item.additional_job_details,
                                       date: moment(item.job_date).format('ll'),
                                       address: item.starting_address,
-                                      Tip:true
+                                      Tip:this.state.tipStatus
                                   })}
 
 

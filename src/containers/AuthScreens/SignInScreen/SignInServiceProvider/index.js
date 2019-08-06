@@ -1,11 +1,7 @@
 import React, {Component} from 'react';
-import {ImageBackground, Text, View, TouchableOpacity, TextInput, ScrollView, Keyboard} from 'react-native';
-import {SafeAreaView} from 'react-navigation';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {Keyboard, ScrollView, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {styles} from './styles';
 import {Header, Image} from "react-native-elements";
-
-import {checkEmail} from '../../../../utils';
 import {Colors} from "../../../../themes";
 import {constants} from "../../../../utils/constants";
 import Preference from "react-native-preference";
@@ -28,6 +24,8 @@ export default class SignInProvider extends Component {
             text: 'Useless Placeholder',
             showIconLeftEmail: false,
             showIconLeftpass: false,
+            Cross1:false,
+            Cross2:false,
             userName: undefined,
             email: '',
             password: '',
@@ -48,7 +46,7 @@ export default class SignInProvider extends Component {
 
             if (result.isCancelled) {
                 alert('Login was cancelled');
-
+                return
             } else {
                 this.FBGraphRequest('id, email, name', this.FBLoginCallback);
             }
@@ -57,7 +55,7 @@ export default class SignInProvider extends Component {
         } catch (e) {
             alert("error: " + e)
         }
-    };
+    }
 
     async FBGraphRequest(fields, callback) {
         const accessData = await AccessToken.getCurrentAccessToken();
@@ -79,7 +77,7 @@ export default class SignInProvider extends Component {
         if (error) {
             alert(JSON.stringify(error))
         } else {
-            console.log("FBLoginCallback: " + JSON.stringify(result));
+            console.log("FBLoginCallback: " + JSON.stringify(result))
             // this.socialLogin(
             //     'sd23h3k39sdk2932',
             //     'facebook',
@@ -119,7 +117,7 @@ export default class SignInProvider extends Component {
             // show loading
             this.setState({
                 showLoading: true
-            });
+            })
 
             // call api
             fetch(constants.ProviderSocialLogin, {
@@ -132,16 +130,16 @@ export default class SignInProvider extends Component {
             }).then(response => response.json())
             .then(response => {
                     this.setState({showLoading: false});
-                    console.log('Social Login response: ' + JSON.stringify(response));
+                    console.log('Social Login response: ' + JSON.stringify(response))
 
                     if (response.ResultType === 1) {
                         this.setState({showLoading: false});
                         Preference.set({
-                            clientlogin: true,
+                            clientlogin: false,
                             userEmail: response.Data.email,
-                            userId: response.Data.id,
+                            ProviderId: response.Data.id,
                             userName: response.Data.firstName + " " + response.Data.lastName,
-                            userToken: response.Data.token
+                            userToken: response.Data.token,
                         });
 
                         this.moveToHome();
@@ -167,7 +165,6 @@ export default class SignInProvider extends Component {
     moveToHome() {
         this.props.navigation.navigate("ProviderTab");
     }
-    //this.
     onLogin = () => {
 
         if (this.state.isConnected) {
@@ -200,11 +197,12 @@ export default class SignInProvider extends Component {
                         if (response.ResultType === 1) {
                             this.setState({showLoading: false});
                             Preference.set({
-                                clientlogin: true,
+                                clientlogin: false,
                                 userEmail: response.Data.email,
-                                userId: response.Data.id,
-                                userName: response.Data.firstname + " " + response.Data.lastname,
+                                providerId: response.Data.id,
+                                ProviderName: response.Data.firstName + " " + response.Data.lastName,
                                 userToken: response.Data.token
+
                             });
 
                             this.moveToHome();
@@ -217,7 +215,6 @@ export default class SignInProvider extends Component {
                         }
                     })
                     .catch(error => {
-                        //console.error('Errorr:', error);
                         console.log('Error:', error);
                         alert("Error: " + error);
                     });
@@ -248,10 +245,20 @@ export default class SignInProvider extends Component {
                     textContentType={"Email"}
                     placeholder={item.hintText}
                     value={email}
+                    autoCapitalize={'none'}
                 />
 
                 {this.state.showIconLeftEmail &&
                 <Image resizeMode={"contain"} source={require("../../../../assets/images/checked.png")}
+                       style={{
+                           width: 20,
+                           height: 20,
+                           position: "absolute",
+                           right: 10,
+                           top: 15
+                       }}/>}
+                {this.state.Cross1 &&
+                <Image resizeMode={"contain"} source={require("../../../../assets/images/close.png")}
                        style={{
                            width: 20,
                            height: 20,
@@ -286,6 +293,15 @@ export default class SignInProvider extends Component {
                            right: 10,
                            top: 15
                        }}/>}
+                {this.state.Cross2 &&
+                <Image resizeMode={"contain"} source={require("../../../../assets/images/close.png")}
+                       style={{
+                           width: 20,
+                           height: 20,
+                           position: "absolute",
+                           right: 10,
+                           top: 15
+                       }}/>}
             </View>
             <View style={{height: 0.5, backgroundColor: "#52525D", marginStart: 25, marginEnd: 25,}}></View>
         </View>;
@@ -296,10 +312,10 @@ export default class SignInProvider extends Component {
         let reg = /^[\w]{1,}[\w.+-]{0,}@[\w-]{2,}([.][a-zA-Z]{2,}|[.][\w-]{2,}[.][a-zA-Z]{2,})$/;
         if (reg.test(text) === false) {
             console.log("Email is Not Correct");
-            this.setState({email: text});
+            this.setState({email: text})
             return false;
         } else {
-            this.setState({email: text});
+            this.setState({email: text})
             console.log("Email is Correct");
             return true;
         }
@@ -308,25 +324,38 @@ export default class SignInProvider extends Component {
         this.setState({[key]: value});
     };
     checkPassword(text) {
+
         if (text.length >= 8 && text.length <= 12) {
             this.setState({showIconLeftpass: true});
-
-        }else {
+            this.setState({Cross2: false})
+        } else if (text.length === 0) {
             this.setState({showIconLeftpass: false})
+            this.setState({Cross2: true})
+        } else {
+            this.setState({showIconLeftpass: false})
+            this.setState({Cross2: true})
+
+
         }
         this.onChangeText('password', text)
     }
 
     checkEmail(email) {
+
         if (this.validate(email)) {
             this.setState({showIconLeftEmail: true});
-
-        } else {
+            this.setState({Cross1: false})
+        } else if (email.length === 0) {
             this.setState({showIconLeftEmail: false})
+            this.setState({Cross1: true})
+        } else {
+            this.setState({showIconLeftEmail: false});
+            this.setState({Cross1: true})
         }
-
         this.onChangeText('email', email)
+
     }
+
 
     render() {
         return (

@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {Text, View} from "react-native";
-import {CheckBox} from "react-native-elements";
+import {CheckBox, Image} from "react-native-elements";
 
 export default class Vehicle extends Component {
     constructor(props) {
@@ -10,12 +10,10 @@ export default class Vehicle extends Component {
             text: "Useless Placeholder",
             showIconLeftEmail: false,
             Cross1: false,
-            date: new Date(),
+            VehicleValue: null,
             checked: false,
             checked2: false,
-            checked3: false,
-            VehicleValue: ""
-
+            checked3: false
         };
     }
 
@@ -39,32 +37,59 @@ export default class Vehicle extends Component {
     }
 
     VehiclePressed = () => {
-        this.setState({checked: !this.state.checked, checked2: false, checked3: false});
-        if(this.state.checked===true){
-        this.setState({VehicleValue: "No Vehicle Needed"});
+        this.setState({
+            checked: !this.state.checked,
+            checked2: false,
+            checked3: false,
+            VehicleValue: "No Vehicle Needed"
+        }, ()=> {
+            if (!this.state.checked) {
+                this.setState({VehicleValue: null} ,()=>{
+                    alert("first " + this.state.VehicleValue)
+                })
 
-       }else{
-            this.setState({vehicleValue:null});
-            alert("Vvalue" + this.state.VehicleValue)
-        }
+            }else{
+              this.props.onVehicle(this.state.VehicleValue)
+            }
+        });
+
     };
     VehiclePressed2 = () => {
-        this.setState({checked2: !this.state.checked2, checked: false, checked3: false})
-        if(this.state.checked2===true) {
-            this.setState({VehicleValue: "A car is needed"});
-            alert("Vvalue" + this.state.VehicleValue)
-        }else{ this.setState({vehicleValue:null});
-            alert("Vvalue" + this.state.VehicleValue)}
+
+        this.setState({
+            checked2: !this.state.checked2,
+            checked: false,
+            checked3: false,
+            VehicleValue: "A car is needed"
+        }, ()=> {
+            if (!this.state.checked2) {
+                this.setState({VehicleValue: null} ,()=>{
+                    alert("first " + this.state.VehicleValue)
+                })
+
+            }else{
+                this.props.onVehicle(this.state.VehicleValue)
+            }
+        });
+
 
     };
     VehiclePressed3 = () => {
-        this.setState({checked3: !this.state.checked3, checked2: false, checked: false})
-        if(this.state.checked3===true) {
-        this.setState({VehicleValue: "A truck is needed"});
-        alert("Vvalue" + this.state.VehicleValue)}else{
-            this.setState({vehicleValue:null});
-            alert("Vvalue" + this.state.VehicleValue)
-        }
+        this.setState({
+            checked3: !this.state.checked3,
+            checked: false,
+            checked2: false,
+            VehicleValue: "A truck is needed"
+        }, ()=> {
+            if (!this.state.checked3) {
+                this.setState({VehicleValue: null} ,()=>{
+                   alert("first " + this.state.VehicleValue)
+                })
+
+            }else{
+                this.props.onVehicle(this.state.VehicleValue)
+            }
+        });
     };
 
     render() {
@@ -83,14 +108,17 @@ export default class Vehicle extends Component {
                 </Text>
                 <View
                     style={{
-                        flexDirection: "column",
+                        flexDirection: "row",
                         backgroundColor: "white",
                         marginTop: 20,
                         height: 170,
                         width: "100%",
+
+                        alignItems: "center"
                     }}
                 >
                     <View style={{flexDirection: "column"}}>
+
                         <View style={{flexDirection: "column"}}>
                             {this.renderRowWithChecks({
                                 title: "No Vehicle Needed",
@@ -109,6 +137,8 @@ export default class Vehicle extends Component {
                             })}
 
                         </View>
+
+
                     </View>
                 </View>
             </View>

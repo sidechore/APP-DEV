@@ -13,6 +13,7 @@ export default class JobDate extends Component {
             Cross1: false,
             date: new Date()
         };
+        this.props.onGetDate(this.state.date);
     }
 
     render() {
@@ -34,8 +35,10 @@ export default class JobDate extends Component {
                     <DatePicker
                         date={this.state.date}
                         onDateChange={date => {
-                            this.setState({date});
-                            this.props.onGetDate(date)
+                            this.setState({date}, () => {
+                                this.props.onGetDate(this.state.date)
+                            });
+
                         }}
                         mode={"datetime"}
 

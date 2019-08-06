@@ -1,20 +1,7 @@
-import React, { Component } from 'react';
-import {
-  ImageBackground,
-  Text,
-  View,
-  TouchableOpacity,
-  TextInput,
-  ScrollView,
-  Switch
-} from 'react-native';
-import { SafeAreaView } from 'react-navigation';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { styles } from './styles';
-import { Header, Image } from 'react-native-elements';
-
-import { checkEmail } from '../../../utils';
-import { Colors } from '../../../themes';
+import React, {Component} from 'react';
+import {ScrollView, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {styles} from './styles';
+import {Header, Image} from 'react-native-elements';
 
 export default class VerifyPhoneNo extends Component {
   constructor(props) {
@@ -194,7 +181,6 @@ export default class VerifyPhoneNo extends Component {
             </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('ResetPassword')}
               style={{
                 justifyContent: 'center',
                 alignItems: 'center',

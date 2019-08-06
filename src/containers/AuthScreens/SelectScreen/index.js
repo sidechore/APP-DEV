@@ -11,10 +11,15 @@ class SelectScreen extends Component {
       // let userId = await Preference.get('clientlogin');
       //if (userId) {
       //} else {
-      this.props.navigation.navigate('InitialScreen');
+      this.gotoNextscreen();
       //}
     }, 3000);
   }
+  gotoNextscreen(){
+
+      this.props.navigation.navigate('InitialScreen');
+    }
+
 
   render() {
     return (

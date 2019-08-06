@@ -11,7 +11,7 @@ import { styles } from "./styles";
 export default class SubmitInvoice extends Component {
     constructor(props)
     {
-        console.disableYellowBox=true;
+        console.disableYellowBox=true
         super(props);
         this.state = { showHours: false, showTimeHours:"00:00",date: new Date() };
       

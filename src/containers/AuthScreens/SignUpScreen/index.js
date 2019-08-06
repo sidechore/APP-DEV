@@ -1,21 +1,9 @@
-import React, { Component } from 'react';
-import {
-  ImageBackground,
-  Text,
-  View,
-  TouchableOpacity,
-  TextInput,
-  ScrollView,
-  Keyboard
-} from 'react-native';
-import { SafeAreaView } from 'react-navigation';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { styles } from './styles';
-import { Header, Image } from 'react-native-elements';
-
-import { checkEmail } from '../../../utils';
-import { Colors } from '../../../themes';
-import { constants } from '../../../utils/constants';
+import React, {Component} from 'react';
+import {Keyboard, ScrollView, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {styles} from './styles';
+import {Header, Image} from 'react-native-elements';
+import {Colors} from '../../../themes';
+import {constants} from '../../../utils/constants';
 import Preference from 'react-native-preference';
 
 const FBSDK = require('react-native-fbsdk');
@@ -68,7 +56,7 @@ export default class SignUpScreen extends Component {
 
       if (result.isCancelled) {
         alert('Login was cancelled');
-
+        return;
       } else {
         this.FBGraphRequest(
           'id, email, first_name, last_name',
@@ -373,6 +361,7 @@ export default class SignUpScreen extends Component {
             textContentType={'Email'}
             placeholder={item.hintText}
             keyboardType={'email-address'}
+            autoCapitalize={'none'}
             value={email}
           />
 
@@ -426,7 +415,7 @@ export default class SignUpScreen extends Component {
             onChangeText={text => this.checkPhone(text)}
             textContentType={'Email'}
             placeholder={item.hintText}
-            keyboardType={'email-address'}
+            keyboardType={'phone-pad'}
             value={phone}
           />
 
@@ -481,7 +470,6 @@ export default class SignUpScreen extends Component {
             textContentType={'Email'}
             placeholder={item.hintText}
             value={password}
-            keyboardType={'email-address'}
             secureTextEntry={true}
           />
 
@@ -534,7 +522,6 @@ export default class SignUpScreen extends Component {
             onChangeText={text => this.cnfrPassword(text)}
             textContentType={'Email'}
             placeholder={item.hintText}
-            keyboardType={'email-address'}
             secureTextEntry={true}
           />
 
@@ -587,6 +574,8 @@ export default class SignUpScreen extends Component {
             onChangeText={text => this.postal(text)}
             textContentType={'Email'}
             placeholder={item.hintText}
+            keyboardType={'number-pad'}
+
           />
 
           {this.state.showIconLeftpass7 && (

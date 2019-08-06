@@ -1,12 +1,8 @@
 import React, {Component} from 'react';
-import {ImageBackground, Text, View, TouchableOpacity, TextInput, Dimensions, ScrollView} from 'react-native';
-import {SafeAreaView} from 'react-navigation';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {Dimensions, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import {styles} from './styles';
 import {Header, Image} from "react-native-elements";
-import RBSheet from "react-native-raw-bottom-sheet";
-import Modal from "react-native-modal";
-import MapView, {Marker, ProviderPropType} from 'react-native-maps';
+import MapView, {Marker} from 'react-native-maps';
 import Redmarker from '../../../assets/images/markerred.png';
 
 const {width, height} = Dimensions.get('window');
@@ -20,19 +16,17 @@ const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 let id = 0;
 
 
-
 export default class ScheduledJobDetails extends Component {
     constructor(props) {
 
         super(props);
         const {navigation} = this.props;
-        const Latci = navigation.getParam('latCi');
-        const Longci = navigation.getParam('longCi');
-        const descr=navigation.getParam('descrp');
+        const item = navigation.getParam('item');
+        console.log("item123"+JSON.stringify(item));
 
         console.disableYellowBox = true;
         this.state = {
-               descr:descr,
+            descr: "",
 
             region: {
                 latitude: LATITUDE,
@@ -45,7 +39,7 @@ export default class ScheduledJobDetails extends Component {
 
             LATLNG: {
                 latitude: Latci,
-                longitude:Longci
+                longitude: Longci
             },
             markers: [],
         };
@@ -53,9 +47,8 @@ export default class ScheduledJobDetails extends Component {
         this.onMapPress = this.onMapPress.bind(this);
 
 
-
-
     }
+
     componentDidMount() {
         this.setState({
             markers: [
@@ -133,7 +126,13 @@ export default class ScheduledJobDetails extends Component {
 
 
                     </View>
-                    <View style={{width: "100%", height: 200, marginTop: 30,justifyContent:"center",alignItems:"center"}}>
+                    <View style={{
+                        width: "100%",
+                        height: 200,
+                        marginTop: 30,
+                        justifyContent: "center",
+                        alignItems: "center"
+                    }}>
 
 
                         <MapView
@@ -141,7 +140,9 @@ export default class ScheduledJobDetails extends Component {
                             style={styles.map}
                             initialRegion={this.state.region}
                             onPress={this.onMapPress}
-                            ref={(ref) => { this.mapRef = ref }}
+                            ref={(ref) => {
+                                this.mapRef = ref
+                            }}
 
                         >
                             {this.state.markers.map(marker => (

@@ -1,80 +1,194 @@
 import React, {Component} from 'react';
-import {
-    ImageBackground,
-    Text,
-    View,
-    TouchableOpacity,
-    TextInput,
-    ScrollView,
-    FlatList,
-    TouchableHighlight
-} from 'react-native';
-import {SafeAreaView} from 'react-navigation';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {FlatList, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import {styles} from './styles';
 import {Header, Image} from "react-native-elements";
 import Modal from "react-native-modal";
 import RBSheet from "react-native-raw-bottom-sheet";
 import SwipeUpDown from 'react-native-swipe-up-down';
-
-
-import {checkEmail} from '../../../utils';
-import {Colors} from "../../../themes";
-
+import {constants} from "../../../utils/constants";
+import Preference from "react-native-preference";
+import moment from "moment";
+let Servicetype;
+let addressDetail;
+let addressSDetail;
+let jobDate;
+let vehicleSize;
+let  jobSize;
+let addJob;
+let JobTime;
 export default class Tasker extends Component {
 
     constructor(props) {
         super(props);
+        const {navigation} = this.props;
+        addressDetail = navigation.getParam('addressDetail', "NO-ID");
+        addressSDetail = navigation.getParam("addressSDetail", "NO-SERVICE");
+         jobDate = navigation.getParam('jobDate', "NO-ID");
+         vehicleSize = navigation.getParam("vehicleSize", "NO-SERVICE");
+        JobTime = navigation.getParam("jobTime", "NO-SERVICE");
+         jobSize = navigation.getParam('jobSize', "NO-ID");
+        Servicetype = navigation.getParam("Service_Type", "NO-SERVICE");
+         addJob = navigation.getParam("addJob", "NO-JOB");
+        console.log("addjonb--" + addressDetail, addressSDetail, JSON.stringify(jobDate), JSON.stringify(JobTime),vehicleSize, jobSize, Servicetype, addJob);
         console.disableYellowBox = true;
+
         this.state = {
+            isConnected: true,
             isModalVisible: false,
+            serviceType: Servicetype,
+            ProviderName: null,
+            ProviderImage: null,
+            bio: null,
+            prize: null,
+            TotalJobs: null,
+            showLoading: false,
+            ListData: [],
+            ProviderId: null,
+            CustomerID: Preference.get("userId"),
 
-            ListData: [
-                {
-                    id: 1,
-                    imgpath: require("../../../assets/images/pimg1.png"),
-                    heading: "Frances Z.",
-                    Text1: "93% positive reviews",
-                    Text2: "133 jobs Completed ",
-                    Crown: false,
-                    para: "Working as maintainanc Technician for several year I have assissted clients in residential properties with putting together furniture shelving units and appliances ",
-                },
-                {
-                    id: 2,
-                    imgpath: require("../../../assets/images/pimp2.png"),
-                    heading: "Morgan G",
-                    Text1: "93% positive reviews",
-                    Text2: "133 jobs Completed",
-                    Crown: true,
-                    para: "Working as maintainanc Technician for several year I have assissted clients in residential properties with putting together furniture shelving units and appliances ",
-                },
-                {
-                    id: 3,
-                    imgpath: require("../../../assets/images/pimp3.png"),
-                    heading: "Terrance B.",
-                    Text1: "93% positive reviews",
-                    Text2: "133 jobs Completed",
-                    Crown: false,
-                    para: "Working as maintainanc Technician for several year I have assissted clients in residential properties with putting together furniture shelving units and appliances ",
-                },
-
-            ]
         };
         this.toggleModal2 = this.toggleModal2.bind(this);
+        this.onAddJob = this.onAddJob.bind(this)
+
     }
 
+    onAddJob = () => {
+        if (this.state.isConnected) {
+            this.setState({showLoading: true});
+            let date = moment(jobDate).format('YYYY-MM-DD');
+            let time = moment(jobDate).format("H") + ":0";
+            let details =JSON.stringify({
+                starting_address: addressDetail,
+                service_type: Servicetype,
+                provider:this.state.ProviderId,
+                job_date:date,
+                job_time_from:time,
+                job_size:jobSize,
+                vehicle:vehicleSize,
+                additional_job_details:addJob,
+                customer:this.state.CustomerID,
+            }) ;
+
+            console.log("Params", JSON.stringify(details))
+            // var formBody = [];
+            // for (var property in details) {
+            //     var encodedKey = encodeURIComponent(property);
+            //     var encodedValue = encodeURIComponent(details[property]);
+            //     formBody.push(encodedKey + '=' + encodedValue);
+            // }
+            // formBody = formBody.join('&');
+            fetch(constants.AddJob, {
+                method: 'POST',
+                headers: {
+                    "Content-Type":'application/json',
+                },
+                body: details
+            })
+                .then(response => response.json())
+                .then(response => {
+                    console.log(
+                        'responseClientlogin-->',
+                        '-' + JSON.stringify(response)
+                    );
+                    if (response.ResultType === 1) {
+                        this.setState({showLoading: false});
+
+
+                        this.moveTo();
+                        alert(JSON.stringify(response))
+                    } else {
+                        this.setState({showLoading: false});
+                        if (response.ResultType === 0) {
+                            alert(response.Message);
+                        }
+                    }
+                })
+                .catch(error => {
+                    //console.error('Errorr:', error);
+                    console.log('Error:', error);
+                    alert('Error: ' + error);
+                });
+
+            //Keyboard.dismiss();
+        } else {
+            alert('Please connect Internet');
+        }
+    };
     toggleModal = () => {
         this.RBSheet.close();
         this.setState({isModalVisible: !this.state.isModalVisible});
 
     };
-
+    moveTo() {
+     this.toggleModal()
+    }
     toggleModal2() {
-        this.props.navigation.navigate("PaymentUpdate");
+        this.props.navigation.navigate("PaymentUpdate")
         this.setState({isModalVisible: false});
         this.RBSheet.close();
 
 
+    };
+
+    componentDidMount() {
+        this.callTaskerList()
+        //this.props.navigation.navigate("PaymentUpdate")
+    };
+
+    callTaskerList = () => {
+        if (this.state.isConnected) {
+            this.setState({showLoading: true});
+
+            let date = moment(jobDate).format('YYYY-MM-DD');
+            let time = moment(jobDate).format("H") + ":0";
+
+            // date = '2019-08-03'
+            // time = '9:0'
+            let serviceType=this.state.serviceType;
+            let requestBody = JSON.stringify({
+                servicetype:serviceType,
+                date:date,
+                time:time
+            })
+            console.log('callTaskerList1', JSON.stringify(requestBody))
+            fetch(constants.taskerList, {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: requestBody
+            })
+                .then(response => response.json())
+                .then(
+                    response => {
+                        this.setState({showLoading: false});
+                        console.log('Current Jobs Providers 1' + JSON.stringify(response));
+                        if (response.ResultType === 1) {
+                            let data = response.Data;
+                            if (data) {
+                                    this.setState({
+                                        ListData: response.Data,
+                                    }, () => {
+                                        console.log('Current Jobs Providers ' + JSON.stringify(this.state.ListData));
+                                    });
+                            }
+
+                        } else {
+                            alert(response.Message);
+                        }
+                    },
+                    err => {
+                        console.warn(' Current Jobs Providers: error', err);
+                    }
+                )
+                .catch(error => {
+                    this.setState({showLoading: false});
+                    console.log('Current Jobs Providers: ', error);
+                });
+        } else {
+            alert('Please connect Internet');
+        }
     };
 
     renderRowSort(item) {
@@ -165,19 +279,22 @@ export default class Tasker extends Component {
                           showsVerticalScrollIndicator={false}
                           numColumns={1}
                           removeClippedSubviews={false}
-                          renderItem={({item}) =>
+                          renderItem={({item}) => {
+                              let totalJob  = 0
+                              if(item.availability.total_job){
+                                  totalJob = item.availability.total_job
+                              }
+                              return(
                               <View
                                   style={{
                                       flexDirection: "column",
                                       width: "100%",
                                       marginBottom: 10,
-
                                       marginTop: 5,
-
                                       backgroundColor: "white",
                                   }}>
                                   <View style={{marginStart: 30, flexDirection: "row", marginTop: 20}}>
-                                      <Image source={item.imgpath}
+                                      <Image source={item.availability[0].user_id.local.user_image}
                                              style={{width: 70, height: 70, resizeMode: "contain"}}/>
                                       <View style={{flexDirection: "column", marginStart: 7}}>
                                           <TouchableOpacity
@@ -186,10 +303,10 @@ export default class Tasker extends Component {
                                                   color: "black",
                                                   fontWeight: "bold",
                                                   fontSize: 15
-                                              }}>{item.heading}</Text>
+                                              }}>{item.availability[0].user_id.local.firstName + " " + item.availability[0].user_id.local.lastName}</Text>
                                           </TouchableOpacity>
                                           <View style={{flexDirection: "column",}}>
-                                              {item.Crown &&
+
                                               <View style={{flexDirection: "row", alignItems: "center"}}>
                                                   <Image source={require("../../../assets/images/tickred.png")}
                                                          style={{
@@ -201,10 +318,13 @@ export default class Tasker extends Component {
                                                   <Text style={{color: "red"}}>{"Best Match"} </Text>
 
                                               </View>
-                                              }
-                                              <Text style={{color: "#646464", size: 8}}>{item.Text1}</Text>
 
-                                              <Text style={{color: "#646464", size: 8}}>{item.Text2}</Text>
+                                              <Text style={{color: "#646464", size: 8}}>{"93% Positive Reviews"}</Text>
+
+                                              <Text style={{
+                                                  color: "#646464",
+                                                  size: 8
+                                              }}>{totalJob + " Jobs Completed"}</Text>
                                           </View>
 
 
@@ -219,15 +339,18 @@ export default class Tasker extends Component {
                                           marginTop: 15,
                                           marginBottom: 15,
                                           color: "black"
-                                      }}>{item.para}</Text>
+                                      }}>{item.availability[0].user_id.local.bio}</Text>
 
                                       <TouchableOpacity onPress={() => {
                                           this.RBSheet.open();
+                                          this.setState({ProviderId: item.availability[0].user_id._id}, () => {
+                                              console.log("Providerid" + this.state.ProviderId)
+                                          });
+
                                       }}
                                                         style={{
                                                             justifyContent: "center",
                                                             alignItems: "center",
-
                                                             marginBottom: 25
                                                         }}>
                                           <View style={{
@@ -241,7 +364,10 @@ export default class Tasker extends Component {
 
                                           }}>
                                               <Text
-                                                  style={{color: "white", fontSize: 15}}>{"Select for 24$ / hr"}</Text>
+                                                  style={{
+                                                      color: "white",
+                                                      fontSize: 15
+                                                  }}>{"Select for" + item.availability[0].user_id.local.serviceCost + "$ / hr"}</Text>
 
 
                                           </View>
@@ -249,7 +375,7 @@ export default class Tasker extends Component {
 
                                   </View>
 
-                              </View>
+                              </View>)}
 
                           }/>
 
@@ -340,7 +466,7 @@ export default class Tasker extends Component {
                     }}>
                         <Text style={{color: "black", fontSize: 18, margin: 15}}>{"Add Promo Code"}</Text>
                     </View>
-                    <TouchableOpacity onPress={() => this.toggleModal()}
+                    <View
                                       style={{
                                           justifyContent: "center",
                                           alignItems: "center",
@@ -348,7 +474,7 @@ export default class Tasker extends Component {
 
                                           marginBottom: 20
                                       }}>
-                        <View style={{
+                        <TouchableOpacity style={{
                             backgroundColor: "red",
                             height: 50,
                             width: 320,
@@ -357,18 +483,23 @@ export default class Tasker extends Component {
                             borderRadius: 7
 
 
-                        }}>
+                        }}
+                        onPress={()=>{
+                            this.toggleModal()
+                            this.onAddJob()
+                        }}
+                        >
                             <Text
                                 style={{color: "white", fontSize: 15}}>{"Confirm"}</Text>
 
 
-                        </View>
-                    </TouchableOpacity>
+                        </TouchableOpacity>
+                    </View>
 
                 </View>
             </RBSheet>
             <Modal isVisible={this.state.isModalVisible}
-                   onBackdropPress={() => this.setState({isModalVisible: false})} style={{zIndex:9999}}>
+                   onBackdropPress={() => this.setState({isModalVisible: false})} style={{zIndex: 9999}}>
                 <View style={{justifyContent: "center", alignItems: "center",}}>
                     <View style={{
                         flexDirection: "column", backgroundColor: "white", height: 180, borderRadius: 5
@@ -383,8 +514,8 @@ export default class Tasker extends Component {
                             width: "100%",
                             alignItems: "center",
                             position: "absolute",
-                            borderBottomLeftRadius:5,
-                            borderBottomRightRadius:5,
+                            borderBottomLeftRadius: 5,
+                            borderBottomRightRadius: 5,
                             bottom: 0
                         }} onPress={() => this.toggleModal2()}>
                             <View style={{}}>
@@ -394,6 +525,7 @@ export default class Tasker extends Component {
 
 
                     </View>
+
 
                 </View>
 
@@ -482,8 +614,44 @@ export default class Tasker extends Component {
 
 
             </RBSheet>
-
-
+            {this.state.showLoading && (
+                <View
+                    style={{
+                        width: '100%',
+                        height: '100%',
+                        backgroundColor: 'transparent',
+                        position: 'absolute',
+                        opacity: 1,
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }}
+                >
+                    <Image
+                        resizeMode={'contain'}
+                        source={require('../../../assets/images/loading.gif')}
+                        style={{width: 100, height: 100, opacity: 1}}
+                    />
+                </View>
+            )}
+            {this.state.showLoading && (
+                <View
+                    style={{
+                        width: '100%',
+                        height: '100%',
+                        backgroundColor: 'transparent',
+                        position: 'absolute',
+                        opacity: 1,
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }}
+                >
+                    <Image
+                        resizeMode={'contain'}
+                        source={require('../../../assets/images/loading.gif')}
+                        style={{ width: 100, height: 100, opacity: 1 }}
+                    />
+                </View>
+            )}
         </View>)
     }
 

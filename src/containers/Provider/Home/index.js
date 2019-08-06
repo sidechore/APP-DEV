@@ -1,8 +1,7 @@
-import { Header, Image } from "react-native-elements";
-import React, { Component } from "react";
-import { Text, View, TouchableOpacity, Dimensions } from "react-native";
-import { styles } from "./styles";
-import HomeJobs from "./HomeJobs.js";
+import {Header, Image} from "react-native-elements";
+import React, {Component} from "react";
+import {Text, TouchableOpacity, View} from "react-native";
+import {styles} from "./styles";
 
 export default class ProviderHome extends Component {
   constructor(props) {

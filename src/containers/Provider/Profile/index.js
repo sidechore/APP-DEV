@@ -188,7 +188,7 @@ export default class ProProfile extends Component {
 
 
 
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate("TabNavigator")}
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate("InitialScreen")}
                                           style={{
                                               justifyContent: "center",
                                               alignItems: "center",
